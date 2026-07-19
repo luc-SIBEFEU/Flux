@@ -20,9 +20,10 @@ php artisan vendor:publish --tag=laravel-mail
 
 ## 2. Configuration `.env`
 
+Rennomez `.env.example` en `.env` et completez ou remplacez où c'est necessaire
 ```env
 DB_CONNECTION=mysql
-DB_DATABASE=hotel_booking
+DB_DATABASE=flux_db
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -94,26 +95,60 @@ php artisan serve
   (`ReservationController@store`), un email `ReservationProforma` (Markdown
   Mail, avec le logo de l'hôtel) est envoyé au client avec le récapitulatif
   complet et le montant à payer. Il est mis en file d'attente (`ShouldQueue`).
-- **AangaraaPay (vraie doc)** : `AangaraaPayService` utilise le **paiement
-  direct** (`POST /no_redirect/payment`) avec `phone_number`, `amount`,
-  `app_key`, `transaction_id`, `notify_url`, `operator` (`MTN_Cameroon` /
-  `Orange_Cameroon`), puisqu'on a déjà le numéro du client dans le
-  formulaire. Le statut est mis à jour via le webhook `notify_url`
-  (`routes/web.php` → `/paiement/webhook`) ou en interrogeant
-  `POST /aangaraa_check_status` avec le `payToken`.
+- **Paiement MTN MoMo / Orange Money avec bascule automatique** :
+  `PaymentManager` est le point d'entrée unique appelé par
+  `ReservationController@store`. Pour chaque paiement, il vérifie si les
+  identifiants API de l'opérateur concerné sont configurés dans `.env` :
+    - **Configurés** → appel réel à l'API officielle (`MtnMomoService` pour
+      un "Request to Pay" — prompt sur le téléphone du client — ou
+      `OrangeMoneyService` pour une session "Web Payment" avec redirection).
+    - **Non configurés (par défaut)** → **mode manuel** : le client est
+      redirigé vers une page d'instructions (`/paiement/{payment}/instructions`)
+      lui indiquant le numéro MoMo/Orange de l'hôtelier (renseigné dans
+      *Contacts de paiement*) et le montant à envoyer lui-même. Il saisit
+      ensuite la référence de transaction reçue par SMS, que l'hôtelier
+      confirme manuellement depuis sa liste de réservations (bouton
+      *"Confirmer paiement"*), ce qui passe la réservation à `confirmee`.
+  Ce mode manuel permet de mettre le site en ligne dès maintenant, en
+  attendant l'obtention des clés API MTN MoMo / Orange Money.
 
 ## ⚠️ À vérifier avant la mise en production
 
-1. **Format exact du webhook AangaraaPay** : le mapping des statuts
-   (`SUCCESSFUL`, `PENDING`, `FAILED`, `CANCELLED`, `EXPIRED`) et les noms de
-   champs (`payToken`, `transaction_id`, `status`) sont basés sur la doc
-   fournie ; revérifie-les si l'API évolue.
-2. **Numéro de téléphone** : `AangaraaPayService::formaterNumero()` normalise
+1. **MTN MoMo** : `MtnMomoService` suit le flux standard "Collections /
+   Request to Pay" (bien documenté sur momodeveloper.mtn.com), mais les URL
+   de production et la procédure d'obtention des identifiants sont
+   négociées pays par pays avec MTN — à confirmer une fois ton compte Cameroun
+   validé.
+2. **Orange Money** : `OrangeMoneyService` utilise l'API publique "Web
+   Payment" (flux par **redirection**, le client quitte temporairement le
+   site pour confirmer sur la page Orange). Si Orange t'a donné accès à une
+   API différente pour le Cameroun (paiement direct via partenariat), il
+   faudra adapter ce service en conséquence — le endpoint
+   `transactionstatus` notamment est à revérifier avec ta documentation
+   exacte une fois ton compte marchand actif.
+3. **Numéro de téléphone MTN** : `MtnMomoService::formaterNumero()` normalise
    au format `237XXXXXXXXX`. Adapte l'indicatif si tu cibles d'autres pays.
-3. **Disponibilité réelle sur les dates recherchées** : `Hotel::scopeRechercher()`
+4. **Mode manuel** : tant que les clés API ne sont pas renseignées, TOUS les
+   paiements passent en mode manuel automatiquement — pense à bien
+   renseigner les numéros MoMo/Orange de chaque hôtelier (page *Contacts de
+   paiement*), sinon le client ne saura pas où envoyer l'argent.
+5. **Disponibilité réelle sur les dates recherchées** : `Hotel::scopeRechercher()`
    filtre sur la capacité des chambres mais pas encore sur leur disponibilité
    à la date précise (voir `RoomCategory::estDisponible()` pour croiser les
    deux si besoin).
+
+## Structure des rôles
+
+| Rôle | Accès |
+|---|---|
+| `client` | réservation, avis, favoris, profil |
+| `hotelier` | gestion de ses hôtels/chambres/galeries (+ logo), réservations reçues, contacts paiement |
+| `admin` | actualités, validation hôtels, gestion utilisateurs, modération avis, rapports |
+
+## Palette de couleurs
+
+Bleu (`#1d4ed8`), Blanc, Violet (`#6d28d9`), Noir (`#0d0620`), Or (`#fbbf24`) —
+définis dans `tailwind.config.js`.
 
 ## Structure des rôles
 

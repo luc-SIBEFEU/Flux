@@ -1,72 +1,63 @@
-@extends('layouts.hotelier')
+@extends('layouts.dashboard')
+@php $espaceRole = 'hotelier'; @endphp
+@section('titre_page', 'Réservations')
+@section('titre', 'Réservations — Hôtelier')
 
-@section('content')
-<div class="p-6">
-    <h1 class="text-2xl font-bold text-gray-900 mb-6">Réservations reçues</h1>
+@section('contenu')
 
-    <div class="flex gap-2 mb-6">
-        @foreach(['tout' => 'Toutes', 'en_attente' => 'En attente', 'confirmee' => 'Confirmées', 'annulee' => 'Annulées'] as $val => $label)
-            <a href="{{ route('hotelier.reservations.index', ['statut' => $val]) }}"
-               class="px-4 py-2 rounded-full text-sm font-medium {{ $statut === $val ? 'bg-violet-700 text-white' : 'bg-white text-gray-600 border' }}">
-                {{ $label }}
-            </a>
-        @endforeach
-    </div>
+<div class="flex gap-2 mb-6 overflow-x-auto carte-scroll">
+    @foreach(['' => 'Toutes', 'en_attente'=>'En attente', 'confirmee'=>'Confirmées', 'annulee'=>'Annulées', 'terminee'=>'Terminées'] as $val=>$label)
+        <a href="{{ route('hotelier.reservations.index', array_filter(['statut'=>$val])) }}"
+           class="shrink-0 px-4 py-2 rounded-full text-sm font-medium border
+                  {{ request('statut', '') === $val ? 'bg-flux-bleu text-white border-flux-bleu' : 'bg-white text-flux-noir/60 border-black/10' }}">
+            {{ $label }}
+        </a>
+    @endforeach
+</div>
 
-    <div class="bg-white rounded-xl shadow overflow-hidden">
-        <table class="w-full text-sm">
-            <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+<div class="bg-white border border-black/10 rounded-2xl overflow-x-auto">
+    <table class="w-full text-sm min-w-[720px]">
+        <thead class="bg-flux-brume text-flux-noir/50 text-xs uppercase">
+            <tr>
+                <th class="text-left px-5 py-3">Client</th>
+                <th class="text-left px-5 py-3">Hôtel / Chambre</th>
+                <th class="text-left px-5 py-3">Période</th>
+                <th class="text-left px-5 py-3">Prix</th>
+                <th class="text-left px-5 py-3">Statut</th>
+                <th class="text-right px-5 py-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-black/5">
+            @foreach($reservations as $r)
                 <tr>
-                    <th class="p-3 text-left">#</th>
-                    <th class="p-3 text-left">Client</th>
-                    <th class="p-3 text-left">Hôtel</th>
-                    <th class="p-3 text-left">Chambre</th>
-                    <th class="p-3 text-left">Période</th>
-                    <th class="p-3 text-left">Personnes</th>
-                    <th class="p-3 text-right">Prix</th>
-                    <th class="p-3 text-left">Statut</th>
-                    <th class="p-3 text-left">Paiement</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y">
-                @forelse($reservations as $r)
-                <tr>
-                    <td class="p-3 text-gray-400">#{{ $r->id }}</td>
-                    <td class="p-3 font-medium text-gray-900">{{ $r->client->nom }}</td>
-                    <td class="p-3 text-gray-500">{{ $r->hotel->nom }}</td>
-                    <td class="p-3 text-gray-500">{{ $r->roomCategory->nom }}</td>
-                    <td class="p-3 text-gray-500">{{ $r->date_debut->format('d/m/Y') }} → {{ $r->date_fin->format('d/m/Y') }}</td>
-                    <td class="p-3 text-gray-500">{{ $r->nombre_adultes }}A / {{ $r->nombre_enfants }}E</td>
-                    <td class="p-3 text-right font-semibold text-violet-700">{{ number_format($r->prix_total, 0) }} FCFA</td>
-                    <td class="p-3">
-                        <span class="text-xs px-2 py-0.5 rounded-full
-                            {{ $r->statut === 'confirmee' ? 'bg-green-100 text-green-700' : ($r->statut === 'annulee' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700') }}">
-                            {{ ucfirst($r->statut) }}
-                        </span>
+                    <td class="px-5 py-3">
+                        <div class="font-medium">{{ $r->client->nom }}</div>
+                        <div class="text-xs text-flux-noir/40">{{ $r->telephone_client }}</div>
                     </td>
-                    <td class="p-3">
-                        @if($r->payment && $r->payment->mode === 'manuel' && $r->statut === 'en_attente')
-                            @if($r->payment->preuve_paiement)
-                                <p class="text-xs text-gray-500 mb-1">Réf : {{ $r->payment->preuve_paiement }}</p>
-                                <form method="POST" action="{{ route('hotelier.reservations.confirmer-paiement', $r) }}" onsubmit="return confirm('Confirmer la réception du paiement ?');">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="px-2 py-1 bg-green-600 text-white text-xs rounded-lg">Confirmer paiement</button>
-                                </form>
-                            @else
-                                <span class="text-xs text-gray-400">En attente de la réf. client</span>
-                            @endif
-                        @elseif($r->payment)
-                            <span class="text-xs text-gray-400">{{ ucfirst($r->payment->mode) }}</span>
+                    <td class="px-5 py-3">{{ $r->hotel->nom }}<br><span class="text-xs text-flux-noir/40">{{ $r->categorieChambre->nom }}</span></td>
+                    <td class="px-5 py-3 whitespace-nowrap">{{ $r->date_arrivee->format('d/m/y') }} → {{ $r->date_depart->format('d/m/y') }}</td>
+                    <td class="px-5 py-3 font-medium text-flux-bleu">{{ number_format($r->prix_total,0,',',' ') }} F</td>
+                    <td class="px-5 py-3">
+                        @php $badges = ['en_attente'=>'bg-flux-or/20 text-flux-or','confirmee'=>'bg-flux-bleu-pale text-flux-bleu','annulee'=>'bg-red-50 text-red-500','terminee'=>'bg-black/5 text-flux-noir/50']; @endphp
+                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$r->statut] ?? '' }}">{{ ucfirst(str_replace('_',' ',$r->statut)) }}</span>
+                    </td>
+                    <td class="px-5 py-3 text-right whitespace-nowrap">
+                        @if($r->statut === 'en_attente')
+                            <form action="{{ route('hotelier.reservations.confirmer', $r) }}" method="POST" class="inline">
+                                @csrf
+                                <button class="text-flux-bleu text-xs font-medium mr-3">Confirmer</button>
+                            </form>
+                            <form action="{{ route('hotelier.reservations.annuler', $r) }}" method="POST" class="inline">
+                                @csrf
+                                <button class="text-red-500 text-xs font-medium">Annuler</button>
+                            </form>
                         @endif
                     </td>
                 </tr>
-                @empty
-                <tr><td colspan="9" class="p-6 text-center text-gray-400">Aucune réservation.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-    <div class="mt-4">{{ $reservations->links() }}</div>
+            @endforeach
+        </tbody>
+    </table>
 </div>
+
+<div class="mt-8">{{ $reservations->links() }}</div>
 @endsection

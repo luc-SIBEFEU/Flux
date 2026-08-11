@@ -1,62 +1,78 @@
-@extends('layouts.guest')
+@extends('layouts.app')
+@section('titre', 'Créer un compte — Flux')
 
-@section('content')
-<div class="max-w-md mx-auto px-4 py-16">
-    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-        <h1 class="text-2xl font-bold text-center text-gray-900 mb-6">Créer un compte</h1>
+@section('contenu')
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
+    <div class="w-full max-w-lg">
+        <div class="text-center mb-8">
+            <span class="inline-flex w-12 h-12 rounded-full bg-flux-or items-center justify-center mb-3">
+                <x-icon name="sparkles" class="w-6 h-6 text-flux-noir" />
+            </span>
+            <h1 class="font-display text-3xl text-flux-noir">Créer un compte</h1>
+            <p class="text-flux-noir/50 text-sm mt-1">Rejoignez Flux en quelques secondes</p>
+        </div>
 
-        <form method="POST" action="{{ route('register') }}" class="space-y-4">
+        <form action="{{ route('register') }}" method="POST" x-data="{ role: '{{ $type }}' }" class="bg-white border border-black/10 rounded-2xl p-6 space-y-4">
             @csrf
-            <div class="grid grid-cols-2 gap-3">
-                <label class="border rounded-lg p-3 flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="role" value="client" {{ old('role', 'client') === 'client' ? 'checked' : '' }}> Client
-                </label>
-                <label class="border rounded-lg p-3 flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="role" value="hotelier" {{ old('role') === 'hotelier' ? 'checked' : '' }}> Hôtelier
-                </label>
-            </div>
-            @error('role') <span class="text-red-600 text-xs">{{ $message }}</span> @enderror
 
             <div>
-                <label class="text-xs font-semibold text-gray-500 uppercase">Nom complet</label>
-                <input type="text" name="nom" value="{{ old('nom') }}" class="w-full mt-1 rounded-lg border-gray-300 focus:ring-violet-600 focus:border-violet-600">
-                @error('nom') <span class="text-red-600 text-xs">{{ $message }}</span> @enderror
+                <label class="text-xs font-medium text-flux-noir/50 mb-2 block">Je m'inscris en tant que</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <label>
+                        <input type="radio" name="role" value="client" x-model="role" class="peer sr-only">
+                        <div class="text-center py-2.5 rounded-lg border border-black/10 peer-checked:bg-flux-bleu peer-checked:text-white peer-checked:border-flux-bleu cursor-pointer text-sm">Client</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="hotelier" x-model="role" class="peer sr-only">
+                        <div class="text-center py-2.5 rounded-lg border border-black/10 peer-checked:bg-flux-bleu peer-checked:text-white peer-checked:border-flux-bleu cursor-pointer text-sm">Hôtelier</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="bailleur" x-model="role" class="peer sr-only">
+                        <div class="text-center py-2.5 rounded-lg border border-black/10 peer-checked:bg-flux-violet peer-checked:text-white peer-checked:border-flux-violet cursor-pointer text-sm">Bailleur</div>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="text-xs font-medium text-flux-noir/50">Nom complet</label>
+                <input type="text" name="nom" required value="{{ old('nom') }}" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-xs font-medium text-flux-noir/50">E-mail</label>
+                    <input type="email" name="email" required value="{{ old('email') }}" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-flux-noir/50">Téléphone</label>
+                    <input type="tel" name="telephone" value="{{ old('telephone') }}" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+                </div>
             </div>
             <div>
-                <label class="text-xs font-semibold text-gray-500 uppercase">Email</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="w-full mt-1 rounded-lg border-gray-300 focus:ring-violet-600 focus:border-violet-600">
-                @error('email') <span class="text-red-600 text-xs">{{ $message }}</span> @enderror
-            </div>
-            <div>
-                <label class="text-xs font-semibold text-gray-500 uppercase">Téléphone</label>
-                <input type="text" name="telephone" value="{{ old('telephone') }}" class="w-full mt-1 rounded-lg border-gray-300 focus:ring-violet-600 focus:border-violet-600">
-                @error('telephone') <span class="text-red-600 text-xs">{{ $message }}</span> @enderror
-            </div>
-            <div>
-                <label class="text-xs font-semibold text-gray-500 uppercase">Genre</label>
-                <select name="genre" class="w-full mt-1 rounded-lg border-gray-300 focus:ring-violet-600 focus:border-violet-600">
-                    <option value="homme" {{ old('genre') === 'homme' ? 'selected' : '' }}>Homme</option>
-                    <option value="femme" {{ old('genre') === 'femme' ? 'selected' : '' }}>Femme</option>
+                <label class="text-xs font-medium text-flux-noir/50">Genre</label>
+                <select name="genre" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none">
+                    <option value="">Ne pas préciser</option>
+                    <option value="homme">Homme</option>
+                    <option value="femme">Femme</option>
                 </select>
             </div>
-            <div>
-                <label class="text-xs font-semibold text-gray-500 uppercase">Mot de passe</label>
-                <input type="password" name="password" class="w-full mt-1 rounded-lg border-gray-300 focus:ring-violet-600 focus:border-violet-600">
-                @error('password') <span class="text-red-600 text-xs">{{ $message }}</span> @enderror
-            </div>
-            <div>
-                <label class="text-xs font-semibold text-gray-500 uppercase">Confirmer le mot de passe</label>
-                <input type="password" name="password_confirmation" class="w-full mt-1 rounded-lg border-gray-300 focus:ring-violet-600 focus:border-violet-600">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-xs font-medium text-flux-noir/50">Mot de passe</label>
+                    <input type="password" name="password" required class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-flux-noir/50">Confirmation</label>
+                    <input type="password" name="password_confirmation" required class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+                </div>
             </div>
 
-            <button type="submit" class="w-full py-3 bg-violet-700 hover:bg-violet-800 text-white font-semibold rounded-lg transition">
-                S'inscrire
+            <button type="submit" class="w-full bg-flux-or hover:bg-flux-or-vif text-flux-noir font-semibold py-3 rounded-lg transition-colors">
+                Créer mon compte
             </button>
         </form>
 
-        <p class="text-center text-sm text-gray-500 mt-6">
-            Déjà un compte ?
-            <a href="{{ route('login') }}" class="text-violet-700 font-semibold hover:underline">Se connecter</a>
+        <p class="text-center text-sm text-flux-noir/50 mt-6">
+            Déjà inscrit ? <a href="{{ route('login') }}" class="text-flux-bleu font-medium hover:underline">Se connecter</a>
         </p>
     </div>
 </div>

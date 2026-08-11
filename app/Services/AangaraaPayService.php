@@ -2,110 +2,88 @@
 
 namespace App\Services;
 
-use App\Models\Payment;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 /**
- * Intégration officielle avec l'API AangaraaPay (MTN Mobile Money / Orange Money).
+ * Client pour l'API AangaraaPay (MTN Mobile Money / Orange Money).
  * Documentation : https://aangaraa-pay.com/integrate-aangaraa-pay
- *
- * On utilise le paiement DIRECT ("no_redirect/payment") car on a déjà le
- * numéro de téléphone du client dans notre formulaire de réservation :
- * le client reçoit directement un prompt USSD / notification sur son
- * téléphone pour approuver le paiement, sans quitter notre site.
  */
 class AangaraaPayService
 {
-    protected string $baseUrl;
-    protected string $appKey;
+    private string $baseUrl;
+    private string $appKey;
 
     public function __construct()
     {
-        $this->baseUrl = config('services.aangaraa.base_url', 'https://api-production.aangaraa-pay.com/api/v1');
-        $this->appKey = config('services.aangaraa.app_key');
+        $this->baseUrl = rtrim(config('services.aangaraa_pay.base_url'), '/');
+        $this->appKey = config('services.aangaraa_pay.app_key');
     }
 
     /**
-     * Convertit notre enum interne (mtn_momo / orange_money) vers
-     * la valeur attendue par l'API AangaraaPay.
+     * Paiement direct (sans redirection) : le client reçoit un prompt sur son
+     * téléphone pour approuver le paiement. C'est le flux utilisé par Flux
+     * puisque le numéro du client est déjà collecté dans nos formulaires.
+     *
+     * @return array{success:bool, pay_token:?string, statut:string, brut:array}
      */
-    protected function operateur(string $methode): string
+    public function payerDirect(string $telephone, float $montant, string $description, string $transactionId): array
     {
-        return $methode === 'mtn_momo' ? 'MTN_Cameroon' : 'Orange_Cameroon';
-    }
+        $operateur = $this->detecterOperateur($telephone);
 
-    /**
-     * Initie un paiement direct (sans redirection) pour une réservation.
-     * Le client reçoit un prompt sur son téléphone pour approuver.
-     */
-    public function initierPaiement(Payment $payment): array
-    {
-        $transactionId = 'RES-' . $payment->reservation_id . '-' . Str::random(6);
-
-        $response = Http::acceptJson()->post("{$this->baseUrl}/no_redirect/payment", [
-            'phone_number' => $this->formaterNumero($payment->telephone_paiement),
-            'amount' => (string) $payment->montant,
-            'description' => "Réservation #{$payment->reservation_id} - HotelBooking",
+        $reponse = Http::asJson()->post("{$this->baseUrl}/api/v1/no_redirect/payment", [
+            'phone_number' => $this->normaliserTelephone($telephone),
+            'amount' => (string) $montant,
+            'description' => $description,
             'app_key' => $this->appKey,
             'transaction_id' => $transactionId,
-            'notify_url' => route('paiement.webhook'),
-            'operator' => $this->operateur($payment->methode),
+            'notify_url' => route('paiements.webhook'),
+            'operator' => $operateur,
             'devise_id' => 'XAF',
         ]);
 
-        $data = $response->json() ?? [];
-        $payToken = $data['data']['payToken'] ?? null;
+        $corps = $reponse->json() ?? [];
 
-        $payment->update([
-            'reference_transaction' => $payToken ?? $transactionId,
-            'statut' => $response->successful() && $payToken ? 'initie' : 'echoue',
-            'reponse_api' => $data,
-        ]);
+        if (! $reponse->successful()) {
+            Log::warning('AangaraaPay: échec initiation paiement', ['reponse' => $corps]);
+            return ['success' => false, 'pay_token' => null, 'statut' => 'echoue', 'brut' => $corps];
+        }
 
-        return $data;
+        return [
+            'success' => true,
+            'pay_token' => $corps['data']['payToken'] ?? null,
+            'statut' => strtolower($corps['data']['status'] ?? 'pending'),
+            'brut' => $corps,
+        ];
     }
 
-    /**
-     * Vérifie le statut d'un paiement auprès d'AangaraaPay via son payToken.
-     */
-    public function verifierStatut(Payment $payment): string
+    /** Vérifie le statut d'un paiement à partir de son payToken. */
+    public function verifierStatut(string $payToken): array
     {
-        $response = Http::acceptJson()->post("{$this->baseUrl}/aangaraa_check_status", [
-            'payToken' => $payment->reference_transaction,
+        $reponse = Http::asJson()->post("{$this->baseUrl}/api/v1/aangaraa_check_status", [
+            'payToken' => $payToken,
             'app_key' => $this->appKey,
         ]);
 
-        $data = $response->json() ?? [];
-        $statutDistant = $data['status'] ?? 'FAILED';
-
-        $mapped = match ($statutDistant) {
-            'SUCCESSFUL' => 'reussi',
-            'PENDING' => 'initie',
-            default => 'echoue', // FAILED, CANCELLED, EXPIRED
-        };
-
-        $payment->update(['statut' => $mapped, 'reponse_api' => $data]);
-
-        if ($mapped === 'reussi') {
-            $payment->reservation->update(['statut' => 'confirmee']);
-        }
-
-        return $mapped;
+        return $reponse->json() ?? [];
     }
 
-    /**
-     * Normalise le numéro de téléphone au format attendu par l'API
-     * (avec l'indicatif 237, sans le +).
-     */
-    protected function formaterNumero(string $numero): string
+    /** Détecte l'opérateur (MTN/Orange) à partir des préfixes camerounais. */
+    public function detecterOperateur(string $telephone): string
     {
-        $numero = preg_replace('/\D/', '', $numero); // garde uniquement les chiffres
+        $numero = preg_replace('/\D/', '', $telephone);
+        $numero = ltrim(str_replace('237', '', $numero, ), '0');
+        $prefixe = substr($numero, 0, 3);
 
-        if (str_starts_with($numero, '237')) {
-            return $numero;
-        }
+        $orange = ['655', '656', '657', '658', '659', '690', '691', '692', '693', '694', '695', '696', '697', '698', '699'];
+        $mtn = ['650', '651', '652', '653', '654', '670', '671', '672', '673', '674', '675', '676', '677', '678', '679', '680', '681', '682', '683'];
 
-        return '237' . ltrim($numero, '0');
+        return in_array($prefixe, $orange, true) ? 'Orange_Cameroon' : (in_array($prefixe, $mtn, true) ? 'MTN_Cameroon' : 'MTN_Cameroon');
+    }
+
+    private function normaliserTelephone(string $telephone): string
+    {
+        $numero = preg_replace('/\D/', '', $telephone);
+        return str_starts_with($numero, '237') ? $numero : '237' . ltrim($numero, '0');
     }
 }

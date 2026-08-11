@@ -4,42 +4,39 @@ namespace App\Http\Controllers\Hotelier;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
-use App\Services\PaymentManager;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $statut = $request->input('statut', 'tout');
-        $hotelIds = Auth::user()->hotels()->pluck('id');
+        $hotelIds = auth()->user()->hotels()->pluck('id');
 
-        $reservations = Reservation::with(['client', 'hotel', 'roomCategory', 'payment'])
-            ->whereIn('hotel_id', $hotelIds)
-            ->parStatut($statut)
+        $reservations = Reservation::whereIn('hotel_id', $hotelIds)
+            ->when(request('statut'), fn ($q, $v) => $q->where('statut', $v))
+            ->with(['client', 'hotel', 'categorieChambre'])
             ->latest()
-            ->paginate(10)
+            ->paginate(15)
             ->withQueryString();
 
-        return view('hotelier.reservations.index', compact('reservations', 'statut'));
+        return view('hotelier.reservations.index', compact('reservations'));
     }
 
-    /**
-     * L'hôtelier confirme manuellement avoir reçu le paiement sur son propre
-     * numéro MoMo/Orange Money (mode manuel uniquement), après vérification
-     * de la référence de transaction fournie par le client.
-     */
-    public function confirmerPaiement(Reservation $reservation, PaymentManager $paiements)
+    public function confirmer(Reservation $reservation)
     {
-        abort_unless($reservation->hotel->hotelier_id === Auth::id(), 403);
+        $this->authorizeHotelier($reservation);
+        $reservation->update(['statut' => 'confirmee']);
+        return back()->with('success', 'Réservation confirmée.');
+    }
 
-        $payment = $reservation->payment;
+    public function annuler(Reservation $reservation)
+    {
+        $this->authorizeHotelier($reservation);
+        $reservation->update(['statut' => 'annulee']);
+        return back()->with('success', 'Réservation annulée.');
+    }
 
-        abort_if(! $payment || $payment->mode !== 'manuel', 403, 'Cette réservation ne nécessite pas de confirmation manuelle.');
-
-        $paiements->confirmerManuellement($payment, Auth::id());
-
-        return back()->with('success', 'Paiement confirmé, la réservation est validée.');
+    private function authorizeHotelier(Reservation $reservation): void
+    {
+        abort_unless($reservation->hotel->hotelier_id === auth()->id(), 403);
     }
 }

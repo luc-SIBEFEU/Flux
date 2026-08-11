@@ -3,34 +3,28 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Reservation;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    public function index(Request $request)
+    // Vue avec onglets : tout, en attente, confirmés, annulés (voir resources/views/client/reservations/index.blade.php)
+    public function index()
     {
-        $onglet = $request->input('onglet', 'tout');
+        $statut = request('statut', 'tout');
 
-        $reservations = Reservation::with(['hotel', 'roomCategory', 'payment'])
-            ->where('client_id', Auth::id())
-            ->parStatut($onglet)
+        $reservations = auth()->user()->reservations()
+            ->when($statut !== 'tout', fn ($q) => $q->where('statut', $statut))
+            ->with(['hotel', 'categorieChambre', 'paiement'])
             ->latest()
-            ->paginate(8)
+            ->paginate(10)
             ->withQueryString();
 
-        return view('client.reservations.index', compact('reservations', 'onglet'));
+        return view('client.reservations.index', compact('reservations', 'statut'));
     }
 
-    public function annuler(Reservation $reservation)
+    /** Suivi du séjour une fois la réservation confirmée. */
+    public function suivi(\App\Models\Reservation $reservation)
     {
-        abort_unless($reservation->client_id === Auth::id(), 403);
-
-        if ($reservation->statut === 'en_attente') {
-            $reservation->update(['statut' => 'annulee']);
-        }
-
-        return back()->with('success', 'Réservation annulée.');
+        abort_unless($reservation->client_id === auth()->id(), 403);
+        return view('client.reservations.suivi', compact('reservation'));
     }
 }

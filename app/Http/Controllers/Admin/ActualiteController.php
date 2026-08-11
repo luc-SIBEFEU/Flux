@@ -5,51 +5,47 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Actualite;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ActualiteController extends Controller
 {
     public function index()
     {
-        $actualites = Actualite::with('auteur')->latest()->paginate(10);
+        $actualites = Actualite::ordonnees()
+            ->when(request('periode') === 'en_cours', fn ($q) => $q->enCours())
+            ->when(request('periode') === 'a_venir', fn ($q) => $q->where('date_debut', '>', now()))
+            ->when(request('periode') === 'passees', fn ($q) => $q->where('date_fin', '<', now()))
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.actualites.index', compact('actualites'));
     }
 
     public function create()
     {
-        return view('admin.actualites.create');
+        return view('admin.actualites.form', ['actualite' => new Actualite()]);
     }
 
     public function store(Request $request)
     {
-        $data = $this->validerDonnees($request);
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('actualites', 'public');
-        }
-
-        $data['user_id'] = Auth::id();
+        $data = $this->validated($request);
+        $data['image'] = $request->file('image')->store('actualites', 'public');
+        $data['cree_par'] = auth()->id();
 
         Actualite::create($data);
 
-        return redirect()->route('admin.actualites.index')->with('success', 'Actualité créée.');
+        return redirect()->route('admin.actualites.index')->with('success', 'Actualité publiée.');
     }
 
     public function edit(Actualite $actualite)
     {
-        return view('admin.actualites.edit', compact('actualite'));
+        return view('admin.actualites.form', compact('actualite'));
     }
 
     public function update(Request $request, Actualite $actualite)
     {
-        $data = $this->validerDonnees($request);
+        $data = $this->validated($request, false);
 
         if ($request->hasFile('image')) {
-            if ($actualite->image) {
-                Storage::disk('public')->delete($actualite->image);
-            }
             $data['image'] = $request->file('image')->store('actualites', 'public');
         }
 
@@ -60,23 +56,19 @@ class ActualiteController extends Controller
 
     public function destroy(Actualite $actualite)
     {
-        if ($actualite->image) {
-            Storage::disk('public')->delete($actualite->image);
-        }
-
         $actualite->delete();
-
         return back()->with('success', 'Actualité supprimée.');
     }
 
-    protected function validerDonnees(Request $request): array
+    private function validated(Request $request, bool $imageRequired = true): array
     {
         return $request->validate([
-            'nom' => 'required|string|max:150',
-            'description' => 'required|string',
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date|after_or_equal:date_debut',
-            'image' => 'nullable|image|max:4096',
+            'nom' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'date_debut' => ['required', 'date'],
+            'date_fin' => ['required', 'date', 'after_or_equal:date_debut'],
+            'ordre' => ['nullable', 'integer', 'min:0'],
+            'image' => [$imageRequired ? 'required' : 'nullable', 'image', 'max:4096'],
         ]);
     }
 }

@@ -5,111 +5,85 @@ namespace App\Http\Controllers\Hotelier;
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class HotelController extends Controller
 {
     public function index()
     {
-        $hotels = Auth::user()->hotels()->latest()->get();
+        $hotels = auth()->user()->hotels()
+            ->when(request('statut'), fn ($q, $v) => $q->where('statut', $v))
+            ->latest()
+            ->get();
 
         return view('hotelier.hotels.index', compact('hotels'));
     }
 
     public function create()
     {
-        return view('hotelier.hotels.create');
+        return view('hotelier.hotels.form', ['hotel' => new Hotel()]);
     }
 
     public function store(Request $request)
     {
-        $data = $this->validerDonnees($request);
+        $data = $this->validated($request);
+        $data['image_couverture'] = $request->file('image_couverture')->store('hotels', 'public');
+        $data['hotelier_id'] = auth()->id();
+        $data['statut'] = 'en_attente'; // doit être validé par l'admin
 
-        if ($request->hasFile('image_couverture')) {
-            $data['image_couverture'] = $request->file('image_couverture')->store('hotels', 'public');
+        $hotel = Hotel::create($data);
+
+        $admin = \App\Models\User::where('role', 'admin')->first();
+        if ($admin) {
+            \Illuminate\Support\Facades\Mail::to($admin->email)->send(new \App\Mail\NouvelHotelMail($hotel));
         }
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('hotels/logos', 'public');
-        }
 
-        $data['hotelier_id'] = Auth::id();
-        $data['statut'] = 'en_attente'; // toute création est soumise à validation admin
-
-        Hotel::create($data);
-
-        return redirect()->route('hotelier.hotels.index')
-            ->with('success', "Hôtel enregistré. Il sera visible après validation par l'administrateur.");
+        return redirect()->route('hotelier.hotels.edit', $hotel)
+            ->with('success', 'Hôtel créé, en attente de validation par un administrateur.');
     }
 
     public function edit(Hotel $hotel)
     {
-        $this->autoriser($hotel);
-
-        return view('hotelier.hotels.edit', compact('hotel'));
+        $this->authorizeProprietaire($hotel);
+        return view('hotelier.hotels.form', compact('hotel'));
     }
 
     public function update(Request $request, Hotel $hotel)
     {
-        $this->autoriser($hotel);
-
-        $data = $this->validerDonnees($request);
+        $this->authorizeProprietaire($hotel);
+        $data = $this->validated($request, false);
 
         if ($request->hasFile('image_couverture')) {
-            if ($hotel->image_couverture) {
-                Storage::disk('public')->delete($hotel->image_couverture);
-            }
             $data['image_couverture'] = $request->file('image_couverture')->store('hotels', 'public');
         }
-        if ($request->hasFile('logo')) {
-            if ($hotel->logo) {
-                Storage::disk('public')->delete($hotel->logo);
-            }
-            $data['logo'] = $request->file('logo')->store('hotels/logos', 'public');
-        }
-
-        // toute modification renvoie l'hôtel en attente de validation admin
-        $data['statut'] = 'en_attente';
 
         $hotel->update($data);
 
-        return redirect()->route('hotelier.hotels.index')
-            ->with('success', "Hôtel mis à jour. Il sera de nouveau visible après validation par l'administrateur.");
+        return back()->with('success', 'Hôtel mis à jour.');
     }
 
     public function destroy(Hotel $hotel)
     {
-        $this->autoriser($hotel);
-
-        if ($hotel->image_couverture) {
-            Storage::disk('public')->delete($hotel->image_couverture);
-        }
-        if ($hotel->logo) {
-            Storage::disk('public')->delete($hotel->logo);
-        }
-
+        $this->authorizeProprietaire($hotel);
         $hotel->delete();
-
         return redirect()->route('hotelier.hotels.index')->with('success', 'Hôtel supprimé.');
     }
 
-    protected function validerDonnees(Request $request): array
+    private function authorizeProprietaire(Hotel $hotel): void
     {
-        return $request->validate([
-            'nom' => 'required|string|max:150',
-            'nombre_etoiles' => 'required|integer|min:1|max:5',
-            'ville' => 'required|string|max:100',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'adresse' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'image_couverture' => 'nullable|image|max:4096',
-            'logo' => 'nullable|image|max:2048',
-        ]);
+        abort_unless($hotel->hotelier_id === auth()->id(), 403);
     }
 
-    protected function autoriser(Hotel $hotel): void
+    private function validated(Request $request, bool $imageRequired = true): array
     {
-        abort_unless($hotel->hotelier_id === Auth::id(), 403);
+        return $request->validate([
+            'nom' => ['required', 'string', 'max:255'],
+            'nombre_etoiles' => ['required', 'integer', 'min:1', 'max:5'],
+            'ville' => ['required', 'string', 'max:255'],
+            'adresse' => ['nullable', 'string', 'max:255'],
+            'latitude' => ['nullable', 'numeric'],
+            'longitude' => ['nullable', 'numeric'],
+            'description' => ['nullable', 'string'],
+            'image_couverture' => [$imageRequired ? 'required' : 'nullable', 'image', 'max:4096'],
+        ]);
     }
 }

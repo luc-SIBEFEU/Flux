@@ -1,0 +1,434 @@
+\documentclass[11pt,a4paper]{report}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+
+% ---------- Mise en page ----------
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\onehalfspacing
+
+% ---------- Couleurs (palette réelle de la plateforme) ----------
+\usepackage{xcolor}
+\definecolor{fluxbleu}{HTML}{1B3A6B}
+\definecolor{fluxbleuvif}{HTML}{2E5AA8}
+\definecolor{fluxbleupale}{HTML}{E7EEFA}
+\definecolor{fluxviolet}{HTML}{5B3596}
+\definecolor{fluxvioletvif}{HTML}{7A4FC2}
+\definecolor{fluxviopale}{HTML}{F1E9FB}
+\definecolor{fluxor}{HTML}{C6A24D}
+\definecolor{fluxnoir}{HTML}{12131A}
+\definecolor{fluxbrume}{HTML}{F5F7FB}
+\definecolor{grisdoux}{HTML}{6B7280}
+
+% ---------- Tableaux, figures, code ----------
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds}
+\usepackage{listings}
+
+% ---------- Liens & PDF ----------
+\usepackage[colorlinks=true,linkcolor=fluxbleu,urlcolor=fluxbleuvif,citecolor=fluxbleu]{hyperref}
+
+% ---------- Style des titres ----------
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{fluxbleu}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{fluxbleu}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{fluxviolet}}{\thesubsection}{1em}{}
+
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\color{grisdoux}Flux --- Rapport de conception}
+\fancyhead[R]{\small\color{grisdoux}\leftmark}
+\fancyfoot[C]{\small\thepage}
+
+% ---------- Boîtes d'information ----------
+\usepackage[most]{tcolorbox}
+\newtcolorbox{noteflux}[1][]{colback=fluxbleupale,colframe=fluxbleu,boxrule=0.5pt,arc=3pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+\newtcolorbox{noteviolet}[1][]{colback=fluxviopale,colframe=fluxviolet,boxrule=0.5pt,arc=3pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+
+\newcommand{\tech}[1]{\texttt{\small #1}}
+
+\begin{document}
+
+% ======================================================================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\Huge\bfseries\color{fluxbleu} Flux}\\[0.3cm]
+{\Large\color{fluxviolet} Plateforme de réservation hôtelière \\ \& de mise en relation locative}\\[2cm]
+
+\begin{tikzpicture}
+\node[circle, fill=fluxbleu, minimum size=2.2cm] (c) {};
+\node[color=fluxor, font=\Large\bfseries] at (c) {F};
+\end{tikzpicture}
+
+\vspace{2cm}
+{\LARGE\bfseries Rapport de conception}\\[0.5cm]
+{\large Architecture, modèle de données et workflows métier}
+
+\vfill
+
+\begin{tabularx}{0.7\textwidth}{Xr}
+\textbf{Framework} & Laravel 13.8 \\
+\textbf{Version du document} & 1.0 \\
+\textbf{Date} & \today \\
+\end{tabularx}
+
+\vspace{1cm}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+% ======================================================================
+\chapter{Introduction}
+
+\section{Contexte}
+Flux est une plateforme web réunissant deux métiers distincts sous une même identité :
+\begin{itemize}[leftmargin=1.2cm]
+    \item la \textbf{réservation hôtelière} : recherche, consultation et réservation de chambres d'hôtel, avec paiement mobile ;
+    \item la \textbf{mise en relation locative} : publication de logements (chambres, studios, appartements, villas, mini-cités) par des bailleurs et location par des clients, avec suivi de bail.
+\end{itemize}
+
+Quatre profils d'utilisateurs cohabitent sur la plateforme : \textbf{administrateur}, \textbf{hôtelier}, \textbf{bailleur} et \textbf{client}. Chacun dispose d'un espace dédié avec ses propres fonctionnalités, mais tous partagent le même socle applicatif.
+
+\section{Objectifs du document}
+Ce rapport décrit les choix de conception retenus pour construire Flux~: architecture technique, modèle de données, workflows métier (inscription, validation, réservation, location, paiement) et principes d'interface. Il sert de référence pour la suite du développement et pour toute personne reprenant le projet.
+
+\section{Périmètre}
+Le document couvre la conception applicative telle qu'implémentée dans le code livré (migrations, modèles, contrôleurs, vues). Il ne couvre pas le déploiement infrastructure (serveurs, CI/CD), qui relève d'un document distinct.
+
+% ======================================================================
+\chapter{Analyse des besoins}
+
+\section{Acteurs}
+
+\begin{longtable}{p{2.8cm}p{11.5cm}}
+\toprule
+\textbf{Acteur} & \textbf{Rôle sur la plateforme} \\
+\midrule
+\endhead
+Administrateur & Valide les comptes hôtelier/bailleur, les hôtels et les logements ; modère les avis ; consulte (sans modifier) l'ensemble des hôtels, logements, baux et réservations ; publie les actualités ; consulte les rapports financiers. \\
+Hôtelier & Crée et gère ses hôtels (une fois validés par l'admin), leurs catégories de chambres, leur galerie photo, leurs réseaux sociaux et contacts de paiement ; traite les réservations reçues. \\
+Bailleur & Crée et gère ses logements et mini-cités (une fois validés par l'admin) ; traite les demandes de location ; suit les baux en cours et leurs paiements ; valide les demandes de prolongation. \\
+Client & Recherche et réserve des hôtels ou des logements ; paie en ligne (Mobile Money) ; suit ses réservations, ses locations et ses paiements ; laisse des avis. \\
+\bottomrule
+\end{longtable}
+
+\section{Cas d'usage principaux}
+
+\subsection{Module hôtellerie}
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Recherche d'un hôtel par destination, période, nombre de personnes.
+    \item Filtrage par nombre d'étoiles et note.
+    \item Consultation de la fiche hôtel (galerie, localisation, catégories de chambres, avis).
+    \item Réservation d'une chambre avec calcul du coût total en direct.
+    \item Paiement Mobile Money et confirmation de la réservation.
+    \item Suivi du séjour, puis réception d'un pro-forma à la clôture.
+\end{enumerate}
+
+\subsection{Module logements}
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Recherche d'un logement par type, catégorie, ville, prix.
+    \item Consultation de la fiche logement (galerie, équipements, localisation).
+    \item Prise de contact avec le bailleur en précisant une durée de bail souhaitée.
+    \item Validation de la demande par le bailleur et paiement initial (caution + durée minimum).
+    \item Suivi du bail et paiement des mensualités restantes au rythme du client.
+    \item Demande de prolongation (validée par le bailleur) ou fin de bail avec moratoire, puis remise en location automatique du logement.
+\end{enumerate}
+
+% ======================================================================
+\chapter{Architecture technique}
+
+\section{Stack technologique}
+
+\begin{longtable}{p{4cm}p{10.3cm}}
+\toprule
+\textbf{Composant} & \textbf{Choix technique} \\
+\midrule
+\endhead
+Framework backend & Laravel 13.8 (PHP 8.3+), architecture MVC classique \\
+Base de données & MySQL \\
+Frontend & Blade + Tailwind CSS v4 (configuration CSS-first), Alpine.js pour l'interactivité légère \\
+Graphiques & Chart.js (courbes et camemberts dans les tableaux de bord) \\
+Génération PDF & \tech{barryvdh/laravel-dompdf} (pro-forma de réservation et de bail) \\
+E-mail transactionnel & Composant Markdown Mail natif de Laravel \\
+Paiement mobile & API \href{https://aangaraa-pay.com/integrate-aangaraa-pay}{AangaraaPay} (MTN Mobile Money / Orange Money) \\
+Tâches planifiées & Laravel Scheduler (\tech{routes/console.php}) \\
+\bottomrule
+\end{longtable}
+
+\section{Organisation applicative}
+
+L'application suit une architecture MVC standard, avec une segmentation nette des contrôleurs par espace :
+
+\begin{center}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners, minimum width=3.1cm, minimum height=1cm, align=center, font=\small},
+    every node/.style={font=\small}
+]
+\node[box, fill=fluxbleupale, draw=fluxbleu] (public) {Contrôleurs\\publics};
+\node[box, fill=fluxbleupale, draw=fluxbleu, right=0.6cm of public] (admin) {Admin};
+\node[box, fill=fluxbleupale, draw=fluxbleu, right=0.6cm of admin] (hotelier) {Hôtelier};
+\node[box, fill=fluxviopale, draw=fluxviolet, right=0.6cm of hotelier] (bailleur) {Bailleur};
+\node[box, fill=fluxbleupale, draw=fluxbleu, right=0.6cm of bailleur] (client) {Client};
+
+\node[box, fill=fluxnoir, text=white, below=1.2cm of hotelier, xshift=1cm, minimum width=9cm] (middleware) {Middleware \texttt{role:\{admin,hotelier,bailleur,client\}} + \texttt{auth}};
+
+\node[box, fill=white, draw=grisdoux, below=1.2cm of middleware, minimum width=9cm] (models) {Modèles Eloquent (Users, Hotels, Logements, Reservations, Bayes, Loyers, Paiements...)};
+
+\node[box, fill=fluxor, below=1.2cm of models, minimum width=9cm] (db) {Base de données MySQL};
+
+\draw[-{Latex}] (public.south) -- ++(0,-0.4) -| (middleware.north);
+\draw[-{Latex}] (admin.south) -- (middleware.north);
+\draw[-{Latex}] (hotelier.south) -- (middleware.north);
+\draw[-{Latex}] (bailleur.south) -- (middleware.north);
+\draw[-{Latex}] (client.south) -- ++(0,-0.4) -| (middleware.north);
+\draw[-{Latex}] (middleware.south) -- (models.north);
+\draw[-{Latex}] (models.south) -- (db.north);
+\end{tikzpicture}%
+}
+\end{center}
+
+\begin{noteflux}
+\textbf{Principe de séparation des rôles.} Chaque groupe de routes est protégé par le middleware \texttt{role:xxx}, qui vérifie à la fois l'authentification et le rôle exact de l'utilisateur. Un hôtelier ne peut jamais accéder aux routes bailleur, et inversement.
+\end{noteflux}
+
+\section{Services applicatifs}
+
+Deux services encapsulent la logique technique transverse :
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \tech{App\textbackslash Services\textbackslash AangaraaPayService} : abstraction de l'API de paiement (paiement direct, détection d'opérateur, vérification de statut) ;
+    \item \tech{App\textbackslash Services\textbackslash ProformaService} : génération des documents PDF pro-forma pour les réservations et les baux terminés.
+\end{itemize}
+
+% ======================================================================
+\chapter{Modèle de données}
+
+\section{Vue d'ensemble}
+Le modèle de données s'articule autour de quatre blocs~:
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{Comptes} --- \tech{users} (admin, hôtelier, bailleur, client), avec statut de validation et vérification par code.
+    \item \textbf{Module hôtels} --- hôtels, catégories de chambres, réservations, avis, favoris, actualités.
+    \item \textbf{Module logements} --- logements, mini-cités, demandes de baye, baux, loyers.
+    \item \textbf{Transverse} --- \tech{photos} (galerie polymorphique) et \tech{paiements} (polymorphique, relié à l'API AangaraaPay).
+\end{enumerate}
+
+\section{Tables principales}
+
+\begin{longtable}{p{3.6cm}p{10.7cm}}
+\toprule
+\textbf{Table} & \textbf{Rôle} \\
+\midrule
+\endhead
+\tech{users} & Compte unique pour les 4 rôles ; champs de vérification par code et de validation admin \\
+\tech{actualites} & Actualités affichées dans le carrousel de l'accueil (champ \tech{ordre}) \\
+\tech{hotels} & Fiche hôtel, statut de validation admin \\
+\tech{categorie\_chambres} & Catégories de chambres d'un hôtel (capacité, prix, équipements) \\
+\tech{reservations} & Réservation d'une chambre, statut, pro-forma PDF \\
+\tech{avis\_hotels} & Avis client sur un hôtel, modéré par l'admin \\
+\tech{favoris} & Hôtels mis en favoris par un client \\
+\tech{minicites} & Regroupement de logements d'un même bailleur \\
+\tech{logements} & Chambre / studio / appartement / villa ; statut de disponibilité \emph{et} de validation admin ; moratoire \\
+\tech{demandes\_baye} & Demande initiale du client (« Contacter le bailleur ») \\
+\tech{bayes} & Contrat de location actif ou terminé, avec date de fin de moratoire \\
+\tech{loyers} & Échéances de paiement d'un bail (paiement initial ou mensualité libre) \\
+\tech{prolongations} & Historique des demandes de prolongation d'un bail \\
+\tech{photos} & Galerie polymorphique (hôtels, chambres, logements, mini-cités) \\
+\tech{paiements} & Transaction Mobile Money polymorphique (réservation ou loyer) \\
+\bottomrule
+\end{longtable}
+
+\section{Décisions de conception notables}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Polymorphisme} pour les galeries photo et les paiements, afin d'éviter la duplication de tables quasi identiques et de centraliser l'intégration avec l'API de paiement.
+    \item \textbf{Double statut sur les logements} : \tech{statut} (disponible / loué) est indépendant de \tech{validation} (en\_attente / valide / rejete) --- un logement peut être disponible mais invisible tant qu'il n'est pas validé.
+    \item \textbf{Dénormalisation contrôlée} : \tech{hotels.note\_moyenne} est recalculée à chaque approbation d'avis, pour permettre un tri rapide sans agrégation à la volée.
+    \item \textbf{Mutateur Eloquent} sur \tech{Logement} : le type \og villa \fg{} force systématiquement la catégorie à \og meublé \fg, y compris si un autre champ est soumis --- la règle est appliquée au niveau du modèle et non de la seule vue, ce qui la rend impossible à contourner.
+    \item \textbf{Distinction paiement initial / mensualité libre} sur \tech{loyers} (champ \tech{paiement\_initial}) pour représenter le plan de paiement en deux temps d'un bail.
+\end{itemize}
+
+% ======================================================================
+\chapter{Workflows métier}
+
+\section{Inscription en deux étapes}
+
+\begin{center}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+    etapebox/.style={draw, rounded corners, fill=fluxbleupale, draw=fluxbleu, minimum width=3.6cm, minimum height=1.1cm, align=center, font=\small},
+    >=Latex
+]
+\node[etapebox] (s1) {1. Saisie des\\informations};
+\node[etapebox, right=1cm of s1] (s2) {2. Code envoyé\\par e-mail};
+\node[etapebox, right=1cm of s2] (s3) {3. Vérification\\du code};
+\node[etapebox, right=1cm of s3, fill=fluxor, draw=fluxor] (s4) {4. Compte actif\\(client)};
+
+\draw[->] (s1) -- (s2);
+\draw[->] (s2) -- (s3);
+\draw[->] (s3) -- (s4);
+
+\node[etapebox, below=1cm of s4, fill=fluxviopale, draw=fluxviolet] (s5) {4'. En attente de\\validation admin\\(hôtelier / bailleur)};
+\draw[->] (s3) -- (s5);
+\end{tikzpicture}%
+}
+\end{center}
+
+Seuls les comptes \textbf{client} sont actifs immédiatement après vérification de l'e-mail. Les comptes \textbf{hôtelier} et \textbf{bailleur} déclenchent un e-mail à l'administrateur et restent bloqués jusqu'à validation ; la personne reçoit alors un e-mail de validation (accès débloqué) ou de rejet (avec motif, et possibilité de soumettre une nouvelle inscription).
+
+\section{Validation en cascade}
+
+\begin{noteviolet}
+Trois niveaux de validation admin coexistent et suivent le même schéma \emph{demande $\rightarrow$ e-mail admin $\rightarrow$ décision $\rightarrow$ e-mail au demandeur}~: le \textbf{compte} hôtelier/bailleur, l'\textbf{hôtel}, et le \textbf{logement}. Toute modification d'un hôtel ou d'un logement déjà validé le repasse en attente.
+\end{noteviolet}
+
+\section{Réservation hôtelière et paiement}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Le client choisit une catégorie de chambre et ses dates ; le coût total s'affiche en direct (calcul JavaScript côté formulaire).
+    \item À la validation, une réservation est créée au statut \emph{en\_attente} et le client est redirigé vers le paiement.
+    \item Le paiement direct (\tech{AangaraaPayService::payerDirect}) envoie une notification Mobile Money au téléphone du client ; l'écran d'attente interroge périodiquement le statut (\emph{polling}) en parallèle du webhook serveur.
+    \item Une fois confirmé, la réservation passe au statut \emph{confirmee}.
+    \item Une tâche planifiée quotidienne (\tech{flux:terminer-sejours}) clôture les séjours dont la date de départ est passée~: statut \emph{terminee}, e-mail à l'hôtelier, pro-forma PDF généré et envoyé au client.
+\end{enumerate}
+
+\section{Location de logement}
+
+\begin{center}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+    flowbox/.style={draw, rounded corners, minimum width=2.6cm, minimum height=1.3cm, align=center, font=\footnotesize},
+    >=Latex, node distance=0.5cm
+]
+\node[flowbox, fill=fluxviopale, draw=fluxviolet] (a) {Demande\\du client};
+\node[flowbox, fill=fluxviopale, draw=fluxviolet, right=of a] (b) {Validation\\bailleur};
+\node[flowbox, fill=fluxor, right=of b] (c) {Paiement initial\\(caution + durée min.)};
+\node[flowbox, fill=fluxviopale, draw=fluxviolet, right=of c] (d) {Bail\\en\_cours};
+\node[flowbox, fill=fluxbleupale, draw=fluxbleu, right=of d] (e) {Mensualités\\libres};
+\node[flowbox, fill=grisdoux!30, right=of e] (f) {Fin + moratoire};
+\node[flowbox, fill=fluxor, below=1cm of f] (g) {Logement\\re-publié};
+
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\end{tikzpicture}%
+}
+\end{center}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Le client indique une \textbf{durée souhaitée} (supérieure ou égale à la durée minimum du logement) en contactant le bailleur.
+    \item Le bailleur valide la demande~: un bail est créé (statut \emph{nouveau}), le logement passe en \emph{loué}, et un \textbf{paiement initial} est généré, regroupant la caution et les mois de la durée minimum.
+    \item Une fois ce paiement confirmé, le bail passe en \emph{en\_cours}. Les mois suivants sont des mensualités indépendantes, payables par le client à son rythme.
+    \item Le client peut demander une \textbf{prolongation}, qui doit être validée par le bailleur ; la date de fin et le moratoire sont recalculés en conséquence.
+    \item À l'échéance (moratoire compris), une tâche planifiée quotidienne (\tech{flux:traiter-baux}) clôture le bail~: statut \emph{termine}, logement remis en \emph{disponible} (donc de nouveau visible sur le site), e-mail au bailleur, pro-forma PDF envoyé au client.
+\end{enumerate}
+
+\begin{noteflux}
+\textbf{Rôle du moratoire.} Paramétrable par logement (7 jours par défaut), il laisse un délai après la fin théorique du bail pour que le bailleur récupère le logement ou que le client obtienne une prolongation, avant que l'annonce ne redevienne publique.
+\end{noteflux}
+
+% ======================================================================
+\chapter{Intégration du paiement AangaraaPay}
+
+\section{Paiement direct}
+Flux utilise le flux de paiement \og direct \fg{} de l'API AangaraaPay (documentation officielle : \url{https://aangaraa-pay.com/integrate-aangaraa-pay}), adapté aux cas où le numéro du client est déjà connu~: aucune redirection vers une page tierce, le client reçoit directement une notification sur son téléphone pour approuver la transaction.
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Détection automatique de l'opérateur (MTN ou Orange) à partir des préfixes du numéro camerounais.
+    \item Création d'un enregistrement \tech{Paiement} (polymorphique) au statut \emph{en\_attente}.
+    \item Appel à l'API avec un identifiant de transaction unique et une \tech{notify\_url} pointant vers le webhook Flux.
+    \item Double confirmation~: interrogation périodique du statut côté client (JavaScript) \emph{et} réception du webhook côté serveur --- le premier des deux qui aboutit déclenche la confirmation.
+\end{enumerate}
+
+\section{Effets métier à la confirmation}
+Le contrôleur central (\tech{PaiementController::confirmerPaiement}) applique les effets selon le type d'objet payé~:
+\begin{itemize}[leftmargin=1.2cm]
+    \item \tech{Reservation} $\rightarrow$ statut \emph{confirmee} ;
+    \item \tech{Loyer} (paiement initial) $\rightarrow$ statut \emph{paye}, activation du bail (\emph{nouveau} $\rightarrow$ \emph{en\_cours}) ;
+    \item \tech{Loyer} (mensualité) $\rightarrow$ statut \emph{paye}, recalcul de l'état de paiement global du bail.
+\end{itemize}
+
+% ======================================================================
+\chapter{Interface \& expérience utilisateur}
+
+\section{Palette de couleurs}
+La charte graphique distingue les deux univers de la plateforme tout en partageant une base commune~: le \textbf{bleu} et l'\textbf{or} identifient le module hôtellerie, le \textbf{violet} et l'\textbf{or} le module logements.
+
+\begin{center}
+\begin{tabular}{cccc}
+\begin{tikzpicture}\node[circle,fill=fluxbleu,minimum size=1cm]{};\end{tikzpicture} &
+\begin{tikzpicture}\node[circle,fill=fluxviolet,minimum size=1cm]{};\end{tikzpicture} &
+\begin{tikzpicture}\node[circle,fill=fluxor,minimum size=1cm]{};\end{tikzpicture} &
+\begin{tikzpicture}\node[circle,fill=fluxnoir,minimum size=1cm]{};\end{tikzpicture} \\
+Bleu \tech{\#1B3A6B} & Violet \tech{\#5B3596} & Or \tech{\#C6A24D} & Noir \tech{\#12131A} \\
+\end{tabular}
+\end{center}
+
+\section{Typographie}
+Les titres utilisent \textit{Fraunces} (serif, registre \og hôtellerie \fg) et le corps de texte \textit{Inter} (sans-serif, lisibilité en interface), chargées via Google Fonts.
+
+\section{Composants transverses}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Système d'icônes autonome} : composant Blade \tech{<x-icon>} avec 25 tracés SVG dessinés à la main, sans dépendance à une librairie externe.
+    \item \textbf{Responsive} : grilles adaptatives (1 colonne en mobile, jusqu'à 4 en desktop), navigation en menu hamburger, tableaux de bord à barre latérale rétractable.
+    \item \textbf{Graphiques} : chaque tableau de bord (admin, hôtelier, bailleur) combine une courbe d'évolution sur 6 mois et un camembert de répartition, alimentés directement par les contrôleurs.
+    \item \textbf{Filtres} : chaque liste de ressource dans les espaces connectés propose un filtre pertinent au contexte (statut, ville, type, note, période...).
+\end{itemize}
+
+% ======================================================================
+\chapter{Sécurité}
+
+\section{Contrôle d'accès}
+Un middleware dédié (\tech{EnsureRole}) vérifie à la fois l'authentification et l'appartenance au rôle attendu pour chaque groupe de routes. Les quatre espaces (\tech{/admin}, \tech{/hotelier}, \tech{/bailleur}, \tech{/mon-espace}) sont cloisonnés~: aucune route n'est accessible à un rôle non habilité.
+
+\section{Validation en profondeur}
+Trois barrières successives protègent la visibilité publique du contenu généré par les professionnels~:
+\begin{enumerate}[leftmargin=1.2cm]
+    \item vérification de l'e-mail (code à 6 chiffres, expiration 15 minutes) ;
+    \item validation du compte par l'administrateur (hôtelier / bailleur) ;
+    \item validation de chaque hôtel et de chaque logement par l'administrateur, y compris après modification.
+\end{enumerate}
+
+\section{Accès admin en lecture seule}
+L'administrateur dispose d'une vue complète sur les hôtels, logements, baux et réservations (module \tech{Admin\textbackslash SupervisionController}) sans disposer d'actions de modification sur ces ressources --- la responsabilité de gestion reste entièrement du côté de l'hôtelier, du bailleur ou du client concerné.
+
+% ======================================================================
+\chapter{Limites connues et perspectives}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Les tâches planifiées (clôture des séjours et des baux) nécessitent que \tech{php artisan schedule:work} tourne en continu (ou une entrée cron en production) --- sans cela, aucune clôture automatique n'a lieu.
+    \item Le webhook de paiement doit être exposé publiquement pour être appelé par le serveur AangaraaPay (nécessite un tunnel type \textit{ngrok} en développement local).
+    \item Aucune notification SMS n'est envoyée à ce stade (uniquement des e-mails) ; une extension vers un fournisseur SMS local serait pertinente pour les utilisateurs sans accès régulier à leur boîte mail.
+    \item Le bailleur ne reçoit pas encore de notification immédiate (au-delà de l'affichage dans son espace) lors d'une nouvelle demande de baye.
+\end{itemize}
+
+% ======================================================================
+\chapter{Conclusion}
+
+Flux couvre l'intégralité du parcours métier défini~: inscription sécurisée en deux étapes, validation en cascade par l'administrateur, réservation hôtelière avec paiement Mobile Money direct, et location de logement avec plan de paiement flexible et gestion automatisée de la fin de bail via un système de moratoire. L'architecture retenue --- séparation stricte des espaces par rôle, modèles polymorphiques pour les éléments transverses (galeries, paiements), et automatisation par tâches planifiées --- doit permettre d'étendre la plateforme (nouveaux moyens de paiement, notifications SMS, statistiques avancées) sans remise en cause de la structure existante.
+
+\end{document}

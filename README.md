@@ -1,164 +1,100 @@
-# Flux — Site de réservation hôtelière (Laravel 13 + Blade)
+# Flux — Plateforme de réservation hôtelière & de mise en relation locative
 
-Version **100% Blade classique** (contrôleurs + vues, sans Livewire/Flux) —
-formulaires en GET pour les filtres/recherche, CRUD classiques
-create/store/edit/update/destroy pour l'admin et l'hôtelier.
+Application Laravel complète : modèle de données, contrôleurs, vues responsives, workflows métier (validation, paiement, moratoire), e-mails transactionnels et fichiers d'environnement.
 
-## 1. Installation
-Ouvrez un terminal depuis le dossier du proget
+## 1. Fonctionnalités livrées
+
+### Comptes & validation
+- **Inscription en deux étapes** : informations → code de vérification à 6 chiffres envoyé par e-mail → activation. Seuls les **clients sont actifs par défaut** ; hôteliers et bailleurs passent en attente de validation admin après vérification de leur e-mail.
+- L'admin reçoit un e-mail à chaque nouvelle inscription hôtelier/bailleur, chaque nouvel hôtel et chaque nouveau logement soumis. La personne concernée reçoit un e-mail de validation ou de rejet (avec motif), et peut se reconnecter ou soumettre une nouvelle demande en conséquence.
+- Toute modification d'un hôtel ou d'un logement le repasse automatiquement en attente de validation.
+
+### Réservations & paiement
+- Formulaire de réservation avec **coût total calculé en direct** (Alpine.js) selon les dates choisies.
+- Paiement **MTN MoMo / Orange Money** via l'API [aangaraa-pay.com](https://aangaraa-pay.com/integrate-aangaraa-pay) : `App\Services\AangaraaPayService` (paiement direct, détection automatique de l'opérateur, vérification de statut), `PaiementController` (formulaire, initiation, polling temps réel, webhook).
+- À la fin d'un séjour (tâche planifiée quotidienne) : e-mail à l'hôtelier, **pro-forma PDF** généré et envoyé au client, téléchargeable aussi depuis son espace et par l'admin en consultation.
+
+### Location de logements
+- Le client choisit une **durée personnalisée** (≥ durée minimum du logement) en contactant le bailleur.
+- À la validation de la demande : **paiement initial obligatoire** (caution + durée minimum) généré comme une seule échéance ; les mois suivants sont des mensualités que le client règle **à son rythme** (fin de mois, tous les deux mois...) depuis son espace.
+- **Moratoire** : délai (7 jours par défaut, modifiable par logement) après la fin du bail avant que le logement redevienne visible sur le site — le temps de le libérer ou de valider une prolongation. Les prolongations doivent être **validées par le bailleur**.
+- À l'expiration du bail (moratoire inclus, tâche planifiée) : logement remis en ligne automatiquement, e-mail au bailleur, pro-forma PDF envoyé au client.
+- **Villas toujours meublées** : forcé côté modèle (mutateur Eloquent) quel que soit ce qui est soumis.
+
+### Consultation admin (lecture seule)
+- L'admin a accès à **toutes** les informations des hôtels, logements, baux et réservations (`Admin\SupervisionController`, listes filtrées + détail) **sans pouvoir les modifier** — la gestion reste entre les mains de l'hôtelier/bailleur/client concerné.
+
+### Interface
+- **Carrousel d'actualités** intégré au hero de l'accueil (Alpine.js, transition fondu, puces, flèches, rotation automatique toutes les 6s).
+- **Filtres pertinents sur toutes les ressources listées des dashboards** : statut, ville, type, note, période, validation... (voir tableau ci-dessous).
+- **Guide & notice** dans chaque espace (admin, hôtelier, client, bailleur) expliquant les workflows propres au rôle.
+
+| Espace | Ressource | Filtres |
+|---|---|---|
+| Admin | Utilisateurs | rôle, statut de validation, recherche |
+| Admin | Actualités | période (en cours / à venir / passées) |
+| Admin | Avis | note minimum |
+| Admin | Consultation hôtels | statut, ville |
+| Admin | Consultation logements | validation, type |
+| Admin | Consultation baux | statut |
+| Admin | Consultation réservations | statut |
+| Hôtelier | Hôtels | statut de validation |
+| Hôtelier | Chambres | recherche par nom |
+| Hôtelier | Réservations | statut |
+| Hôtelier | Avis | hôtel, note minimum |
+| Bailleur | Logements | type, validation, disponibilité |
+| Bailleur | Mini-cités | ville |
+| Bailleur | Demandes de baye | statut |
+| Bailleur | Locations | statut |
+| Bailleur | Commentaires | logement, note minimum |
+| Client | Réservations | statut (onglets) |
+| Client | Favoris | ville |
+| Client | Locations | statut (onglets) |
+
+## 2. Nouveaux fichiers clés
+
+```
+app/Services/AangaraaPayService.php       Client API paiement (doc officielle)
+app/Services/ProformaService.php          Génération des PDF pro-forma (dompdf)
+app/Http/Controllers/PaiementController.php   Formulaire / initiation / webhook / statut
+app/Mail/ (14 classes)                    E-mails transactionnels (code, validations, pro-forma...)
+resources/views/mail/ (14 vues)           Templates markdown (composant natif Laravel)
+resources/views/pdf/                      Templates des pro-forma PDF
+app/Console/Commands/
+  TerminerSejoursExpires.php              Clôture des séjours + e-mails + PDF (quotidien)
+  TraiterBauxExpires.php                  Libération des logements après moratoire (quotidien)
+routes/console.php                        Planification des deux commandes ci-dessus
+app/Http/Controllers/Admin/
+  SupervisionController.php               Consultation lecture seule (hôtels/logements/baux/résa)
+  LogementValidationController.php        Validation admin des logements
+  AideController.php (+ Hotelier/Client/Bailleur)   Guide & notice par espace
+```
+
+## 3. Démarrage
+
 ```bash
 composer install
+cp .env.example .env
 php artisan key:generate
-```
 
-Les vues email utilisent les composants Markdown Mail de Laravel
-(`x-mail::message`, déjà inclus par défaut). Si tu veux personnaliser leur
-style, publie-les avec :
-```bash
-php artisan vendor:publish --tag=laravel-mail
-```
-
-## 2. Configuration `.env`
-
-Rennomez `.env.example` en `.env` et completez ou remplacez où c'est necessaire
-```env
-DB_CONNECTION=mysql
-DB_DATABASE=flux_db
-DB_USERNAME=root
-DB_PASSWORD=
-
-FILESYSTEM_DISK=public
-
-MAIL_MAILER=smtp
-MAIL_HOST=...
-MAIL_PORT=587
-MAIL_USERNAME=...
-MAIL_PASSWORD=...
-MAIL_FROM_ADDRESS="reservations@tonsite.com"
-MAIL_FROM_NAME="Flux"
-
-# API officielle MTN Mobile Money (Collections) — https://momodeveloper.mtn.com
-MTN_MOMO_BASE_URL=https://sandbox.momodeveloper.mtn.com
-MTN_MOMO_SUBSCRIPTION_KEY=
-MTN_MOMO_API_USER=
-MTN_MOMO_API_KEY=
-MTN_MOMO_TARGET_ENV=sandbox
-
-# API officielle Orange Money Web Payment — https://developer.orange.com/apis/om-webpay
-ORANGE_MONEY_BASE_URL=https://api.orange.com
-ORANGE_MONEY_CLIENT_ID=
-ORANGE_MONEY_CLIENT_SECRET=
-ORANGE_MONEY_MERCHANT_KEY=
-```
-
-Comme les emails de pro-forma sont envoyés via une file d'attente
-(`ShouldQueue`), configure aussi un driver de queue (database, redis...) et
-lance un worker :
-```bash
-QUEUE_CONNECTION=database
-php artisan queue:table && php artisan migrate
-php artisan queue:work
-```
-(Ou passe temporairement `QUEUE_CONNECTION=sync` en développement pour un
-envoi immédiat sans worker.)
-
-## 3. Base de données & stockage
-
-```bash
-php artisan migrate
-php artisan db:seed
+# configure DB_*, MAIL_*, AANGARAA_PAY_* dans .env
+php artisan migrate --seed
 php artisan storage:link
+
+npm install && npm run dev   # terminal 1
+php artisan serve            # terminal 2
+php artisan schedule:work    # terminal 3 — indispensable pour les clôtures automatiques
 ```
 
-Comptes de démonstration créés par le seeder (mot de passe : `password`) :
-- **Admin** : admin@hotelbooking.test
-- **Hôtelier** : hotelier@hotelbooking.test
-- **Client** : client@hotelbooking.test
+**Compte admin** (créé par le seeder) : `admin@flux.cm` / `password`.
 
-## 4. Lancer le projet
+## 4. Variables d'environnement à renseigner
 
-```bash
-npm install
-npm run dev
-php artisan serve
-```
+- `MAIL_*` — indispensable : toute la mécanique de validation de compte, d'hôtel, de logement et les pro-forma passent par e-mail.
+- `AANGARAA_PAY_APP_KEY` — clé fournie par aangaraa-pay.com. Voir `config/services.php` et [la documentation officielle](https://aangaraa-pay.com/integrate-aangaraa-pay).
 
-## Fonctionnalités clés de cette version
+## 5. TODO restants
 
-- **100% Blade** : recherche/filtres hôtels via formulaires GET (query string,
-  paginé avec `withQueryString()`), CRUD admin/hôtelier via routes resource
-  classiques (create/store/edit/update/destroy), pas de JS requis.
-- **Logo d'hôtel** : chaque hôtel a désormais un champ `logo` (en plus de
-  l'image de couverture), affiché sur la carte, la fiche détail et dans
-  l'email de pro-forma.
-- **Pro-forma par email** : dès que le client valide sa réservation
-  (`ReservationController@store`), un email `ReservationProforma` (Markdown
-  Mail, avec le logo de l'hôtel) est envoyé au client avec le récapitulatif
-  complet et le montant à payer. Il est mis en file d'attente (`ShouldQueue`).
-- **Paiement MTN MoMo / Orange Money avec bascule automatique** :
-  `PaymentManager` est le point d'entrée unique appelé par
-  `ReservationController@store`. Pour chaque paiement, il vérifie si les
-  identifiants API de l'opérateur concerné sont configurés dans `.env` :
-    - **Configurés** → appel réel à l'API officielle (`MtnMomoService` pour
-      un "Request to Pay" — prompt sur le téléphone du client — ou
-      `OrangeMoneyService` pour une session "Web Payment" avec redirection).
-    - **Non configurés (par défaut)** → **mode manuel** : le client est
-      redirigé vers une page d'instructions (`/paiement/{payment}/instructions`)
-      lui indiquant le numéro MoMo/Orange de l'hôtelier (renseigné dans
-      *Contacts de paiement*) et le montant à envoyer lui-même. Il saisit
-      ensuite la référence de transaction reçue par SMS, que l'hôtelier
-      confirme manuellement depuis sa liste de réservations (bouton
-      *"Confirmer paiement"*), ce qui passe la réservation à `confirmee`.
-  Ce mode manuel permet de mettre le site en ligne dès maintenant, en
-  attendant l'obtention des clés API MTN MoMo / Orange Money.
-
-## ⚠️ À vérifier avant la mise en production
-
-1. **MTN MoMo** : `MtnMomoService` suit le flux standard "Collections /
-   Request to Pay" (bien documenté sur momodeveloper.mtn.com), mais les URL
-   de production et la procédure d'obtention des identifiants sont
-   négociées pays par pays avec MTN — à confirmer une fois ton compte Cameroun
-   validé.
-2. **Orange Money** : `OrangeMoneyService` utilise l'API publique "Web
-   Payment" (flux par **redirection**, le client quitte temporairement le
-   site pour confirmer sur la page Orange). Si Orange t'a donné accès à une
-   API différente pour le Cameroun (paiement direct via partenariat), il
-   faudra adapter ce service en conséquence — le endpoint
-   `transactionstatus` notamment est à revérifier avec ta documentation
-   exacte une fois ton compte marchand actif.
-3. **Numéro de téléphone MTN** : `MtnMomoService::formaterNumero()` normalise
-   au format `237XXXXXXXXX`. Adapte l'indicatif si tu cibles d'autres pays.
-4. **Mode manuel** : tant que les clés API ne sont pas renseignées, TOUS les
-   paiements passent en mode manuel automatiquement — pense à bien
-   renseigner les numéros MoMo/Orange de chaque hôtelier (page *Contacts de
-   paiement*), sinon le client ne saura pas où envoyer l'argent.
-5. **Disponibilité réelle sur les dates recherchées** : `Hotel::scopeRechercher()`
-   filtre sur la capacité des chambres mais pas encore sur leur disponibilité
-   à la date précise (voir `RoomCategory::estDisponible()` pour croiser les
-   deux si besoin).
-
-## Structure des rôles
-
-| Rôle | Accès |
-|---|---|
-| `client` | réservation, avis, favoris, profil |
-| `hotelier` | gestion de ses hôtels/chambres/galeries (+ logo), réservations reçues, contacts paiement |
-| `admin` | actualités, validation hôtels, gestion utilisateurs, modération avis, rapports |
-
-## Palette de couleurs
-
-Bleu (`#1d4ed8`), Blanc, Violet (`#6d28d9`), Noir (`#0d0620`), Or (`#fbbf24`) —
-définis dans `tailwind.config.js`.
-
-## Structure des rôles
-
-| Rôle | Accès |
-|---|---|
-| `client` | réservation, avis, favoris, profil |
-| `hotelier` | gestion de ses hôtels/chambres/galeries (+ logo), réservations reçues, contacts paiement |
-| `admin` | actualités, validation hôtels, gestion utilisateurs, modération avis, rapports |
-
-## Palette de couleurs
-
-Bleu (`#1d4ed8`), Blanc, Violet (`#6d28d9`), Noir (`#0d0620`), Or (`#fbbf24`) —
-définis dans `tailwind.config.js`.
+- Le webhook (`/paiements/webhook`) doit être accessible publiquement (pas de HTTPS local ? utiliser ngrok/expose en développement pour le tester réellement).
+- Notification par mail/SMS supplémentaire lors d'une demande de baye reçue par le bailleur (actuellement visible uniquement dans son espace).
+- Les tâches planifiées nécessitent `php artisan schedule:work` (dev) ou une entrée cron `* * * * * php artisan schedule:run` (production) — sans cela, séjours et baux ne se clôturent jamais automatiquement.

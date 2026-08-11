@@ -1,9 +1,42 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
+/*
+  Palette Flux — dérivée du brief (bleu, blanc, violet, noir, or).
+  Le bleu+or est l'accent du module Hôtels ; le violet+or celui du module Logements.
+  Cela donne aux deux univers une identité propre tout en partageant la même base.
+*/
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-flux-blanc: #FFFFFF;
+    --color-flux-brume: #F5F7FB;
+    --color-flux-noir: #12131A;
+    --color-flux-noir-doux: #262837;
+
+    --color-flux-bleu: #1B3A6B;
+    --color-flux-bleu-vif: #2E5AA8;
+    --color-flux-bleu-pale: #E7EEFA;
+
+    --color-flux-violet: #5B3596;
+    --color-flux-violet-vif: #7A4FC2;
+    --color-flux-violet-pale: #F1E9FB;
+
+    --color-flux-or: #C6A24D;
+    --color-flux-or-vif: #D9B85E;
+
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
+    --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-flux-noir);
+    background: var(--color-flux-brume);
+}
+
+.font-display { font-family: var(--font-display); }
+
+/* Cache le scroll horizontal des cartes sur mobile sans perdre le "snap" */
+.carte-scroll { scrollbar-width: none; }
+.carte-scroll::-webkit-scrollbar { display: none; }

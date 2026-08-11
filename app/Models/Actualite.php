@@ -2,39 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Actualite extends Model
 {
-    use HasFactory;
+    protected $fillable = ['nom', 'description', 'date_debut', 'date_fin', 'image', 'cree_par', 'ordre'];
+    protected $casts = ['date_debut' => 'date', 'date_fin' => 'date'];
 
-    protected $fillable = [
-        'nom', 'description', 'date_debut', 'date_fin', 'image', 'user_id',
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'date_debut' => 'date',
-            'date_fin' => 'date',
-        ];
-    }
-
-    public function auteur()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    // actualité en cours de validité
     public function scopeEnCours($query)
     {
-        return $query->where('date_debut', '<=', now())
-            ->where('date_fin', '>=', now());
+        return $query->where('date_debut', '<=', now())->where('date_fin', '>=', now());
     }
 
-    public function imageUrl(): ?string
+    public function scopeOrdonnees($query)
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        return $query->orderBy('ordre')->orderByDesc('date_debut');
     }
 }

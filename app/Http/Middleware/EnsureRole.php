@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureRole
 {
     /**
-     * Usage dans les routes : ->middleware('role:admin') ou ->middleware('role:admin,hotelier')
+     * Utilisation dans routes/web.php : ->middleware('role:admin')
+     * ou plusieurs roles : ->middleware('role:admin,hotelier')
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {

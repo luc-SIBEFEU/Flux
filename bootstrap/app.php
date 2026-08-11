@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Utilisation : Route::middleware('role:admin') ou 'role:admin,hotelier'
         $middleware->alias([
             'role' => EnsureRole::class,
         ]);

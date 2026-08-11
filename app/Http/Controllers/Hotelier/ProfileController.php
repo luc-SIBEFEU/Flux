@@ -4,45 +4,39 @@ namespace App\Http\Controllers\Hotelier;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
-        return view('hotelier.profile');
+        return view('hotelier.profil', ['user' => auth()->user()]);
     }
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
         $data = $request->validate([
-            'nom' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'genre' => 'required|in:homme,femme',
-            'avatar' => 'nullable|image|max:2048',
+            'nom' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
+            'genre' => ['nullable', 'in:homme,femme,autre'],
+            'avatar' => ['nullable', 'image', 'max:2048'],
+            'password' => ['nullable', 'confirmed', 'min:8'],
         ]);
 
         if ($request->hasFile('avatar')) {
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
 
+        if (! empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
         $user->update($data);
 
         return back()->with('success', 'Profil mis à jour.');
-    }
-
-    public function updatePassword(Request $request)
-    {
-        $request->validate([
-            'nouveau_mot_de_passe' => ['required', 'confirmed', Password::min(8)],
-        ]);
-
-        Auth::user()->update(['password' => Hash::make($request->input('nouveau_mot_de_passe'))]);
-
-        return back()->with('success', 'Mot de passe modifié.');
     }
 }

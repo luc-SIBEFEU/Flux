@@ -3,35 +3,34 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\HotelRejeteMail;
+use App\Mail\HotelValideMail;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HotelValidationController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $filtre = $request->input('filtre', 'en_attente');
-
-        $hotels = Hotel::with('hotelier')
-            ->when($filtre !== 'tout', fn ($q) => $q->where('statut', $filtre))
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
-
-        return view('admin.hotels-validation', compact('hotels', 'filtre'));
+        $hotels = Hotel::where('statut', 'en_attente')->with('hotelier')->latest()->paginate(10);
+        return view('admin.hotels.index', compact('hotels'));
     }
 
-    public function valider(Hotel $hotel)
+    public function approuver(Hotel $hotel)
     {
-        $hotel->update(['statut' => 'valide']);
+        $hotel->update(['statut' => 'valide', 'motif_rejet' => null]);
+        Mail::to($hotel->hotelier->email)->send(new HotelValideMail($hotel));
 
-        return back()->with('success', 'Hôtel validé, il est désormais visible par les visiteurs.');
+        return back()->with('success', "Hôtel « {$hotel->nom} » validé et visible sur le site.");
     }
 
-    public function rejeter(Hotel $hotel)
+    public function rejeter(Request $request, Hotel $hotel)
     {
-        $hotel->update(['statut' => 'rejete']);
+        $data = $request->validate(['motif_rejet' => ['required', 'string', 'max:500']]);
+        $hotel->update(['statut' => 'rejete', ...$data]);
+        Mail::to($hotel->hotelier->email)->send(new HotelRejeteMail($hotel));
 
-        return back()->with('success', 'Hôtel rejeté.');
+        return back()->with('success', "Hôtel « {$hotel->nom} » rejeté.");
     }
 }

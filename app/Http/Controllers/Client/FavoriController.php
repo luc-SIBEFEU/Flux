@@ -3,22 +3,32 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Favori;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Hotel;
 
 class FavoriController extends Controller
 {
     public function index()
     {
-        $hotels = Auth::user()->hotelsFavoris()->with('hotelier')->get();
+        $favoris = auth()->user()->favoris()
+            ->when(request('ville'), fn ($q, $v) => $q->where('ville', 'like', "%{$v}%"))
+            ->paginate(9)
+            ->withQueryString();
 
-        return view('client.favoris', compact('hotels'));
+        return view('client.favoris', compact('favoris'));
     }
 
-    public function destroy(int $hotelId)
+    public function toggle(Hotel $hotel)
     {
-        Favori::where('client_id', Auth::id())->where('hotel_id', $hotelId)->delete();
+        $user = auth()->user();
 
-        return back();
+        if ($user->favoris()->where('hotel_id', $hotel->id)->exists()) {
+            $user->favoris()->detach($hotel->id);
+            $message = 'Retiré des favoris.';
+        } else {
+            $user->favoris()->attach($hotel->id);
+            $message = 'Ajouté aux favoris.';
+        }
+
+        return back()->with('success', $message);
     }
 }

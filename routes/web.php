@@ -1,39 +1,29 @@
 <?php
 
-use App\Http\Controllers\Admin\ActualiteController as AdminActualiteController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\HotelValidationController;
-use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Client\FavoriController;
-use App\Http\Controllers\Client\ProfileController as ClientProfileController;
-use App\Http\Controllers\Client\ReservationController as ClientReservationController;
-use App\Http\Controllers\Client\ReviewController as ClientReviewController;
+use App\Http\Controllers\Bailleur;
+use App\Http\Controllers\Client;
+use App\Http\Controllers\Hotelier;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Hotelier\DashboardController as HotelierDashboardController;
-use App\Http\Controllers\Hotelier\HotelController as HotelierHotelController;
-use App\Http\Controllers\Hotelier\HotelGalleryController;
-use App\Http\Controllers\Hotelier\PaymentContactController;
-use App\Http\Controllers\Hotelier\ProfileController as HotelierProfileController;
-use App\Http\Controllers\Hotelier\ReservationController as HotelierReservationController;
-use App\Http\Controllers\Hotelier\RoomCategoryController;
-use App\Http\Controllers\Hotelier\RoomGalleryController;
 use App\Http\Controllers\HotelController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\LogementController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Routes publiques
+| Public
 |--------------------------------------------------------------------------
 */
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('accueil');
+
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
+
+Route::get('/logements', [LogementController::class, 'index'])->name('logements.index');
+Route::get('/logements/{logement}', [LogementController::class, 'show'])->name('logements.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -45,73 +35,39 @@ Route::middleware('guest')->group(function () {
     Route::post('/connexion', [LoginController::class, 'store']);
     Route::get('/inscription', [RegisterController::class, 'create'])->name('register');
     Route::post('/inscription', [RegisterController::class, 'store']);
+    Route::get('/inscription/verifier', [RegisterController::class, 'formulaireVerification'])->name('register.verifier');
+    Route::post('/inscription/verifier', [RegisterController::class, 'verifier'])->name('register.verifier.store');
+    Route::post('/inscription/renvoyer-code', [RegisterController::class, 'renvoyerCode'])->name('register.renvoyer-code');
 });
-
 Route::post('/deconnexion', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| Réservation & favoris (client connecté uniquement)
+| Paiement (AangaraaPay — MTN MoMo / Orange Money)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::get('/reservations/creer', [ReservationController::class, 'create'])->name('reservations.create');
-    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::post('/paiements/webhook', [\App\Http\Controllers\PaiementController::class, 'webhook'])->name('paiements.webhook');
 
-    Route::get('/paiement/{payment}/instructions', [PaymentController::class, 'instructions'])->name('paiement.instructions');
-    Route::post('/paiement/{payment}/preuve', [PaymentController::class, 'soumettrePreuve'])->name('paiement.preuve');
-    Route::post('/paiement/{payment}/verifier', [PaymentController::class, 'verifier'])->name('paiement.verifier');
-
-    Route::post('/hotels/{hotel}/favori', [HotelController::class, 'basculerFavori'])->name('hotels.favori');
-
-    Route::get('/mon-profil', [ClientProfileController::class, 'edit'])->name('client.profile.edit');
-    Route::put('/mon-profil', [ClientProfileController::class, 'update'])->name('client.profile.update');
-    Route::put('/mon-profil/mot-de-passe', [ClientProfileController::class, 'updatePassword'])->name('client.profile.password');
-
-    Route::get('/mes-reservations', [ClientReservationController::class, 'index'])->name('client.reservations.index');
-    Route::put('/mes-reservations/{reservation}/annuler', [ClientReservationController::class, 'annuler'])->name('client.reservations.annuler');
-
-    Route::get('/mes-favoris', [FavoriController::class, 'index'])->name('client.favoris');
-    Route::delete('/mes-favoris/{hotelId}', [FavoriController::class, 'destroy'])->name('client.favoris.destroy');
-
-    Route::get('/hotels/{hotel}/avis', [ClientReviewController::class, 'create'])->name('client.reviews.create');
-    Route::post('/hotels/{hotel}/avis', [ClientReviewController::class, 'store'])->name('client.reviews.store');
+Route::middleware('auth')->prefix('paiements')->name('paiements.')->group(function () {
+    Route::get('/{type}/{id}', [\App\Http\Controllers\PaiementController::class, 'formulaire'])->name('formulaire');
+    Route::post('/{type}/{id}', [\App\Http\Controllers\PaiementController::class, 'initier'])->name('initier');
+    Route::get('/statut/{paiement}', [\App\Http\Controllers\PaiementController::class, 'statut'])->name('statut');
 });
 
 /*
 |--------------------------------------------------------------------------
-| Espace Hôtelier
+| Réservation hôtel + avis + favoris (authentifié, tous rôles connectés)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:hotelier'])->prefix('hotelier')->name('hotelier.')->group(function () {
-    Route::get('/', [HotelierDashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/chambres/{categorieChambre}/reserver', [ReservationController::class, 'create'])->name('reservations.create');
+    Route::post('/chambres/{categorieChambre}/reserver', [ReservationController::class, 'store'])->name('reservations.store');
 
-    Route::resource('hotels', HotelierHotelController::class)->except(['show']);
+    Route::post('/hotels/{hotel}/avis', [Client\AvisController::class, 'store'])->name('avis.store');
+    Route::post('/hotels/{hotel}/favori', [Client\FavoriController::class, 'toggle'])->name('favoris.toggle');
 
-    Route::get('hotels/{hotel}/chambres', [RoomCategoryController::class, 'index'])->name('rooms.index');
-    Route::get('hotels/{hotel}/chambres/creer', [RoomCategoryController::class, 'create'])->name('rooms.create');
-    Route::post('hotels/{hotel}/chambres', [RoomCategoryController::class, 'store'])->name('rooms.store');
-    Route::get('hotels/{hotel}/chambres/{chambre}/modifier', [RoomCategoryController::class, 'edit'])->name('rooms.edit');
-    Route::put('hotels/{hotel}/chambres/{chambre}', [RoomCategoryController::class, 'update'])->name('rooms.update');
-    Route::delete('hotels/{hotel}/chambres/{chambre}', [RoomCategoryController::class, 'destroy'])->name('rooms.destroy');
-
-    Route::get('hotels/{hotel}/galerie', [HotelGalleryController::class, 'index'])->name('gallery.index');
-    Route::post('hotels/{hotel}/galerie', [HotelGalleryController::class, 'store'])->name('gallery.store');
-    Route::delete('hotels/{hotel}/galerie/{image}', [HotelGalleryController::class, 'destroy'])->name('gallery.destroy');
-
-    Route::get('chambres/{chambre}/galerie', [RoomGalleryController::class, 'index'])->name('rooms.gallery.index');
-    Route::post('chambres/{chambre}/galerie', [RoomGalleryController::class, 'store'])->name('rooms.gallery.store');
-    Route::delete('chambres/{chambre}/galerie/{image}', [RoomGalleryController::class, 'destroy'])->name('rooms.gallery.destroy');
-
-    Route::get('/reservations', [HotelierReservationController::class, 'index'])->name('reservations.index');
-    Route::put('/reservations/{reservation}/confirmer-paiement', [HotelierReservationController::class, 'confirmerPaiement'])->name('reservations.confirmer-paiement');
-
-    Route::get('/contacts-paiement', [PaymentContactController::class, 'edit'])->name('payment-contacts.edit');
-    Route::put('/contacts-paiement', [PaymentContactController::class, 'update'])->name('payment-contacts.update');
-
-    Route::get('/profil', [HotelierProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profil', [HotelierProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profil/mot-de-passe', [HotelierProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/logements/{logement}/demande-baye', [Client\DemandeBayeController::class, 'store'])->name('demandes-baye.store');
+    Route::post('/logements/{logement}/commentaire', [Client\CommentaireController::class, 'store'])->name('commentaires.store');
 });
 
 /*
@@ -120,32 +76,137 @@ Route::middleware(['auth', 'role:hotelier'])->prefix('hotelier')->name('hotelier
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('actualites', AdminActualiteController::class)->except(['show']);
+    Route::resource('actualites', Admin\ActualiteController::class)->except('show');
 
-    Route::get('/hotels/validation', [HotelValidationController::class, 'index'])->name('hotels.validation');
-    Route::put('/hotels/{hotel}/valider', [HotelValidationController::class, 'valider'])->name('hotels.valider');
-    Route::put('/hotels/{hotel}/rejeter', [HotelValidationController::class, 'rejeter'])->name('hotels.rejeter');
+    Route::get('/hotels', [Admin\HotelValidationController::class, 'index'])->name('hotels.index');
+    Route::post('/hotels/{hotel}/approuver', [Admin\HotelValidationController::class, 'approuver'])->name('hotels.approuver');
+    Route::post('/hotels/{hotel}/rejeter', [Admin\HotelValidationController::class, 'rejeter'])->name('hotels.rejeter');
 
-    Route::get('/utilisateurs', [AdminUserController::class, 'index'])->name('users.index');
-    Route::put('/utilisateurs/{user}/basculer', [AdminUserController::class, 'basculerActivation'])->name('users.toggle');
-    Route::delete('/utilisateurs/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/logements', [Admin\LogementValidationController::class, 'index'])->name('logements.index');
+    Route::post('/logements/{logement}/approuver', [Admin\LogementValidationController::class, 'approuver'])->name('logements.approuver');
+    Route::post('/logements/{logement}/rejeter', [Admin\LogementValidationController::class, 'rejeter'])->name('logements.rejeter');
 
-    Route::get('/avis', [AdminReviewController::class, 'index'])->name('reviews.index');
-    Route::put('/avis/{review}/approuver', [AdminReviewController::class, 'approuver'])->name('reviews.approuver');
-    Route::put('/avis/{review}/rejeter', [AdminReviewController::class, 'rejeter'])->name('reviews.rejeter');
+    // Consultation en lecture seule : l'admin voit tout, ne modifie rien.
+    Route::prefix('consultation')->name('consultation.')->group(function () {
+        Route::get('/hotels', [Admin\SupervisionController::class, 'hotels'])->name('hotels');
+        Route::get('/hotels/{hotel}', [Admin\SupervisionController::class, 'hotel'])->name('hotels.show');
+        Route::get('/logements', [Admin\SupervisionController::class, 'logements'])->name('logements');
+        Route::get('/logements/{logement}', [Admin\SupervisionController::class, 'logement'])->name('logements.show');
+        Route::get('/bayes', [Admin\SupervisionController::class, 'bayes'])->name('bayes');
+        Route::get('/bayes/{baye}', [Admin\SupervisionController::class, 'baye'])->name('bayes.show');
+        Route::get('/reservations', [Admin\SupervisionController::class, 'reservations'])->name('reservations');
+        Route::get('/reservations/{reservation}', [Admin\SupervisionController::class, 'reservation'])->name('reservations.show');
+    });
 
-    Route::get('/rapports', [ReportController::class, 'index'])->name('reports');
+    Route::get('/utilisateurs', [Admin\UserController::class, 'index'])->name('users.index');
+    Route::get('/utilisateurs/en-attente', [Admin\UserController::class, 'enAttente'])->name('users.en-attente');
+    Route::post('/utilisateurs/{user}/valider', [Admin\UserController::class, 'valider'])->name('users.valider');
+    Route::post('/utilisateurs/{user}/rejeter', [Admin\UserController::class, 'rejeter'])->name('users.rejeter');
+    Route::post('/utilisateurs/{user}/statut', [Admin\UserController::class, 'toggleActif'])->name('users.toggle');
+    Route::delete('/utilisateurs/{user}', [Admin\UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/avis', [Admin\AvisController::class, 'index'])->name('avis.index');
+    Route::post('/avis/{avi}/approuver', [Admin\AvisController::class, 'approuver'])->name('avis.approuver');
+    Route::post('/avis/{avi}/rejeter', [Admin\AvisController::class, 'rejeter'])->name('avis.rejeter');
+
+    Route::get('/rapports', [Admin\RapportController::class, 'index'])->name('rapports.index');
+
+    Route::get('/aide', [Admin\AideController::class, 'index'])->name('aide.index');
 });
 
 /*
 |--------------------------------------------------------------------------
-| Retour et webhook Orange Money (API officielle)
+| Espace Hôtelier
 |--------------------------------------------------------------------------
-| Ces routes sont appelées par Orange (redirection du client ou notification
-| serveur-à-serveur) : elles doivent rester accessibles sans authentification.
 */
-Route::get('/paiement/orange/retour/{payment}', [PaymentController::class, 'retourOrange'])->name('paiement.orange.retour');
-Route::get('/paiement/orange/annulation/{payment}', [PaymentController::class, 'annulationOrange'])->name('paiement.orange.annulation');
-Route::post('/paiement/webhook/orange', [PaymentController::class, 'webhookOrange'])->name('paiement.webhook.orange');
+Route::middleware(['auth', 'role:hotelier'])->prefix('hotelier')->name('hotelier.')->group(function () {
+    Route::get('/', [Hotelier\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('hotels', Hotelier\HotelController::class)->except('show');
+
+    Route::get('/hotels/{hotel}/chambres', [Hotelier\CategorieChambreController::class, 'index'])->name('hotels.chambres.index');
+    Route::get('/hotels/{hotel}/chambres/creer', [Hotelier\CategorieChambreController::class, 'create'])->name('hotels.chambres.create');
+    Route::post('/hotels/{hotel}/chambres', [Hotelier\CategorieChambreController::class, 'store'])->name('hotels.chambres.store');
+    Route::get('/hotels/{hotel}/chambres/{chambre}/modifier', [Hotelier\CategorieChambreController::class, 'edit'])->name('hotels.chambres.edit');
+    Route::put('/hotels/{hotel}/chambres/{chambre}', [Hotelier\CategorieChambreController::class, 'update'])->name('hotels.chambres.update');
+    Route::delete('/hotels/{hotel}/chambres/{chambre}', [Hotelier\CategorieChambreController::class, 'destroy'])->name('hotels.chambres.destroy');
+
+    Route::post('/galerie/{type}/{id}', [Hotelier\PhotoController::class, 'store'])->name('photos.store');
+    Route::delete('/galerie/{photo}', [Hotelier\PhotoController::class, 'destroy'])->name('photos.destroy');
+
+    Route::get('/reservations', [Hotelier\ReservationController::class, 'index'])->name('reservations.index');
+    Route::post('/reservations/{reservation}/confirmer', [Hotelier\ReservationController::class, 'confirmer'])->name('reservations.confirmer');
+    Route::post('/reservations/{reservation}/annuler', [Hotelier\ReservationController::class, 'annuler'])->name('reservations.annuler');
+
+    Route::get('/avis', [Hotelier\AvisController::class, 'index'])->name('avis.index');
+
+    Route::get('/profil', [Hotelier\ProfileController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [Hotelier\ProfileController::class, 'update'])->name('profil.update');
+
+    Route::post('/hotels/{hotel}/contacts-paiement', [Hotelier\ContactPaiementController::class, 'store'])->name('contacts-paiement.store');
+    Route::delete('/hotels/{hotel}/contacts-paiement/{contact}', [Hotelier\ContactPaiementController::class, 'destroy'])->name('contacts-paiement.destroy');
+
+    Route::post('/hotels/{hotel}/reseaux-sociaux', [Hotelier\ReseauSocialController::class, 'store'])->name('reseaux-sociaux.store');
+    Route::delete('/hotels/{hotel}/reseaux-sociaux/{reseau}', [Hotelier\ReseauSocialController::class, 'destroy'])->name('reseaux-sociaux.destroy');
+
+    Route::get('/aide', [Hotelier\AideController::class, 'index'])->name('aide.index');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Espace Client
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:client'])->prefix('mon-espace')->name('client.')->group(function () {
+    Route::get('/reservations', [Client\ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/{reservation}/suivi', [Client\ReservationController::class, 'suivi'])->name('reservations.suivi');
+
+    Route::get('/favoris', [Client\FavoriController::class, 'index'])->name('favoris.index');
+
+    Route::get('/profil', [Client\ProfileController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [Client\ProfileController::class, 'update'])->name('profil.update');
+
+    Route::get('/locations', [Client\BayeController::class, 'index'])->name('bayes.index');
+    Route::get('/locations/{baye}', [Client\BayeController::class, 'show'])->name('bayes.show');
+    Route::post('/locations/{baye}/prolonger', [Client\BayeController::class, 'demanderProlongation'])->name('bayes.prolonger');
+
+    Route::get('/loyers/{loyer}/payer', [Client\LoyerController::class, 'payer'])->name('loyers.payer');
+
+    Route::get('/aide', [Client\AideController::class, 'index'])->name('aide.index');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Espace Bailleur
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:bailleur'])->prefix('bailleur')->name('bailleur.')->group(function () {
+    Route::get('/', [Bailleur\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('minicites', Bailleur\MiniciteController::class)->except('show');
+    Route::resource('logements', Bailleur\LogementController::class)->except('show');
+
+    Route::post('/galerie/{type}/{id}', [Bailleur\PhotoController::class, 'store'])->name('photos.store');
+    Route::delete('/galerie/{photo}', [Bailleur\PhotoController::class, 'destroy'])->name('photos.destroy');
+
+    Route::get('/demandes', [Bailleur\DemandeBayeController::class, 'index'])->name('demandes.index');
+    Route::post('/demandes/{demande}/valider', [Bailleur\DemandeBayeController::class, 'valider'])->name('demandes.valider');
+    Route::post('/demandes/{demande}/rejeter', [Bailleur\DemandeBayeController::class, 'rejeter'])->name('demandes.rejeter');
+
+    Route::get('/locations', [Bailleur\BayeController::class, 'index'])->name('bayes.index');
+    Route::post('/prolongations/{prolongation}/approuver', [Bailleur\BayeController::class, 'approuverProlongation'])->name('prolongations.approuver');
+
+    Route::get('/logements/{logement}/clients', [Bailleur\ClientController::class, 'parLogement'])->name('logements.clients');
+
+    Route::get('/commentaires', [Bailleur\CommentaireController::class, 'index'])->name('commentaires.index');
+
+    Route::get('/profil', [Bailleur\ProfileController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [Bailleur\ProfileController::class, 'update'])->name('profil.update');
+
+    Route::post('/contacts-paiement', [Bailleur\ContactPaiementController::class, 'store'])->name('contacts-paiement.store');
+    Route::delete('/contacts-paiement/{contact}', [Bailleur\ContactPaiementController::class, 'destroy'])->name('contacts-paiement.destroy');
+
+    Route::get('/aide', [Bailleur\AideController::class, 'index'])->name('aide.index');
+});

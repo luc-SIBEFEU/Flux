@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Actualite;
 use App\Models\Hotel;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $actualites = Actualite::enCours()->latest()->take(6)->get();
+        // Carrousel du hero : actualités en cours, triées par ordre d'affichage
+        $actualites = Actualite::enCours()->ordonnees()->take(5)->get();
 
         $hotelsEnVogue = Hotel::valides()
+            ->withCount(['reservations' => fn ($q) => $q->where('created_at', '>=', now()->subDays(30))])
+            ->orderByDesc('reservations_count')
             ->orderByDesc('note_moyenne')
-            ->orderByDesc('nombre_avis')
             ->take(8)
             ->get();
 
-        return view('public.home', compact('actualites', 'hotelsEnVogue'));
+        return view('home', compact('actualites', 'hotelsEnVogue'));
     }
 }

@@ -1,0 +1,51 @@
+APP_NAME=Flux
+APP_ENV=local
+APP_KEY=base64:YApniovChPjxt/oUT6/+9ZHM/QxRqN5sQZn1Rz3ozxM=
+APP_DEBUG=true
+APP_TIMEZONE=Africa/Douala
+APP_URL=http://localhost:8000
+APP_LOCALE=fr
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=noutta.cm@gmail.com
+MAIL_PASSWORD=akqytmnoycqzhzsk
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="noutta.cm@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
+
+# Base de données — MySQL recommandé (utilisé pour les fonctions DATE_FORMAT des dashboards)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=flux
+DB_USERNAME=root
+DB_PASSWORD=
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+QUEUE_CONNECTION=sync
+CACHE_STORE=file
+
+FILESYSTEM_DISK=public
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="contact@flux.cm"
+MAIL_FROM_NAME="${APP_NAME}"
+
+VITE_APP_NAME="${APP_NAME}"
+
+# --------------------------------------------------------------------------
+# Paiement — aangaraa-pay.com (MTN Mobile Money / Orange Money)
+# Doc officielle : https://aangaraa-pay.com/integrate-aangaraa-pay
+# Utilisé par App\Services\AangaraaPayService (paiement direct + webhook)
+# --------------------------------------------------------------------------
+AANGARAA_PAY_BASE_URL=https://api-production.aangaraa-pay.com
+AANGARAA_PAY_APP_KEY=

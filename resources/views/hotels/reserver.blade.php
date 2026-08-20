@@ -30,12 +30,12 @@
                        class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
             </div>
             <div>
-                <label class="text-xs font-medium text-flux-noir/50">Adultes</label>
+                <label class="text-xs font-medium text-flux-noir/50">Adultes (max {{ $categorieChambre->capacite_adultes }})</label>
                 <input type="number" name="nombre_adultes" min="1" max="{{ $categorieChambre->capacite_adultes }}" value="{{ request('adultes', 1) }}"
                        class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
             </div>
             <div>
-                <label class="text-xs font-medium text-flux-noir/50">Enfants</label>
+                <label class="text-xs font-medium text-flux-noir/50">Enfants (max {{ $categorieChambre->capacite_enfants }})</label>
                 <input type="number" name="nombre_enfants" min="0" max="{{ $categorieChambre->capacite_enfants }}" value="{{ request('enfants', 0) }}"
                        class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
             </div>

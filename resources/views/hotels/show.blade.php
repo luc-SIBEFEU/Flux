@@ -2,6 +2,7 @@
 @section('titre', $hotel->nom . ' — Flux')
 
 @section('contenu')
+<link rel="stylesheet" href="{{ asset('icons/bootstrap-icons.css') }}">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
     <!-- En-tête -->
@@ -45,7 +46,7 @@
             <!-- Catégories de chambres -->
             <section>
                 <h2 class="font-display text-2xl mb-4">Chambres disponibles</h2>
-                <div class="space-y-4">
+                <div class="space-y-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5">
                     @foreach($hotel->categorieChambres as $chambre)
                         <div class="border border-black/10 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                             @if($chambre->photos->first())
@@ -97,8 +98,9 @@
                         @csrf
                         <label class="text-sm font-medium">Laisser un avis</label>
                         <textarea name="commentaire" rows="3" class="w-full mt-2 border border-black/10 rounded-lg px-3 py-2 text-sm outline-none focus:border-flux-bleu" placeholder="Votre expérience..."></textarea>
-                        <div class="flex items-center gap-3 mt-3">
-                            <input type="number" name="note" min="0" max="10" placeholder="Note /10" class="w-28 border border-black/10 rounded-lg px-3 py-2 text-sm outline-none">
+                            <div class="  text-flux-noir/70  mt-3 text-sm">Note (sur 10)</div>
+                        <div class="flex items-center -mt-3 gap-3">
+                            <input type="range" name="note" min="0" max="10" class="w-full mt-2 accent-flux-or">
                             <button class="bg-flux-bleu text-white text-sm font-medium px-4 py-2 rounded-lg">Publier</button>
                         </div>
                     </form>
@@ -108,10 +110,13 @@
 
         <!-- Colonne latérale : localisation + réseaux -->
         <aside class="space-y-6">
-            @if($hotel->latitude)
+            @if($hotel->map)
                 <div class="rounded-2xl overflow-hidden border border-black/10 h-56">
-                    <iframe class="w-full h-full" loading="lazy"
-                        src="https://www.google.com/maps?q={{ $hotel->latitude }},{{ $hotel->longitude }}&output=embed"></iframe>
+                    <!-- <iframe class="w-full h-full" loading="lazy"
+                        src="https://www.google.com/maps?q={{ $hotel->latitude }},{{ $hotel->longitude }}&output=embed"></iframe> -->
+                <iframe class="w-full h-full" loading="lazy"
+                        src="{{ $hotel->map }}">
+                </iframe>        
                 </div>
             @endif
 
@@ -120,7 +125,14 @@
                     <h3 class="font-medium mb-3">Réseaux sociaux</h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach($hotel->reseauxSociaux as $rs)
-                            <a href="{{ $rs->lien }}" target="_blank" class="text-xs bg-flux-brume px-3 py-1.5 rounded-full text-flux-noir/70 hover:text-flux-bleu">{{ ucfirst($rs->plateforme) }}</a>
+                            <a href="{{ $rs->lien }}" target="_blank" class="bg-flux-brume px-3 py-1.5 rounded-full text-2xl text-flux-noir hover:text-flux-or">
+                                @if($rs->plateforme == 'x')
+                                    <i class="bi bi-twitter-x"></i></a>
+                                @elseif($rs->plateforme == 'site_web')
+                                <i class="bi bi-globe"></i></a>
+                                @else
+                                <i class="bi bi-{{ $rs->plateforme }}"></i></a>
+                                @endif
                         @endforeach
                     </div>
                 </div>

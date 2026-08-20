@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
     @forelse($minicites as $mc)
         <div class="bg-white border border-black/10 rounded-2xl p-5">
             <h3 class="font-medium">{{ $mc->nom }}</h3>

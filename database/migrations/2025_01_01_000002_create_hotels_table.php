@@ -16,8 +16,9 @@ return new class extends Migration
             $table->decimal('note_moyenne', 3, 1)->default(0); // recalculee depuis avis_hotels
             $table->string('ville');
             $table->string('adresse')->nullable();
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('map')->nullable();
+            // $table->decimal('latitude', 10, 7)->nullable();
+            // $table->decimal('longitude', 10, 7)->nullable();
             $table->string('image_couverture');
             $table->text('description')->nullable();
             $table->enum('statut', ['en_attente', 'valide', 'rejete'])->default('en_attente');

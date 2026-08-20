@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         // Cree quand un client clique sur "Contacter le bailleur"
-        Schema::create('demandes_baye', function (Blueprint $table) {
+        Schema::create('demande_bayes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('logement_id')->constrained('logements')->cascadeOnDelete();
@@ -24,6 +24,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('demandes_baye');
+        Schema::dropIfExists('demande_bayes');
     }
 };

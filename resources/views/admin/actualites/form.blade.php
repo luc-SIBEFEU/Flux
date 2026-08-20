@@ -4,7 +4,10 @@
 @section('titre', 'Actualité — Admin')
 
 @section('contenu')
-
+<div class="mb-7">
+<a href="{{ route('admin.actualites.index') }}" class="inline-flex items-center gap-2 text-sm text-flux-bleu font-medium">
+    Actualités</a> > {{ $actualite->exists ? 'modifier' : 'Nouvelle actualité' }}</h2>
+</div>
 <form action="{{ $actualite->exists ? route('admin.actualites.update', $actualite) : route('admin.actualites.store') }}"
       method="POST" enctype="multipart/form-data" class="bg-white border border-black/10 rounded-2xl p-6 max-w-2xl space-y-5">
     @csrf

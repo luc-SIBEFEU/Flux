@@ -18,12 +18,12 @@
             @endforeach
 
             <!-- Contenu texte de l'actualité active -->
-            <div class="absolute bottom-70 sm:bottom-70 left-300 right-4 sm:left-300 sm:right-auto sm:max-w-md">
-                <h1>Actualités</h1>
+            <div class="absolute top-5 sm:top-20 left-10 right-4 sm:left-110 sm:right-auto sm:max-w-md">
+                <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">Actualités</p>
                 @foreach($actualites as $i => $actu)
                     <div x-show="index === {{ $i }}" x-transition:enter="transition ease-out duration-500 delay-150" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
                         <p class="text-flux-or text-xs font-medium uppercase tracking-wide mb-1">{{ $actu->date_debut->format('d M') }} — {{ $actu->date_fin->format('d M Y') }}</p>
-                        <h3 class="font-display text-xl text-white">{{ $actu->nom }}</h3>
+                        <h3 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white max-w-2xl leading-[1.05]">{{ $actu->nom }}</h3>
                         <p class="text-white/70 text-sm mt-1 line-clamp-2 max-w-sm">{{ $actu->description }}</p>
                     </div>
                 @endforeach
@@ -44,7 +44,10 @@
                 <x-icon name="chevron-down" class="w-4 h-4 -rotate-90" />
             </button>
         </div>
-    @endif
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-28 sm:pt-24 sm:pb-36">
+    </div>
+    @else
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-28 sm:pt-24 sm:pb-36">
         <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">Hôtels & logements</p>
@@ -53,9 +56,10 @@
         </h1>
         <p class="text-white/70 mt-4 max-w-lg">Réservez une chambre d'hôtel ou trouvez le logement à louer qui vous correspond, partout au pays.</p>
     </div>
+    @endif
 
     <!-- Carte de recherche flottante -->
-    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20">
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-20">
         <form action="{{ route('hotels.index') }}" class="bg-white rounded-2xl shadow-xl p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div class="lg:col-span-2">
                 <label class="text-xs font-medium text-flux-noir/50">Destination</label>

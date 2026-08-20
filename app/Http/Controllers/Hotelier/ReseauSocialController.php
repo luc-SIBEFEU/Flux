@@ -13,7 +13,7 @@ class ReseauSocialController extends Controller
         abort_unless($hotel->hotelier_id === auth()->id(), 403);
 
         $data = $request->validate([
-            'plateforme' => ['required', 'in:facebook,instagram,tiktok,whatsapp,x,site_web,autre'],
+            'plateforme' => ['required', 'in:facebook,instagram,tiktok,whatsapp,x,web,autre'],
             'lien' => ['required', 'url'],
         ]);
 

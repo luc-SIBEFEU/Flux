@@ -1,0 +1,46 @@
+.form-toggle {
+    cursor: pointer;
+}
+
+.form-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+}
+.button {
+    cursor: pointer;
+}
+.form-overlay.is-visible {
+    display: block;
+}
+
+.form {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1.25rem;
+}
+
+.form.is-open {
+    display: flex;
+}
+
+.form form {
+    width: min(92vw, 760px);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.4);
+    padding: 1.5rem;
+}
+
+.form-toggle.hidden {
+    display: none !important;
+}

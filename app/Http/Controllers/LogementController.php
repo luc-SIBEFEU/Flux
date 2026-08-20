@@ -15,7 +15,7 @@ class LogementController extends Controller
             ->when(request('prix_max'), fn ($q, $v) => $q->where('prix_mois', '<=', $v))
             ->with('photos')
             ->latest()
-            ->paginate(9)
+            ->paginate(12)
             ->withQueryString();
 
         return view('logements.index', compact('logements'));

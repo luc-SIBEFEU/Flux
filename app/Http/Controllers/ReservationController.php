@@ -45,6 +45,6 @@ class ReservationController extends Controller
         ]);
 
         // Redirection vers le paiement (MTN MoMo / Orange Money via aangaraa-pay.com)
-        return redirect()->route('paiements.formulaire', ['reservation', $reservation->id]);
+        return redirect()->route('paiements.formulaire', ['reservation', $reservation->id] + ['chambre', $categorieChambre->id]);
     }
 }

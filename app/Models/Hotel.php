@@ -8,7 +8,7 @@ class Hotel extends Model
 {
     protected $fillable = [
         'hotelier_id', 'nom', 'nombre_etoiles', 'note_moyenne', 'ville', 'adresse',
-        'latitude', 'longitude', 'image_couverture', 'description', 'statut', 'motif_rejet',
+        'map', 'image_couverture', 'description', 'statut', 'motif_rejet',
     ];
 
     public function hotelier() { return $this->belongsTo(User::class, 'hotelier_id'); }

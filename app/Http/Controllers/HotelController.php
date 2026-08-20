@@ -13,7 +13,7 @@ class HotelController extends Controller
             ->when(request('etoiles'), fn ($q, $v) => $q->where('nombre_etoiles', '>=', $v))
             ->when(request('note_min'), fn ($q, $v) => $q->where('note_moyenne', '>=', $v))
             ->orderByDesc('note_moyenne')
-            ->paginate(9)
+            ->paginate(12)
             ->withQueryString();
 
         return view('hotels.index', compact('hotels'));

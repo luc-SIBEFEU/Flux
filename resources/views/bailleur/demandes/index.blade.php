@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@php($espaceRole = 'bailleur')
+@php $espaceRole = 'bailleur'; @endphp
 @section('titre_page', 'Demandes de baye')
 @section('titre', 'Demandes — Bailleur')
 

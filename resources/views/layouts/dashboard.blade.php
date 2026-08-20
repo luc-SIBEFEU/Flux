@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('titre', 'Tableau de bord — Flux')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script defer src="{{ asset('js/cdn.min.js') }}"></script>
     <script src="{{ asset('js/chart.js@4') }}"></script>
     <style>[x-cloak] { display: none !important; }</style>

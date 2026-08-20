@@ -17,7 +17,7 @@ class ActualiteController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.actualites.index', compact('actualites'));
+        return view('admin.actualites.index',['actualite' => new Actualite()] + compact('actualites'));
     }
 
     public function create()

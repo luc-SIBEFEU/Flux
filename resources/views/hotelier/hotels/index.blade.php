@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
     @foreach($hotels as $hotel)
         <div class="bg-white border border-black/10 rounded-2xl overflow-hidden">
             <div class="relative">

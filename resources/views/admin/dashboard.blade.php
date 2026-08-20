@@ -93,5 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
         options: { plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } } }
     });
 });
+
 </script>
+<script src="{{ asset('js/admin.js') }}"></script>
 @endsection

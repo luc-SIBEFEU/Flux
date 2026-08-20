@@ -33,6 +33,7 @@ class HotelsSeeder extends Seeder
                 'description' => 'Hôtel 5 étoiles avec spa, restaurant gastronomique et service de conciergerie 24h/24.',
                 'adresse' => '123 Avenue des Champs-Élysées',
                 'ville' => 'Paris',
+                'map' => 'https://www.google.com/maps?q=9.15,11.9&output=embed',
                 'nombre_etoiles' => 5,
                 'note_moyenne' => 4.9,
                 'image_couverture' => 'https://images.unsplash.com/photo-1501117716987-c8e9d8a2c18f?auto=format&fit=crop&w=1200&q=80',

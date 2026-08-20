@@ -11,7 +11,7 @@ return new class extends Migration
         // Cree quand le bailleur valide une demande de baye (et paiement initial ok)
         Schema::create('bayes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('demande_baye_id')->nullable()->constrained('demandes_baye')->nullOnDelete();
+            $table->foreignId('demande_baye_id')->nullable()->constrained('demande_bayes')->nullOnDelete();
             $table->foreignId('client_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('logement_id')->constrained('logements')->cascadeOnDelete();
             $table->foreignId('bailleur_id')->constrained('users')->cascadeOnDelete();

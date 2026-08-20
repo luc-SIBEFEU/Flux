@@ -8,14 +8,7 @@
                 <span class="font-display text-lg text-white">Flux</span>
             </div>
             <p class="text-sm leading-relaxed">Réservation hôtelière et mise en relation locative, réunies au même endroit.</p>
-            <div class="mt-5">
-                <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Suivez Nous</h4>
-                <ul class="flex items-center gap-3">
-                    <li><a href="#" target="_blank" class="hover:text-flux-or"><i class="bi bi-facebook"></i></a></li>
-                    <li><a href="#" target="_blank" class="hover:text-flux-or"><i class="bi bi-instagram"></i></a></li>
-                    <li><a href="#" target="_blank" class="hover:text-flux-or"><i class="bi bi-linkedin"></i></a></li>
-                </ul>
-            </div>
+            
             <div class="mt-5">
                 <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Contact</h4>
                 <p class="text-sm">Contactez-nous pour toute question ou assistance.</p>
@@ -28,14 +21,31 @@
                 <li><a href="{{ route('logements.index') }}" class="hover:text-flux-or">Trouver un logement</a></li>
                 <li><a href="{{ route('register', ['type' => 'bailleur']) }}" class="hover:text-flux-or">Devenir bailleur</a></li>
             </ul>
+            <div class="mt-5"></div>
+            <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Hotels</h4>
+            <ul class="space-y-2 text-sm">
+                <li><a href="{{ route('hotels.index') }}" class="hover:text-flux-or">Trouver un hotel</a></li>
+                <li><a href="{{ route('register', ['type' => 'hotelier']) }}" class="hover:text-flux-or">Devenir Hotelier</a></li>
+            </ul>
         </div>
         <div>
             <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Paiement</h4>
             <p class="text-sm">MTN Mobile Money · Orange Money</p>
             <p class="text-xs mt-2 text-white/40">Paiements sécurisés via aangaraa-pay.com</p>
+
+            <div class="mt-5">
+                <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Suivez Nous</h4>
+                <ul class="flex items-center gap-3">
+                    <li><a href="#" target="_blank" class="hover:text-flux-or"><i class="bi bi-facebook"></i></a></li>
+                    <li><a href="#" target="_blank" class="hover:text-flux-or"><i class="bi bi-instagram"></i></a></li>
+                    <li><a href="#" target="_blank" class="hover:text-flux-or"><i class="bi bi-linkedin"></i></a></li>
+                </ul>
+            </div>
+
         </div>
     </div>
-    <div class="border-t border-white/10 py-5 text-center text-xs text-white/40">
-        © {{ date('Y') }} Flux. Tous droits réservés.
+    <div class="border-t border-white/10 py-5 text-center">
+        <div class="text-xl sm:text-2xl md:text-3xl font-black tracking-[0.2em] text-white/90 uppercase font-mono">N0UTTA S4RL</div>
+        <div class="mt-2 text-xs text-white/40">© {{ date('Y') }} Flux. Tous droits réservés.</div>
     </div>
 </footer>

@@ -40,15 +40,15 @@
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Latitude (Google Maps)</label>
-            <input type="text" name="latitude" value="{{ old('latitude', $hotel->latitude) }}"
+            <label class="text-xs font-medium text-flux-noir/50">Lien Google Maps</label>
+            <input type="text" name="map" value="{{ old('latitude', $hotel->map) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
-        <div>
+        <!-- <div>
             <label class="text-xs font-medium text-flux-noir/50">Longitude (Google Maps)</label>
             <input type="text" name="longitude" value="{{ old('longitude', $hotel->longitude) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
-        </div>
+        </div> -->
     </div>
 
     <div>

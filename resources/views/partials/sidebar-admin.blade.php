@@ -16,7 +16,7 @@ $liens = [
 ];
 @endphp
 
-<div class="p-6">
+<div class="p-6 rounded-xl">
     <a href="{{ route('accueil') }}" class="flex items-center gap-2 mb-8">
         <span class="w-9 h-9 rounded-full bg-flux-or flex items-center justify-center">
             <x-icon name="sparkles" class="w-5 h-5 text-flux-noir" />

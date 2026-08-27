@@ -70,7 +70,7 @@
         <div class="lg:col-span-3">
             <p class="text-sm text-flux-noir/50 mb-4">{{ $logements->total() }} logement(s) disponible(s)</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 @forelse($logements as $logement)
                     <a href="{{ route('logements.show', $logement) }}" class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5 hover:shadow-lg transition-shadow">
                         <div class="relative">

@@ -29,7 +29,7 @@
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10 rounded-2xl overflow-hidden">
         <img src="{{ asset('storage/'.$hotel->image_couverture) }}" class="col-span-2 row-span-2 w-full h-full object-cover min-h-[220px]">
         @foreach($hotel->photos->take(4) as $photo)
-            <!-- <img src="{{ asset('storage/'.$photo->chemin) }}" class="w-full h-full object-cover min-h-[105px]"> -->
+            <img src="{{ asset('storage/'.$photo->chemin) }}" class="w-full h-full object-cover min-h-[105px]">
         @endforeach
     </div>
 

@@ -91,7 +91,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Consultation en lecture seule : l'admin voit tout, ne modifie rien.
     Route::prefix('consultation')->name('consultation.')->group(function () {
         Route::get('/hotels', [Admin\SupervisionController::class, 'hotels'])->name('hotels');
-        Route::get('/hotels/{hotel}', [Admin\SupervisionController::class, 'hotel'])->name('hotels.show');
+        Route::get('/hotels/{hotel}/chambre/{chambre}', [Admin\SupervisionController::class, 'chambresHotel'])->name('hotels.chambre.show');
+        Route::get('/hotels/{hotel}/{action}', [Admin\SupervisionController::class, 'hotel'])->name('hotels.show');
+        Route::get('/hotels/{hotel}/{chambre}', [Admin\SupervisionController::class, 'chambresHotel'])->name('hotels.chambre.show');
         Route::get('/logements', [Admin\SupervisionController::class, 'logements'])->name('logements');
         Route::get('/logements/{logement}', [Admin\SupervisionController::class, 'logement'])->name('logements.show');
         Route::get('/bayes', [Admin\SupervisionController::class, 'bayes'])->name('bayes');

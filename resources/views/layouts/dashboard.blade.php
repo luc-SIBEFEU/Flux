@@ -28,7 +28,7 @@
         </div>
 
         <!-- Sidebar desktop -->
-        <aside class="hidden lg:flex lg:flex-col w-64 shrink-0 h-screen sticky top-0 bg-flux-noir text-white overflow-y-auto">
+        <aside class="hidden lg:flex lg:flex-col w-64 h-screen sticky top-5 bg-flux-noir rounded-2xl  text-white overflow-y-auto">
             @include('partials.sidebar-' . $espaceRole, ['espaceLabel' => $espaceLabel ?? ''])
         </aside>
 

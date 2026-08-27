@@ -33,7 +33,7 @@
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Adresse</label>
+        <label class="text-xs font-medium text-flux-noir/50">Adresse (Quartier)</label>
         <input type="text" name="adresse" value="{{ old('adresse', $hotel->adresse) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
     </div>

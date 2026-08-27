@@ -72,7 +72,7 @@
         <aside class="space-y-5">
             <div class="bg-white border border-black/10 rounded-2xl p-6 sticky top-24">
                 <p class="font-display text-3xl text-flux-violet">{{ number_format($logement->prix_mois, 0, ',', ' ') }} FCFA</p>
-                <p class="text-xs text-flux-noir/40 mb-4">/ mois · caution {{ number_format($logement->caution, 0, ',', ' ') }} FCFA</p>
+                <p class="text-xs text-flux-noir/40 mb-4">/ mois ·<span style="color:red;">caution {{ number_format($logement->caution, 0, ',', ' ') }} FCFA</span> </p>
                 <p class="text-sm text-flux-noir/60 mb-5">Durée minimum : {{ $logement->duree_min_mois }} mois</p>
 
                 @auth

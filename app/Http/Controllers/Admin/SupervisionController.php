@@ -7,6 +7,7 @@ use App\Models\Baye;
 use App\Models\Hotel;
 use App\Models\Logement;
 use App\Models\Reservation;
+use App\Models\CategorieChambre;
 
 /**
  * Vues de consultation pour l'admin : accès total en lecture, aucune modification
@@ -26,12 +27,14 @@ class SupervisionController extends Controller
         return view('admin.consultation.hotels', compact('hotels'));
     }
 
-    public function hotel(Hotel $hotel)
+    public function hotel(Hotel $hotel, String $action)
     {
         $hotel->load(['hotelier', 'categorieChambres', 'reservations.client', 'avis.client', 'contactsPaiement']);
-        return view('admin.consultation.hotel', compact('hotel'));
+        return view('admin.consultation.hotel', compact('hotel','action'));
     }
-
+    public function chambresHotel(Hotel $hotel, CategorieChambre $chambre){
+        return view('admin.consultation.chambresHotel', compact('hotel','chambre'));
+    }
     public function logements()
     {
         $logements = Logement::with('bailleur')

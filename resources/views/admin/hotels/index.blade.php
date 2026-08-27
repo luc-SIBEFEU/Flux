@@ -9,6 +9,7 @@
 
 <div class="space-y-4">
     @forelse($hotels as $hotel)
+    <a href="{{ route('admin.consultation.hotels.show', ['hotel'=>$hotel, 'action'=>$action='validation']) }}">
         <div class="bg-white border border-black/10 rounded-2xl p-5 flex flex-col sm:flex-row gap-4" x-data="{ rejet: false }">
             <img src="{{ asset('storage/'.$hotel->image_couverture) }}" class="w-full sm:w-40 h-28 rounded-xl object-cover shrink-0">
             <div class="flex-1">
@@ -19,6 +20,7 @@
                 <p class="text-sm text-flux-noir/50 flex items-center gap-1 mt-1"><x-icon name="map-pin" class="w-3.5 h-3.5" /> {{ $hotel->ville }}</p>
                 <p class="text-sm text-flux-noir/50 flex items-center gap-1 mt-1"><x-icon name="user" class="w-3.5 h-3.5" /> {{ $hotel->hotelier->nom }} — {{ $hotel->hotelier->email }}</p>
 
+        </a>
                 <div class="flex flex-wrap gap-3 mt-4">
                     <form action="{{ route('admin.hotels.approuver', $hotel) }}" method="POST">
                         @csrf

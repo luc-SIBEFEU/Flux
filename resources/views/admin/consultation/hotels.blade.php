@@ -43,7 +43,7 @@
                         <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$hotel->statut] }}">{{ ucfirst(str_replace('_',' ',$hotel->statut)) }}</span>
                     </td>
                     <td class="px-5 py-3 text-right">
-                        <a href="{{ route('admin.consultation.hotels.show', $hotel) }}" class="text-flux-bleu text-xs font-medium">Voir →</a>
+                        <a href="{{ route('admin.consultation.hotels.show', ['hotel'=>$hotel, 'action'=>$action='consultation']) }}" class="text-flux-bleu text-xs font-medium">Voir →</a>
                     </td>
                 </tr>
             @endforeach

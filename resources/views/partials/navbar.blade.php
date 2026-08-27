@@ -10,14 +10,14 @@
         <div class="hidden md:flex items-center gap-8 text-sm font-medium text-flux-noir/80">
             <a href="{{ route('hotels.index') }}" class="hover:text-flux-bleu transition-colors {{ request()->routeIs('hotels.*') ? 'text-flux-bleu' : '' }}">Hôtels</a>
             <a href="{{ route('logements.index') }}" class="hover:text-flux-violet transition-colors {{ request()->routeIs('logements.*') ? 'text-flux-violet' : '' }}">Logements</a>
-            <a href="{{ route('accueil') }}#actualites" class="hover:text-flux-bleu transition-colors">Actualités</a>
+            <!-- <a href="{{ route('accueil') }}#actualites" class="hover:text-flux-bleu transition-colors">Actualités</a> -->
         </div>
 
         <div class="hidden md:flex items-center gap-3">
             @auth
                 @php $espace = match(auth()->user()->role){'admin'=>'admin.dashboard','hotelier'=>'hotelier.dashboard','bailleur'=>'bailleur.dashboard',default=>'client.reservations.index'}; @endphp
                 <a href="{{ route($espace) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-flux-bleu text-white text-sm font-medium hover:bg-flux-bleu-vif transition-colors">
-                    <x-icon name="user" class="w-4 h-4" /> Mon espace
+                    <x-icon name="user" class="w-4 h-4" /> {{ auth()->user()->nom }}
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

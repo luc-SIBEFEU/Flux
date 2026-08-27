@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Hotelier;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategorieChambre;
-use App\Models\Equipement;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 
@@ -23,8 +22,7 @@ class CategorieChambreController extends Controller
     public function create(Hotel $hotel)
     {
         $this->authorizeProprietaire($hotel);
-        $equipements = Equipement::whereIn('contexte', ['hotel', 'les_deux'])->get();
-        return view('hotelier.chambres.form', ['hotel' => $hotel, 'chambre' => new CategorieChambre(), 'equipements' => $equipements]);
+        return view('hotelier.chambres.form', ['hotel' => $hotel, 'chambre' => new CategorieChambre()]);
     }
 
     public function store(Request $request, Hotel $hotel)
@@ -33,7 +31,6 @@ class CategorieChambreController extends Controller
         $data = $this->validated($request);
 
         $chambre = $hotel->categorieChambres()->create($data);
-        $chambre->equipements()->sync($request->input('equipements', []));
 
         return redirect()->route('hotelier.hotels.chambres.index', $hotel)->with('success', 'Catégorie de chambre ajoutée.');
     }
@@ -41,8 +38,7 @@ class CategorieChambreController extends Controller
     public function edit(Hotel $hotel, CategorieChambre $chambre)
     {
         $this->authorizeProprietaire($hotel);
-        $equipements = Equipement::whereIn('contexte', ['hotel', 'les_deux'])->get();
-        return view('hotelier.chambres.form', compact('hotel', 'chambre', 'equipements'));
+        return view('hotelier.chambres.form', compact('hotel', 'chambre'));
     }
 
     public function update(Request $request, Hotel $hotel, CategorieChambre $chambre)
@@ -51,7 +47,6 @@ class CategorieChambreController extends Controller
         $data = $this->validated($request);
 
         $chambre->update($data);
-        $chambre->equipements()->sync($request->input('equipements', []));
 
         return back()->with('success', 'Catégorie de chambre mise à jour.');
     }

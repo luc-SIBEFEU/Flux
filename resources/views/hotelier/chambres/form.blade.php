@@ -5,6 +5,7 @@
 
 @section('contenu')
 
+    <p class="mb-5"><a href="{{ route('hotelier.hotels.index') }}" class="text-sm text-flux-noir/50 hover:text-flux-bleu">Hotels ></a> <a href="{{ route('hotelier.hotels.chambres.index', $hotel) }}" class="text-sm text-flux-noir/50 hover:text-flux-bleu">{{ $hotel->nom }} ></a> {{ $chambre->nom.' > Modifier' }}</p>
 <form action="{{ $chambre->exists ? route('hotelier.hotels.chambres.update', [$hotel, $chambre]) : route('hotelier.hotels.chambres.store', $hotel) }}"
       method="POST" class="bg-white border border-black/10 rounded-2xl p-6 max-w-2xl space-y-5">
     @csrf
@@ -39,19 +40,6 @@
             <label class="text-xs font-medium text-flux-noir/50">Nombre disponible</label>
             <input type="number" name="nombre_disponible" min="1" required value="{{ old('nombre_disponible', $chambre->nombre_disponible ?? 1) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
-        </div>
-    </div>
-
-    <div>
-        <label class="text-xs font-medium text-flux-noir/50">Équipements</label>
-        <div class="flex flex-wrap gap-2 mt-2">
-            @foreach($equipements as $eq)
-                <label>
-                    <input type="checkbox" name="equipements[]" value="{{ $eq->id }}" class="peer sr-only"
-                           {{ in_array($eq->id, old('equipements', $chambre->equipements->pluck('id')->toArray() ?? [])) ? 'checked' : '' }}>
-                    <span class="text-xs px-3 py-1.5 rounded-full border border-black/10 peer-checked:bg-flux-bleu peer-checked:text-white peer-checked:border-flux-bleu cursor-pointer">{{ $eq->nom }}</span>
-                </label>
-            @endforeach
         </div>
     </div>
 

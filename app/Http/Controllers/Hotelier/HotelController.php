@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hotelier;
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use App\Models\Equipement;
 
 class HotelController extends Controller
 {
@@ -20,7 +21,8 @@ class HotelController extends Controller
 
     public function create()
     {
-        return view('hotelier.hotels.form', ['hotel' => new Hotel()]);
+        $equipements = Equipement::whereIn('contexte', ['hotel', 'les_deux'])->get();
+        return view('hotelier.hotels.form', ['hotel' => new Hotel(), 'equipements' => $equipements]);
     }
 
     public function store(Request $request)
@@ -31,6 +33,7 @@ class HotelController extends Controller
         $data['statut'] = 'en_attente'; // doit être validé par l'admin
 
         $hotel = Hotel::create($data);
+        $hotel->equipements()->sync($request->input('equipements', []));
 
         $admin = \App\Models\User::where('role', 'admin')->first();
         if ($admin) {
@@ -44,7 +47,8 @@ class HotelController extends Controller
     public function edit(Hotel $hotel)
     {
         $this->authorizeProprietaire($hotel);
-        return view('hotelier.hotels.form', compact('hotel'));
+        $equipements = Equipement::whereIn('contexte', ['hotel', 'les_deux'])->get();
+        return view('hotelier.hotels.form', compact('hotel', 'equipements'));
     }
 
     public function update(Request $request, Hotel $hotel)
@@ -56,6 +60,7 @@ class HotelController extends Controller
             $data['image_couverture'] = $request->file('image_couverture')->store('hotels', 'public');
         }
 
+        $hotel->equipements()->sync($request->input('equipements', []));
         $hotel->update($data);
 
         return back()->with('success', 'Hôtel mis à jour.');
@@ -80,6 +85,7 @@ class HotelController extends Controller
             'nombre_etoiles' => ['required', 'integer', 'min:1', 'max:5'],
             'ville' => ['required', 'string', 'max:255'],
             'adresse' => ['nullable', 'string', 'max:255'],
+            'map'=> ['nullable', 'string', 'max:400'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'description' => ['nullable', 'string'],

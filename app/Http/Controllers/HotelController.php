@@ -23,7 +23,7 @@ class HotelController extends Controller
     {
         abort_unless($hotel->statut === 'valide', 404);
 
-        $hotel->load(['photos', 'categorieChambres.equipements', 'categorieChambres.photos', 'avisApprouves.client', 'reseauxSociaux']);
+        $hotel->load(['photos', 'categorieChambres', 'categorieChambres.photos', 'avisApprouves.client', 'reseauxSociaux']);
 
         return view('hotels.show', compact('hotel'));
     }

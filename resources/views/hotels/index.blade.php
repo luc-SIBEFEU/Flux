@@ -81,6 +81,11 @@
                             <p class="text-sm text-flux-noir/50 flex items-center gap-1 mt-1">
                                 <x-icon name="map-pin" class="w-3.5 h-3.5" /> {{ $hotel->ville }}
                             </p>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    @foreach($hotel->equipements as $eq)
+                                        <span class="text-xs bg-flux-bleu-pale text-flux-bleu px-2.5 py-1 rounded-full"><i class="bi bi-{{ $eq->icone }}"></i> {{ $eq->nom }}</span>
+                                    @endforeach
+                                </div>
                             <div class="flex items-center gap-0.5 mt-2">
                                 @for($i=0; $i<$hotel->nombre_etoiles; $i++)
                                     <x-icon name="star-filled" class="w-3.5 h-3.5 text-flux-or" />

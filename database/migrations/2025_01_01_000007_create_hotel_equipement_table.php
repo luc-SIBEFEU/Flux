@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('categorie_chambre_equipement', function (Blueprint $table) {
+        Schema::create('hotel_equipements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('categorie_chambre_id')->constrained('categorie_chambres')->cascadeOnDelete();
+            $table->foreignId('hotel_id')->constrained('hotels')->cascadeOnDelete();
             $table->foreignId('equipement_id')->constrained('equipements')->cascadeOnDelete();
             $table->timestamps();
 
-            $table->unique(['categorie_chambre_id', 'equipement_id'], 'cat_chambre_equip_unique');
+            $table->unique(['hotel_id', 'equipement_id'], 'cat_hotel_equip_unique');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('categorie_chambre_equipement');
+        Schema::dropIfExists('hotel_equipements');
     }
 };

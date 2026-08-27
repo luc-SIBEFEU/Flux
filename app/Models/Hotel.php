@@ -8,11 +8,12 @@ class Hotel extends Model
 {
     protected $fillable = [
         'hotelier_id', 'nom', 'nombre_etoiles', 'note_moyenne', 'ville', 'adresse',
-        'map', 'image_couverture', 'description', 'statut', 'motif_rejet',
+        'map','latitude', 'longitude' , 'image_couverture', 'description', 'statut', 'motif_rejet',
     ];
 
     public function hotelier() { return $this->belongsTo(User::class, 'hotelier_id'); }
     public function categorieChambres() { return $this->hasMany(CategorieChambre::class); }
+    public function equipements() { return $this->belongsToMany(Equipement::class, 'hotel_equipements'); }
     public function reseauxSociaux() { return $this->hasMany(HotelReseauSocial::class); }
     public function contactsPaiement() { return $this->hasMany(HotelContactPaiement::class); }
     public function avis() { return $this->hasMany(AvisHotel::class); }

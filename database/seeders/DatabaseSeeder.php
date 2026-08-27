@@ -60,16 +60,17 @@ class DatabaseSeeder extends Seeder
         );
         // Référentiel d'équipements partagé hôtels / logements
         $equipements = [
-            ['nom' => 'Wifi', 'contexte' => 'les_deux'],
-            ['nom' => 'Piscine', 'contexte' => 'hotel'],
-            ['nom' => 'Climatisation', 'contexte' => 'les_deux'],
-            ['nom' => 'Parking', 'contexte' => 'les_deux'],
-            ['nom' => 'Petit-déjeuner inclus', 'contexte' => 'hotel'],
+            ['nom' => 'Wifi Gratuit', 'icone'=>'wifi', 'contexte' => 'les_deux'],
+            ['nom' => 'Piscine', 'icone'=>'water', 'contexte' => 'hotel'],
+            ['nom' => 'Climatisation', 'icone'=> 'snow', 'contexte' => 'les_deux'],
+            ['nom' => 'Parking', 'icone'=> 'p', 'contexte' => 'les_deux'],
+            ['nom' => 'Petit-déjeuner inclus', 'icone'=>'cup-hot', 'contexte' => 'hotel'],
+            ['nom' => 'spa', 'icone'=>'flower2', 'contexte' => 'hotel'],
             ['nom' => 'Salle de sport', 'contexte' => 'hotel'],
             ['nom' => 'Douche interne', 'contexte' => 'logement'],
-            ['nom' => 'Eau courante', 'contexte' => 'logement'],
+            ['nom' => 'Eau courante', 'icone'=>'droplet', 'contexte' => 'logement'],
             ['nom' => 'Cuisine équipée', 'contexte' => 'logement'],
-            ['nom' => 'Gardiennage', 'contexte' => 'les_deux'],
+            ['nom' => 'Gardiennage', 'icone'=>'shield-fill', 'contexte' => 'les_deux'],
             ['nom' => 'Groupe électrogène', 'contexte' => 'les_deux'],
             ['nom' => 'Meublé', 'contexte' => 'logement'],
         ];

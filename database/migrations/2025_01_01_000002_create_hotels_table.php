@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('ville');
             $table->string('adresse')->nullable();
             $table->string('map')->nullable();
-            // $table->decimal('latitude', 10, 7)->nullable();
-            // $table->decimal('longitude', 10, 7)->nullable();
+            $table->decimal('latitude', 11, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->string('image_couverture');
             $table->text('description')->nullable();
             $table->enum('statut', ['en_attente', 'valide', 'rejete'])->default('en_attente');

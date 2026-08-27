@@ -44,16 +44,34 @@
             <input type="text" name="map" value="{{ old('latitude', $hotel->map) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
-        <!-- <div>
+        <div>
+            <label class="text-xs font-medium text-flux-noir/50">Latitude (Google Maps)</label>
+            <input type="text" name="latitude" value="{{ old('latitude', $hotel->latitude) }}"
+                   class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+        </div>
+        <div>
             <label class="text-xs font-medium text-flux-noir/50">Longitude (Google Maps)</label>
             <input type="text" name="longitude" value="{{ old('longitude', $hotel->longitude) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
-        </div> -->
+        </div>
     </div>
 
     <div>
         <label class="text-xs font-medium text-flux-noir/50">Description</label>
         <textarea name="description" rows="4" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">{{ old('description', $hotel->description) }}</textarea>
+    </div>
+
+    <div>
+        <label class="text-xs font-medium text-flux-noir/50">Équipements</label>
+        <div class="flex flex-wrap gap-2 mt-2">
+            @foreach($equipements as $eq)
+                <label>
+                    <input type="checkbox" name="equipements[]" value="{{ $eq->id }}" class="peer sr-only"
+                           {{ in_array($eq->id, old('equipements', $hotel->equipements->pluck('id')->toArray() ?? [])) ? 'checked' : '' }}>
+                    <span class="text-xs px-3 py-1.5 rounded-full border border-black/10 peer-checked:bg-flux-bleu peer-checked:text-white peer-checked:border-flux-bleu cursor-pointer">{{ $eq->nom }}</span>
+                </label>
+            @endforeach
+        </div>
     </div>
 
     <div>

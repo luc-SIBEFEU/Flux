@@ -43,6 +43,11 @@
                 </section>
             @endif
 
+                <div class="flex flex-wrap gap-2 mt-2">
+                    @foreach($hotel->equipements as $eq)
+                        <span class="text-xs bg-flux-bleu-pale text-flux-bleu px-2.5 py-1 rounded-full"><i class="bi bi-{{ $eq->icone }}"></i> {{ $eq->nom }}</span>
+                    @endforeach
+                </div>
             <!-- Catégories de chambres -->
             <section>
                 <h2 class="font-display text-2xl mb-4">Chambres disponibles</h2>
@@ -57,11 +62,6 @@
                                 <p class="text-sm text-flux-noir/50 flex items-center gap-1 mt-1">
                                     <x-icon name="users" class="w-4 h-4" /> {{ $chambre->capacite_adultes }} adulte(s) · {{ $chambre->capacite_enfants }} enfant(s)
                                 </p>
-                                <div class="flex flex-wrap gap-2 mt-2">
-                                    @foreach($chambre->equipements as $eq)
-                                        <span class="text-xs bg-flux-bleu-pale text-flux-bleu px-2.5 py-1 rounded-full">{{ $eq->nom }}</span>
-                                    @endforeach
-                                </div>
                             </div>
                             <div class="text-right shrink-0">
                                 <p class="font-display text-xl text-flux-bleu">{{ number_format($chambre->prix_nuit, 0, ',', ' ') }} FCFA</p>
@@ -112,11 +112,12 @@
         <aside class="space-y-6">
             @if($hotel->map)
                 <div class="rounded-2xl overflow-hidden border border-black/10 h-56">
-                    <!-- <iframe class="w-full h-full" loading="lazy"
-                        src="https://www.google.com/maps?q={{ $hotel->latitude }},{{ $hotel->longitude }}&output=embed"></iframe> -->
                 <iframe class="w-full h-full" loading="lazy"
                         src="{{ $hotel->map }}">
-                </iframe>        
+            @elseif($hotel->latitude)
+                </iframe> 
+                    <iframe class="w-full h-full" loading="lazy"
+                        src="https://www.google.com/maps?q={{ $hotel->latitude }},{{ $hotel->longitude }}&output=embed"></iframe>
                 </div>
             @endif
 
@@ -131,8 +132,9 @@
                                 @elseif($rs->plateforme == 'site_web')
                                 <i class="bi bi-globe"></i></a>
                                 @else
-                                <i class="bi bi-{{ $rs->plateforme }}"></i></a>
+                                <i class="bi bi-{{ $rs->plateforme }}"></i>
                                 @endif
+                            </a>
                         @endforeach
                     </div>
                 </div>

@@ -6,7 +6,7 @@
 @section('contenu')
 
 <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-    <a href="{{ route('hotelier.hotels.index') }}" class="text-sm text-flux-noir/50 hover:text-flux-bleu">← Retour aux hôtels</a>
+    <p><a href="{{ route('hotelier.hotels.index') }}" class="text-sm text-flux-noir/50 hover:text-flux-bleu">Hotels</a> > {{ $hotel->nom }}</p>
     <div class="flex gap-3">
         <form method="GET" class="flex items-center gap-2 border border-black/10 rounded-lg px-3 py-2 bg-white">
             <x-icon name="search" class="w-4 h-4 text-flux-noir/40" />

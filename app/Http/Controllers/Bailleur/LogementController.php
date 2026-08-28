@@ -8,11 +8,16 @@ use App\Models\Equipement;
 use App\Models\Logement;
 use App\Models\Minicite;
 use App\Models\User;
+use App\Services\NotificationDashboardService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class LogementController extends Controller
 {
+    public function __construct(private NotificationDashboardService $notifications)
+    {
+    }
+
     public function index()
     {
         $logements = auth()->user()->logements()
@@ -57,6 +62,7 @@ class LogementController extends Controller
         $admin = User::where('role', 'admin')->first();
         if ($admin) {
             Mail::to($admin->email)->send(new NouveauLogementMail($logements->first()));
+            $this->notifications->nouveauLogementAValider($admin, $logements->first());
         }
 
         return redirect()->route('bailleur.logements.index')

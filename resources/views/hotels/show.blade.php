@@ -66,10 +66,17 @@
                             <div class="text-right shrink-0">
                                 <p class="font-display text-xl text-flux-bleu">{{ number_format($chambre->prix_nuit, 0, ',', ' ') }} FCFA</p>
                                 <p class="text-xs text-flux-noir/40 mb-2">/ nuit</p>
-                                <a href="{{ route('reservations.create', $chambre) }}"
-                                   class="inline-flex items-center gap-2 bg-flux-or hover:bg-flux-or-vif text-flux-noir text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
-                                    Réserver
-                                </a>
+                                @if($hotel->hotelier->peutUtiliserFonctionsPro())
+                                    <a href="{{ route('reservations.create', $chambre) }}"
+                                       class="inline-flex items-center gap-2 bg-flux-or hover:bg-flux-or-vif text-flux-noir text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                                        Réserver
+                                    </a>
+                                @else
+                                    <a href="#contacter-hotelier"
+                                       class="inline-flex items-center gap-2 bg-flux-brume hover:bg-black/10 text-flux-noir text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                                        Contacter l'hôtelier
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -110,6 +117,25 @@
 
         <!-- Colonne latérale : localisation + réseaux -->
         <aside class="space-y-6">
+            @unless($hotel->hotelier->peutUtiliserFonctionsPro())
+                <div id="contacter-hotelier" class="bg-white border border-black/10 rounded-2xl p-5">
+                    <h3 class="font-medium mb-1">Cet hôtel n'est pas réservable en ligne</h3>
+                    <p class="text-sm text-flux-noir/50 mb-4">Contactez directement l'hôtelier, il vous répondra rapidement.</p>
+                    @auth
+                        <form action="{{ route('hotels.contacter', $hotel) }}" method="POST" class="space-y-3">
+                            @csrf
+                            <input type="tel" name="telephone_client" required placeholder="Votre téléphone"
+                                   class="w-full border border-black/10 rounded-lg px-3 py-2 text-sm outline-none focus:border-flux-bleu">
+                            <textarea name="message" rows="3" required placeholder="Votre message"
+                                      class="w-full border border-black/10 rounded-lg px-3 py-2 text-sm outline-none focus:border-flux-bleu"></textarea>
+                            <button class="w-full bg-flux-bleu-vif text-white text-sm font-medium px-4 py-2.5 rounded-lg">Envoyer le message</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="text-sm text-flux-bleu font-medium hover:underline">Connectez-vous pour contacter l'hôtelier →</a>
+                    @endauth
+                </div>
+            @endunless
+
             @if($hotel->map)
                 <div class="rounded-2xl overflow-hidden border border-black/10 h-56">
                 <iframe class="w-full h-full" loading="lazy"

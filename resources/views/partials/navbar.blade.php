@@ -10,6 +10,7 @@
         <div class="hidden md:flex items-center gap-8 text-sm font-medium text-flux-noir/80">
             <a href="{{ route('hotels.index') }}" class="hover:text-flux-bleu transition-colors {{ request()->routeIs('hotels.*') ? 'text-flux-bleu' : '' }}">Hôtels</a>
             <a href="{{ route('logements.index') }}" class="hover:text-flux-violet transition-colors {{ request()->routeIs('logements.*') ? 'text-flux-violet' : '' }}">Logements</a>
+            <a href="{{ route('a-propos') }}" class="hover:text-flux-bleu transition-colors {{ request()->routeIs('a-propos') ? 'text-flux-bleu' : '' }}">À propos</a>
             <!-- <a href="{{ route('accueil') }}#actualites" class="hover:text-flux-bleu transition-colors">Actualités</a> -->
         </div>
 
@@ -37,6 +38,7 @@
              class="absolute top-16 inset-x-0 bg-white border-b border-black/5 md:hidden px-4 py-4 space-y-3 shadow-lg">
             <a href="{{ route('hotels.index') }}" class="block py-2 font-medium">Hôtels</a>
             <a href="{{ route('logements.index') }}" class="block py-2 font-medium">Logements</a>
+            <a href="{{ route('a-propos') }}" class="block py-2 font-medium">À propos</a>
             <a href="{{ route('accueil') }}#actualites" class="block py-2 font-medium">Actualités</a>
             <hr class="border-black/5">
             @auth

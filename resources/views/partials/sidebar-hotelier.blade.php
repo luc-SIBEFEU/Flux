@@ -4,6 +4,8 @@ $liens = [
     ['route' => 'hotelier.hotels.index', 'icone' => 'building', 'label' => 'Mes hôtels'],
     ['route' => 'hotelier.reservations.index', 'icone' => 'calendar', 'label' => 'Réservations'],
     ['route' => 'hotelier.avis.index', 'icone' => 'star', 'label' => 'Avis clients'],
+    ['route' => 'hotelier.messages.index', 'icone' => 'mail', 'label' => 'Messages'],
+    ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => 'Mon forfait'],
     ['route' => 'hotelier.profil.edit', 'icone' => 'user', 'label' => 'Mon profil'],
     ['route' => 'hotelier.aide.index', 'icone' => 'sparkles', 'label' => 'Guide & notice'],
 ];

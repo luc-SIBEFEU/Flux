@@ -69,6 +69,11 @@
             <button type="submit" class="w-full bg-flux-or hover:bg-flux-or-vif text-flux-noir font-semibold py-3 rounded-lg transition-colors">
                 Créer mon compte
             </button>
+            <p class="text-center text-sm text-flux-noir/70">En envoyant ce formulaire, vous acceptez nos 
+                <a href="{{ route('conditions-utilisation') }}" class="hover:underline font-medium text-flux-bleu">conditions d'utilisation</a>
+                et notre
+                <a href="{{ route('politique-confidentialite') }}" class="hover:underline font-medium text-flux-bleu">Politique de confidentialité</a>
+            </p>
         </form>
 
         <p class="text-center text-sm text-flux-noir/50 mt-6">

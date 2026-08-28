@@ -12,3 +12,5 @@ Artisan::command('inspire', function () {
 // Nécessite que le worker de planification tourne : php artisan schedule:work (ou un cron système appelant schedule:run chaque minute).
 Schedule::command('flux:terminer-sejours')->daily();
 Schedule::command('flux:traiter-baux')->daily();
+Schedule::command('flux:traiter-forfaits')->daily();
+Schedule::command('flux:verifier-transferts')->hourly();

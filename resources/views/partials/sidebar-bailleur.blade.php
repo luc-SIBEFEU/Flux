@@ -6,6 +6,8 @@ $liens = [
     ['route' => 'bailleur.demandes.index', 'icone' => 'bell', 'label' => 'Demandes de baye'],
     ['route' => 'bailleur.bayes.index', 'icone' => 'key', 'label' => 'Locations en cours'],
     ['route' => 'bailleur.commentaires.index', 'icone' => 'star', 'label' => 'Commentaires'],
+    ['route' => 'bailleur.messages.index', 'icone' => 'mail', 'label' => 'Messages'],
+    ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => 'Mon forfait'],
     ['route' => 'bailleur.profil.edit', 'icone' => 'user', 'label' => 'Mon profil'],
     ['route' => 'bailleur.aide.index', 'icone' => 'sparkles', 'label' => 'Guide & notice'],
 ];

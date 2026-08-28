@@ -24,6 +24,7 @@
             <div>
                 <label class="text-xs font-medium text-flux-noir/50">Mot de passe</label>
                 <input type="password" name="password" required class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
+                <a href="{{ route('password.request') }}" class="inline-block mt-2 text-xs text-flux-bleu hover:underline">Mot de passe oublié ?</a>
             </div>
             <label class="flex items-center gap-2 text-sm text-flux-noir/60">
                 <input type="checkbox" name="remember" class="rounded"> Se souvenir de moi

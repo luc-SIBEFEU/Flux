@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\CompteRejeteMail;
 use App\Mail\CompteValideMail;
+use App\Models\Forfait;
 use App\Models\User;
+use App\Services\NotificationDashboardService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    public function __construct(private NotificationDashboardService $notifications)
+    {
+    }
+
     public function index()
     {
         $users = User::whereIn('role', ['client', 'hotelier', 'bailleur'])
@@ -40,8 +46,13 @@ class UserController extends Controller
     {
         abort_unless(in_array($user->role, ['hotelier', 'bailleur']), 404);
 
-        $user->update(['statut_validation' => 'valide', 'actif' => true, 'motif_rejet_compte' => null]);
+        // Un hôtelier/bailleur nouvellement validé démarre en forfait free (upgrade possible ensuite).
+        $user->update([
+            'statut_validation' => 'valide', 'actif' => true, 'motif_rejet_compte' => null,
+            'forfait_id' => $user->forfait_id ?? Forfait::free()->id,
+        ]);
         Mail::to($user->email)->send(new CompteValideMail($user));
+        $this->notifications->compteValide($user);
 
         return back()->with('success', "Compte de {$user->nom} validé.");
     }
@@ -53,6 +64,7 @@ class UserController extends Controller
         $data = $request->validate(['motif_rejet_compte' => ['required', 'string', 'max:500']]);
         $user->update(['statut_validation' => 'rejete', 'actif' => false, ...$data]);
         Mail::to($user->email)->send(new CompteRejeteMail($user));
+        $this->notifications->compteRejete($user);
 
         return back()->with('success', "Inscription de {$user->nom} rejetée.");
     }

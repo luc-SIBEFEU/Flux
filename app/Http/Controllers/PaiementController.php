@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ReservationTermineeMail;
+use App\Models\Abonnement;
 use App\Models\Loyer;
 use App\Models\Paiement;
 use App\Models\Reservation;
@@ -34,7 +35,11 @@ class PaiementController extends Controller
             'telephone' => ['required', 'string'],
         ]);
 
-        $montant = $type === 'reservation' ? $payable->prix_total : $payable->montant;
+        $montant = match ($type) {
+            'reservation' => $payable->prix_total,
+            'abonnement' => $payable->forfait->prix,
+            default => $payable->montant,
+        };
         $transactionId = strtoupper($type) . '_' . $payable->id . '_' . Str::random(6);
 
         $paiement = Paiement::create([
@@ -48,12 +53,13 @@ class PaiementController extends Controller
             'statut' => 'en_attente',
         ]);
 
-        $resultat = $this->aangaraaPay->payerDirect(
-            $data['telephone'],
-            $montant,
-            $type === 'reservation' ? "Réservation #{$payable->id} — Flux" : "Loyer #{$payable->id} — Flux",
-            $transactionId
-        );
+        $libelle = match ($type) {
+            'reservation' => "Réservation #{$payable->id} — Flux",
+            'abonnement' => "Forfait {$payable->forfait->nom} — Flux",
+            default => "Loyer #{$payable->id} — Flux",
+        };
+
+        $resultat = $this->aangaraaPay->payerDirect($data['telephone'], $montant, $libelle, $transactionId);
 
         $paiement->update([
             'reponse_api' => $resultat['brut'],
@@ -61,6 +67,8 @@ class PaiementController extends Controller
         ]);
 
         if (! $resultat['success']) {
+            $this->marquerEchec($paiement);
+
             return back()->withErrors(['telephone' => "Le paiement n'a pas pu être initié. Vérifiez le numéro et réessayez."]);
         }
 
@@ -91,6 +99,7 @@ class PaiementController extends Controller
             $this->confirmerPaiement($paiement);
         } elseif (in_array($statutDistant, ['failed', 'cancelled', 'expired'])) {
             $paiement->update(['statut' => 'echoue']);
+            $this->marquerEchec($paiement);
         }
 
         return response()->json(['statut' => $paiement->fresh()->statut]);
@@ -111,19 +120,22 @@ class PaiementController extends Controller
             $this->confirmerPaiement($paiement);
         } elseif (in_array($statut, ['failed', 'cancelled', 'expired'])) {
             $paiement->update(['statut' => 'echoue', 'reponse_api' => $request->all()]);
+            $this->marquerEchec($paiement);
         }
 
         return response()->json(['message' => 'ok']);
     }
 
-    /** Marque le paiement réussi et applique les effets métier (réservation / loyer). */
+    /** Marque le paiement réussi et applique les effets métier (réservation / loyer / forfait). */
     private function confirmerPaiement(Paiement $paiement): void
     {
         $paiement->update(['statut' => 'reussi']);
         $payable = $paiement->payable;
 
         if ($payable instanceof Reservation) {
-            $payable->update(['statut' => 'confirmee']);
+            $payable->update(['statut' => 'confirmee', 'statut_paiement' => 'reussi']);
+            app(\App\Services\TransfertService::class)->creerEtVerser($paiement, $payable->hotel->hotelier, $payable->hotel->contactsPaiement->first());
+            app(\App\Services\NotificationDashboardService::class)->paiementReservationReussi($payable);
         }
 
         if ($payable instanceof Loyer) {
@@ -137,6 +149,23 @@ class PaiementController extends Controller
 
             $enRetard = $baye->loyers()->where('statut', '!=', 'paye')->where('date_echeance', '<', now())->exists();
             $baye->update(['etat_paiement' => $enRetard ? 'en_retard' : 'a_jour']);
+
+            app(\App\Services\TransfertService::class)->creerEtVerser($paiement, $baye->bailleur, $baye->bailleur->bailleurContactsPaiement->first());
+        }
+
+        if ($payable instanceof Abonnement) {
+            app(\App\Services\ForfaitService::class)->activer($payable);
+        }
+    }
+
+    /** Propage l'échec du paiement à l'objet lié (statut_paiement réservation, etc.). */
+    private function marquerEchec(Paiement $paiement): void
+    {
+        $payable = $paiement->payable;
+
+        if ($payable instanceof Reservation) {
+            $payable->update(['statut_paiement' => 'echoue']);
+            app(\App\Services\NotificationDashboardService::class)->paiementReservationEchoue($payable);
         }
     }
 
@@ -145,10 +174,15 @@ class PaiementController extends Controller
         $model = match ($type) {
             'reservation' => Reservation::findOrFail($id),
             'loyer' => Loyer::findOrFail($id),
+            'abonnement' => Abonnement::findOrFail($id),
             default => abort(404),
         };
 
-        $proprietaireId = $type === 'reservation' ? $model->client_id : $model->baye->client_id;
+        $proprietaireId = match ($type) {
+            'reservation' => $model->client_id,
+            'loyer' => $model->baye->client_id,
+            'abonnement' => $model->user_id,
+        };
         abort_unless($proprietaireId === auth()->id(), 403);
 
         return $model;

@@ -12,7 +12,8 @@ class ReservationController extends Controller
     {
         abort_if(auth()->guest(), 403, 'Connectez-vous pour réserver.');
 
-        $categorieChambre->load('hotel');
+        $categorieChambre->load('hotel.hotelier');
+        $this->assurerForfaitPro($categorieChambre->hotel);
 
         return view('hotels.reserver', [
             'categorieChambre' => $categorieChambre,
@@ -23,6 +24,9 @@ class ReservationController extends Controller
     public function store(Request $request, CategorieChambre $categorieChambre)
     {
         abort_if(auth()->guest(), 403);
+
+        $categorieChambre->load('hotel.hotelier');
+        $this->assurerForfaitPro($categorieChambre->hotel);
 
         $data = $request->validate([
             'telephone_client' => ['required', 'string', 'max:30'],
@@ -46,5 +50,15 @@ class ReservationController extends Controller
 
         // Redirection vers le paiement (MTN MoMo / Orange Money via aangaraa-pay.com)
         return redirect()->route('paiements.formulaire', ['reservation', $reservation->id] + ['chambre', $categorieChambre->id]);
+    }
+
+    /** La réservation en ligne / le paiement ne sont actifs qu'en forfait pro (voir Hotel::show pour le fallback "contact"). */
+    private function assurerForfaitPro(\App\Models\Hotel $hotel): void
+    {
+        abort_unless(
+            $hotel->hotelier->peutUtiliserFonctionsPro(),
+            403,
+            "Cet hôtel n'a pas activé la réservation en ligne. Utilisez le formulaire de contact sur sa fiche."
+        );
     }
 }

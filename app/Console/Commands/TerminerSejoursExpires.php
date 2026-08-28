@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Mail\ProformaReservationMail;
 use App\Mail\ReservationTermineeMail;
 use App\Models\Reservation;
+use App\Services\NotificationDashboardService;
 use App\Services\ProformaService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +15,7 @@ class TerminerSejoursExpires extends Command
     protected $signature = 'flux:terminer-sejours';
     protected $description = "Clôture les réservations dont la date de départ est passée : génère le pro-forma, notifie l'hôtelier et envoie le pro-forma au client.";
 
-    public function __construct(private ProformaService $proforma)
+    public function __construct(private ProformaService $proforma, private NotificationDashboardService $notifications)
     {
         parent::__construct();
     }
@@ -32,6 +33,8 @@ class TerminerSejoursExpires extends Command
 
             Mail::to($reservation->hotel->hotelier->email)->send(new ReservationTermineeMail($reservation));
             Mail::to($reservation->client->email)->send(new ProformaReservationMail($reservation->fresh()));
+            $this->notifications->sejourTermine($reservation);
+            $this->notifications->proformaReservationDisponible($reservation);
 
             $this->info("Réservation #{$reservation->id} clôturée.");
         }

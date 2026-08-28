@@ -38,6 +38,7 @@ class HotelController extends Controller
         $admin = \App\Models\User::where('role', 'admin')->first();
         if ($admin) {
             \Illuminate\Support\Facades\Mail::to($admin->email)->send(new \App\Mail\NouvelHotelMail($hotel));
+            app(\App\Services\NotificationDashboardService::class)->nouvelHotelAValider($admin, $hotel);
         }
 
         return redirect()->route('hotelier.hotels.edit', $hotel)

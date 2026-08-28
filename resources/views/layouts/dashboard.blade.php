@@ -15,7 +15,11 @@
     <div class="lg:hidden sticky top-0 z-30 bg-flux-noir text-white h-14 flex items-center justify-between px-4">
         <button @click="sidebarOpen = true" aria-label="Ouvrir le menu"><x-icon name="menu" class="w-6 h-6" /></button>
         <span class="font-display text-lg">Flux</span>
-        <a href="{{ route('accueil') }}" class="text-xs text-white/60">Voir le site</a>
+        <div class="flex items-center gap-3">
+            <p class="text-xs text-white/60">{{ auth()->user()->forfait->nom ?? 'free' }}</p>
+            <span class="[&_button]:text-white/70 [&_button:hover]:text-white">@include('partials.notifications-bell')</span>
+            <a href="{{ route('accueil') }}" class="text-xs text-white/60">Voir le site</a>
+        </div>
     </div>
 
     <div class="flex">
@@ -36,6 +40,7 @@
             <header class="hidden lg:flex items-center justify-between px-8 h-16 bg-white border-b border-black/5">
                 <h1 class="font-display text-xl text-flux-noir">@yield('titre_page', 'Tableau de bord')</h1>
                 <div class="flex items-center gap-4">
+                    @include('partials.notifications-bell')
                     <span class="text-sm text-flux-noir/60">{{ auth()->user()->nom }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

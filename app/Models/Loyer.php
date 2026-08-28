@@ -10,5 +10,5 @@ class Loyer extends Model
     protected $casts = ['mois_concerne' => 'date', 'date_echeance' => 'date', 'date_paiement' => 'datetime', 'paiement_initial' => 'boolean'];
 
     public function baye() { return $this->belongsTo(Baye::class); }
-    public function paiement() { return $this->morphOne(Paiement::class, 'payable'); }
+    public function paiement() { return $this->morphOne(Paiement::class, 'payable')->latestOfMany(); }
 }

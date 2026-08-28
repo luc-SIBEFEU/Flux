@@ -9,9 +9,15 @@ use Illuminate\Http\Request;
 
 class DemandeBayeController extends Controller
 {
-    /** Bouton "Contacter le bailleur" sur la fiche logement. */
+    /** Bouton "Envoyer une demande de bail" — réservé aux bailleurs en forfait pro (gestion des bayes). */
     public function store(Request $request, Logement $logement)
     {
+        abort_unless(
+            $logement->bailleur->peutUtiliserFonctionsPro(),
+            403,
+            "Ce bailleur n'a pas activé la gestion des bayes en ligne. Utilisez le formulaire de contact sur la fiche du logement."
+        );
+
         $data = $request->validate([
             'telephone_client' => ['required', 'string', 'max:30'],
             'message' => ['nullable', 'string', 'max:1000'],

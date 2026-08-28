@@ -2,7 +2,7 @@
 @section('titre', 'Paiement en cours — Flux')
 
 @section('contenu')
-<div class="max-w-md mx-auto px-4 py-20 text-center" x-data="paiementAttente('{{ route('paiements.statut', $paiement) }}', '{{ $type === 'reservation' ? route('client.reservations.index') : route('client.bayes.index') }}')" x-init="demarrer()">
+<div class="max-w-md mx-auto px-4 py-20 text-center" x-data="paiementAttente('{{ route('paiements.statut', $paiement) }}', '{{ match($type) { 'reservation' => route('client.reservations.index'), 'abonnement' => route('forfait.index'), default => route('client.bayes.index') } }}')" x-init="demarrer()">
     <div class="w-16 h-16 rounded-full bg-flux-bleu-pale flex items-center justify-center mx-auto mb-6" :class="statut === 'reussi' && 'bg-flux-bleu'">
         <x-icon name="phone" class="w-8 h-8 text-flux-bleu" x-show="statut !== 'reussi'" />
         <x-icon name="check-circle" class="w-8 h-8 text-white" x-show="statut === 'reussi'" x-cloak />

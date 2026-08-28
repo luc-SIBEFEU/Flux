@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Equipement;
+use App\Models\Forfait;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,9 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(ForfaitsSeeder::class);
+        $forfaitFree = Forfait::where('code', 'free')->first();
+
         // Compte admin — aucune vue publique ne permet de créer un admin,
         // ce seeder est le seul moyen d'en obtenir un. On marque l'e-mail comme
         // vérifié directement puisqu'il ne passe pas par le flux d'inscription.
@@ -45,6 +49,7 @@ class DatabaseSeeder extends Seeder
                 'actif' => true,
                 'statut_validation'=> 'non_requis',
                 'email_verified_at' => now(),
+                'forfait_id' => $forfaitFree?->id,
             ]
         );
         User::firstOrCreate(
@@ -56,6 +61,7 @@ class DatabaseSeeder extends Seeder
                 'actif' => true,
                 'statut_validation'=> 'non_requis',
                 'email_verified_at' => now(),
+                'forfait_id' => $forfaitFree?->id,
             ]
         );
         // Référentiel d'équipements partagé hôtels / logements

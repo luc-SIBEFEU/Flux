@@ -24,6 +24,7 @@
                 <th class="text-left px-5 py-3">Période</th>
                 <th class="text-left px-5 py-3">Prix</th>
                 <th class="text-left px-5 py-3">Statut</th>
+                <th class="text-left px-5 py-3">Paiement</th>
                 <th class="text-right px-5 py-3">Actions</th>
             </tr>
         </thead>
@@ -40,6 +41,10 @@
                     <td class="px-5 py-3">
                         @php $badges = ['en_attente'=>'bg-flux-or/20 text-flux-or','confirmee'=>'bg-flux-bleu-pale text-flux-bleu','annulee'=>'bg-red-50 text-red-500','terminee'=>'bg-black/5 text-flux-noir/50']; @endphp
                         <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$r->statut] ?? '' }}">{{ ucfirst(str_replace('_',' ',$r->statut)) }}</span>
+                    </td>
+                    <td class="px-5 py-3">
+                        @php $badgesPaiement = ['en_attente'=>'bg-flux-or/20 text-flux-or','reussi'=>'bg-green-50 text-green-600','echoue'=>'bg-red-50 text-red-500','rembourse'=>'bg-black/5 text-flux-noir/50']; @endphp
+                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badgesPaiement[$r->statut_paiement] ?? '' }}">{{ ucfirst(str_replace('_',' ',$r->statut_paiement)) }}</span>
                     </td>
                     <td class="px-5 py-3 text-right whitespace-nowrap">
                         @if($r->statut === 'en_attente')

@@ -50,11 +50,18 @@
     @else
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-28 sm:pt-24 sm:pb-36">
-        <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">Hôtels & logements</p>
+        <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">Flux</p>
         <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white max-w-2xl leading-[1.05]">
-            Votre séjour, du premier clic au dernier jour.
+            Hotels et Logements au même endroit
         </h1>
-        <p class="text-white/70 mt-4 max-w-lg">Réservez une chambre d'hôtel ou trouvez le logement à louer qui vous correspond, partout au pays.</p>
+        <p class="text-white/70 mt-4 max-w-lg">Parcourez les hotels et logements, reservez en quelques étapes, Communiquez avec des bailleurs</p>
+        <p class="text-white/70 mt-4 max-w-lg">Créez votre compte dès maintenant et commencez vos réservations <br>
+        @if(!auth()->user())
+        <div class="mt-5 hover:bg-fux-bleu">
+        <a href="{{  route('login') }}" class="shadow-sm bg-flux-brume border border-black p-4 rounded-2xl  text-flux-noir"> Se Connecter</a>
+        </div>
+        @endif
+        </p>
     </div>
     @endif
 
@@ -104,6 +111,131 @@
     </div>
 </section>
 
+<!-- Pourquoi Flux ? -->
+<section id="pourquoi-flux" class="bg-white border-y border-black/5 py-20 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-10">
+            <p class="text-flux-or text-sm font-medium uppercase tracking-widest">Pourquoi Flux ?</p>
+            <h2 class="font-display text-3xl sm:text-4xl text-flux-noir mt-2">Tout ce qu'il faut pour avancer sereinement.</h2>
+            <p class="text-flux-noir/60 mt-4 leading-relaxed">Flux simplifie la recherche, la réservation et la mise en location pour vous faire gagner du temps à chaque étape.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-flux-brume rounded-2xl p-6">
+                <x-icon name="search" class="w-7 h-7 text-flux-bleu mb-5" />
+                <h3 class="font-semibold text-flux-noir">Une recherche simple</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Trouvez rapidement un hôtel ou un logement selon votre destination et vos besoins.</p>
+            </div>
+            <div class="bg-flux-brume rounded-2xl p-6">
+                <x-icon name="building" class="w-7 h-7 text-flux-violet mb-5" />
+                <h3 class="font-semibold text-flux-noir">Des offres vérifiées</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Consultez des annonces détaillées et des établissements validés par notre équipe.</p>
+            </div>
+            <div class="bg-flux-brume rounded-2xl p-6">
+                <x-icon name="heart" class="w-7 h-7 text-flux-bleu mb-5" />
+                <h3 class="font-semibold text-flux-noir">Des choix qui vous ressemblent</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Comparez les équipements, les avis et les tarifs pour choisir en confiance.</p>
+            </div>
+            <div class="bg-flux-brume rounded-2xl p-6">
+                <x-icon name="coins" class="w-7 h-7 text-flux-or mb-5" />
+                <h3 class="font-semibold text-flux-noir">Une expérience fluide</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Réservez et payez simplement, tandis que propriétaires et hôteliers développent leur activité.</p>
+            </div>
+        </div>
+        <a href="{{ route('a-propos') }}" class="inline-flex items-center gap-2 mt-8 text-sm font-semibold text-flux-bleu hover:text-flux-violet transition-colors">Découvrir Flux <span aria-hidden="true">→</span></a>
+    </div>
+</section>
+
+<!-- Workflow de réservation -->
+<section class="bg-flux-brume py-20 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-12">
+            <p class="text-flux-violet text-sm font-medium uppercase tracking-widest">Comment ça marche ?</p>
+            <h2 class="font-display text-3xl sm:text-4xl text-flux-noir mt-2">Réservez en quelques étapes.</h2>
+            <p class="text-flux-noir/60 mt-4 leading-relaxed">De la première recherche au suivi de votre séjour, Flux vous accompagne avec un parcours simple et transparent.</p>
+        </div>
+
+        <!-- <div class="flex items-start gap-3 bg-white border border-flux-or/40 rounded-xl px-4 py-3 mb-10 max-w-3xl text-sm text-flux-noir/70">
+            <x-icon name="user" class="w-5 h-5 text-flux-or shrink-0 mt-0.5" />
+            <p><strong class="text-flux-noir">Inscription ou connexion obligatoire :</strong> créez votre compte ou connectez-vous avant toute réservation, demande de logement ou prise de contact.</p>
+        </div> -->
+
+        <div class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-5">
+            <div class="hidden lg:block absolute top-6 left-[10%] right-[10%] border-t-2 border-dashed border-flux-violet/20"></div>
+            <div class="relative">
+                <div class="w-12 h-12 rounded-full bg-flux-bleu text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">1</div>
+                <x-icon name="users" class="w-6 h-6 text-flux-bleu mb-3" />
+                <h3 class="font-semibold text-flux-noir">Inscription</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Créez un compte flux, ou connectez vous si vous en avez un</p>
+            </div>
+            <div class="relative">
+                <div class="w-12 h-12 rounded-full bg-flux-bleu text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">2</div>
+                <x-icon name="search" class="w-6 h-6 text-flux-bleu mb-3" />
+                <h3 class="font-semibold text-flux-noir">Recherchez</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Indiquez votre destination et vos dates de séjour/catégories de logements.</p>
+            </div>
+            <div class="relative">
+                <div class="w-12 h-12 rounded-full bg-flux-violet text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">3</div>
+                <x-icon name="building" class="w-6 h-6 text-flux-violet mb-3" />
+                <h3 class="font-semibold text-flux-noir">Comparez</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Découvrez les hôtels, chambres, équipements et avis, ainsi que les logements disponibles</p>
+            </div>
+            <div class="relative">
+                <div class="w-12 h-12 rounded-full bg-flux-or text-flux-noir flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">4</div>
+                <x-icon name="calendar" class="w-6 h-6 text-flux-or mb-3" />
+                <h3 class="font-semibold text-flux-noir">Réservez</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Choisissez votre chambre/logement et confirmez vos informations.</p>
+            </div>
+            <div class="relative">
+                <div class="w-12 h-12 rounded-full bg-flux-bleu text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">5</div>
+                <x-icon name="coins" class="w-6 h-6 text-flux-bleu mb-3" />
+                <h3 class="font-semibold text-flux-noir">Payez</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Réglez votre réservation/location avec MTN MoMo ou Orange Money.</p>
+            </div>
+            <div class="relative">
+                <div class="w-12 h-12 rounded-full bg-flux-violet text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">6</div>
+                <x-icon name="check-circle" class="w-6 h-6 text-flux-violet mb-3" />
+                <h3 class="font-semibold text-flux-noir">Suivez</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Retrouvez l'état de votre réservation/location dans votre espace.</p>
+            </div>
+        </div>
+
+        <!-- <div class="mt-16 pt-12 border-t border-black/10">
+            <div class="max-w-2xl mb-10">
+                <p class="text-flux-violet text-sm font-medium uppercase tracking-widest">Workflow logements</p>
+                <h3 class="font-display text-2xl sm:text-3xl text-flux-noir mt-2">Trouvez votre prochain logement.</h3>
+                <p class="text-flux-noir/60 mt-3 leading-relaxed">Un parcours pensé pour faciliter les échanges entre locataires et bailleurs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="w-11 h-11 rounded-full bg-flux-violet text-white flex items-center justify-center font-display text-lg mb-5">1</div>
+                    <x-icon name="search" class="w-6 h-6 text-flux-violet mb-3" />
+                    <h4 class="font-semibold text-flux-noir">Recherchez</h4>
+                    <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Explorez les logements disponibles selon la ville ou le quartier.</p>
+                </div>
+                <div>
+                    <div class="w-11 h-11 rounded-full bg-flux-bleu text-white flex items-center justify-center font-display text-lg mb-5">2</div>
+                    <x-icon name="home" class="w-6 h-6 text-flux-bleu mb-3" />
+                    <h4 class="font-semibold text-flux-noir">Consultez</h4>
+                    <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Vérifiez les photos, le loyer, les équipements et les détails du bien.</p>
+                </div>
+                <div>
+                    <div class="w-11 h-11 rounded-full bg-flux-or text-flux-noir flex items-center justify-center font-display text-lg mb-5">3</div>
+                    <x-icon name="user" class="w-6 h-6 text-flux-or mb-3" />
+                    <h4 class="font-semibold text-flux-noir">Connectez-vous</h4>
+                    <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Inscrivez-vous ou connectez-vous pour envoyer une demande au bailleur.</p>
+                </div>
+                <div>
+                    <div class="w-11 h-11 rounded-full bg-flux-violet text-white flex items-center justify-center font-display text-lg mb-5">4</div>
+                    <x-icon name="mail" class="w-6 h-6 text-flux-violet mb-3" />
+                    <h4 class="font-semibold text-flux-noir">Échangez</h4>
+                    <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Envoyez votre demande et poursuivez les échanges depuis votre espace.</p>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</section>
+
 <!-- Hôtels en vogue -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-24">
     <div class="flex items-end justify-between mb-6">
@@ -141,8 +273,6 @@
             </a>
         @endforeach
     </div>
-
-            <x-icon name="wifi" />
 </section>
 
 @endsection

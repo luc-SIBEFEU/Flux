@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Mail\LogementRejeteMail;
 use App\Mail\LogementValideMail;
 use App\Models\Logement;
+use App\Services\NotificationDashboardService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class LogementValidationController extends Controller
 {
+    public function __construct(private NotificationDashboardService $notifications)
+    {
+    }
+
     public function index()
     {
         $logements = Logement::where('validation', 'en_attente')->with('bailleur')->latest()->paginate(10);
@@ -21,6 +26,7 @@ class LogementValidationController extends Controller
     {
         $logement->update(['validation' => 'valide', 'motif_rejet' => null]);
         Mail::to($logement->bailleur->email)->send(new LogementValideMail($logement));
+        $this->notifications->logementValide($logement);
 
         return back()->with('success', 'Logement validé et visible sur le site.');
     }
@@ -30,6 +36,7 @@ class LogementValidationController extends Controller
         $data = $request->validate(['motif_rejet' => ['required', 'string', 'max:500']]);
         $logement->update(['validation' => 'rejete', ...$data]);
         Mail::to($logement->bailleur->email)->send(new LogementRejeteMail($logement));
+        $this->notifications->logementRejete($logement);
 
         return back()->with('success', 'Logement rejeté.');
     }

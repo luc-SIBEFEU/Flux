@@ -76,21 +76,35 @@
                 <p class="text-sm text-flux-noir/60 mb-5">Durée minimum : {{ $logement->duree_min_mois }} mois</p>
 
                 @auth
-                    <form action="{{ route('demandes-baye.store', $logement) }}" method="POST" class="space-y-3">
-                        @csrf
-                        <input type="tel" name="telephone_client" required placeholder="Votre téléphone"
-                               class="w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
-                        <div>
-                            <label class="text-xs font-medium text-flux-noir/50">Durée souhaitée (mois, min. {{ $logement->duree_min_mois }})</label>
-                            <input type="number" name="duree_souhaitee_mois" min="{{ $logement->duree_min_mois }}" value="{{ $logement->duree_min_mois }}" required
-                                   class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
-                        </div>
-                        <textarea name="message" rows="2" placeholder="Message pour le bailleur (optionnel)"
-                                  class="w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet"></textarea>
-                        <button class="w-full inline-flex items-center justify-center gap-2 bg-flux-violet hover:bg-flux-violet-vif text-white font-semibold py-3 rounded-lg transition-colors">
-                            <x-icon name="phone" class="w-4 h-4" /> Contacter le bailleur
-                        </button>
-                    </form>
+                    @if($logement->bailleur->peutUtiliserFonctionsPro())
+                        <form action="{{ route('demandes-baye.store', $logement) }}" method="POST" class="space-y-3">
+                            @csrf
+                            <input type="tel" name="telephone_client" required placeholder="Votre téléphone"
+                                   class="w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
+                            <div>
+                                <label class="text-xs font-medium text-flux-noir/50">Durée souhaitée (mois, min. {{ $logement->duree_min_mois }})</label>
+                                <input type="number" name="duree_souhaitee_mois" min="{{ $logement->duree_min_mois }}" value="{{ $logement->duree_min_mois }}" required
+                                       class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
+                            </div>
+                            <textarea name="message" rows="2" placeholder="Message pour le bailleur (optionnel)"
+                                      class="w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet"></textarea>
+                            <button class="w-full inline-flex items-center justify-center gap-2 bg-flux-violet hover:bg-flux-violet-vif text-white font-semibold py-3 rounded-lg transition-colors">
+                                <x-icon name="phone" class="w-4 h-4" /> Envoyer une demande de bail
+                            </button>
+                        </form>
+                    @else
+                        <p class="text-xs text-flux-noir/50 mb-3">Ce logement n'est pas géré en ligne : contactez directement le bailleur.</p>
+                        <form action="{{ route('logements.contacter', $logement) }}" method="POST" class="space-y-3">
+                            @csrf
+                            <input type="tel" name="telephone_client" required placeholder="Votre téléphone"
+                                   class="w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
+                            <textarea name="message" rows="3" required placeholder="Votre message"
+                                      class="w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet"></textarea>
+                            <button class="w-full inline-flex items-center justify-center gap-2 bg-flux-violet hover:bg-flux-violet-vif text-white font-semibold py-3 rounded-lg transition-colors">
+                                <x-icon name="phone" class="w-4 h-4" /> Contacter le bailleur
+                            </button>
+                        </form>
+                    @endif
                 @else
                     <a href="{{ route('login') }}" class="w-full inline-flex items-center justify-center gap-2 bg-flux-violet text-white font-semibold py-3 rounded-lg">Se connecter pour contacter</a>
                 @endauth

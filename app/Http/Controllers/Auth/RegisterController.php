@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\CodeVerificationMail;
 use App\Mail\NouvelleInscriptionMail;
 use App\Models\User;
+use App\Services\NotificationDashboardService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
+    public function __construct(private NotificationDashboardService $notifications)
+    {
+    }
+
     public function create()
     {
         return view('auth.register', ['type' => request('type', 'client')]);
@@ -93,6 +98,7 @@ class RegisterController extends Controller
         $admin = User::where('role', 'admin')->first();
         if ($admin) {
             Mail::to($admin->email)->send(new NouvelleInscriptionMail($user));
+            $this->notifications->nouvelleInscription($admin, $user);
         }
 
         return redirect()->route('login')->with('success',

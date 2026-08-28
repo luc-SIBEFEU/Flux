@@ -33,6 +33,20 @@
                 </p>
                 <p class="font-display text-lg text-flux-bleu mt-2">{{ number_format($reservation->prix_total,0,',',' ') }} FCFA</p>
 
+                @php
+                    $badgesPaiement = ['en_attente'=>'bg-flux-or/20 text-flux-or','reussi'=>'bg-green-50 text-green-600','echoue'=>'bg-red-50 text-red-500','rembourse'=>'bg-black/5 text-flux-noir/50'];
+                @endphp
+                <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium mt-2 {{ $badgesPaiement[$reservation->statut_paiement] ?? '' }}">
+                    Paiement : {{ ucfirst(str_replace('_',' ', $reservation->statut_paiement)) }}
+                </span>
+
+                @if($reservation->peutReessayerPaiement())
+                    <a href="{{ route('paiements.formulaire', ['reservation', $reservation->id]) }}"
+                       class="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-white bg-red-500 rounded-lg py-2">
+                        Réessayer le paiement
+                    </a>
+                @endif
+
                 @if($reservation->statut === 'confirmee')
                     <a href="{{ route('client.reservations.suivi', $reservation) }}" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-flux-bleu hover:underline">
                         Suivre mon séjour →

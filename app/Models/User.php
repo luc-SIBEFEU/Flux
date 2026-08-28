@@ -12,9 +12,13 @@ class User extends Authenticatable
     protected $fillable = [
         'nom', 'email', 'password', 'telephone', 'avatar', 'genre', 'role', 'actif',
         'code_verification', 'code_expire_a', 'statut_validation', 'motif_rejet_compte',
+        'forfait_id', 'forfait_expire_le', 'essai_pro_utilise',
     ];
     protected $hidden = ['password', 'remember_token', 'code_verification'];
-    protected $casts = ['actif' => 'boolean', 'email_verified_at' => 'datetime', 'code_expire_a' => 'datetime'];
+    protected $casts = [
+        'actif' => 'boolean', 'email_verified_at' => 'datetime', 'code_expire_a' => 'datetime',
+        'forfait_expire_le' => 'date', 'essai_pro_utilise' => 'boolean',
+    ];
 
     public function isAdmin(): bool { return $this->role === 'admin'; }
     public function isHotelier(): bool { return $this->role === 'hotelier'; }
@@ -42,4 +46,46 @@ class User extends Authenticatable
     public function bayesLocataire() { return $this->hasMany(Baye::class, 'client_id'); }
     public function bayesBailleur() { return $this->hasMany(Baye::class, 'bailleur_id'); }
     public function bailleurContactsPaiement() { return $this->hasMany(BailleurContactPaiement::class, 'bailleur_id'); }
+    public function adminContactsPaiement() { return $this->hasMany(AdminContactPaiement::class, 'admin_id'); }
+    public function forfait() { return $this->belongsTo(Forfait::class); }
+    public function abonnements() { return $this->hasMany(Abonnement::class); }
+    public function messagesContactRecus() { return $this->hasMany(MessageContact::class, 'destinataire_id'); }
+    public function transferts() { return $this->hasMany(Transfert::class, 'beneficiaire_id'); }
+
+    /**
+     * Uniquement pertinent pour hotelier/bailleur. Un utilisateur sans forfait_id
+     * (comptes créés avant la migration, ou admin/client) est traité comme "free".
+     */
+    public function estEnForfaitPro(): bool
+    {
+        if (! $this->forfait || ! $this->forfait->estPro()) {
+            return false;
+        }
+
+        // Pas de date de fin = anomalie -> on considère le forfait pro comme expiré
+        // plutôt que de laisser un accès pro non borné.
+        return $this->forfait_expire_le && now()->toDateString() <= $this->forfait_expire_le->toDateString();
+    }
+
+    public function estEnEssaiPro(): bool
+    {
+        if (! $this->estEnForfaitPro()) {
+            return false;
+        }
+
+        $dernier = $this->abonnements()->latest('date_debut')->first();
+
+        return $dernier && $dernier->statut === 'essai';
+    }
+
+    public function peutDemarrerEssaiPro(): bool
+    {
+        return ! $this->essai_pro_utilise && (! $this->forfait || $this->forfait->estFree());
+    }
+
+    /** Réservation en ligne / paiement / gestion des bayes : réservé au forfait pro. */
+    public function peutUtiliserFonctionsPro(): bool
+    {
+        return $this->estEnForfaitPro();
+    }
 }

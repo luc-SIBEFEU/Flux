@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Mail\BayeTermineMail;
 use App\Mail\ProformaBayeMail;
 use App\Models\Baye;
+use App\Services\NotificationDashboardService;
 use App\Services\ProformaService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +15,7 @@ class TraiterBauxExpires extends Command
     protected $signature = 'flux:traiter-baux';
     protected $description = "Termine les baux dont le moratoire est écoulé (le logement redevient visible), et met à jour les retards de paiement des baux en cours.";
 
-    public function __construct(private ProformaService $proforma)
+    public function __construct(private ProformaService $proforma, private NotificationDashboardService $notifications)
     {
         parent::__construct();
     }
@@ -39,6 +40,8 @@ class TraiterBauxExpires extends Command
 
             Mail::to($baye->bailleur->email)->send(new BayeTermineMail($baye));
             Mail::to($baye->client->email)->send(new ProformaBayeMail($baye->fresh(['loyers'])));
+            $this->notifications->bailTermine($baye);
+            $this->notifications->proformaBayeDisponible($baye);
 
             $termines++;
             $this->info("Bail #{$baye->id} terminé, logement #{$baye->logement_id} de nouveau disponible.");

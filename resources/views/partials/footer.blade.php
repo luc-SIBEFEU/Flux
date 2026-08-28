@@ -16,6 +16,14 @@
             </div>
         </div>
         <div>
+            <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Flux</h4>
+            <ul class="space-y-2 text-sm">
+                <li><a href="{{ route('a-propos') }}" class="hover:text-flux-or">À propos de Flux</a></li>
+                <li><a href="{{ route('conditions-utilisation') }}" class="hover:text-flux-or">Conditions d'utilisation</a></li>
+                <li><a href="{{ route('politique-confidentialite') }}" class="hover:text-flux-or">Politique de confidentialité</a></li>
+            </ul>
+        </div>
+        <div>
             <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Logements</h4>
             <ul class="space-y-2 text-sm">
                 <li><a href="{{ route('logements.index') }}" class="hover:text-flux-or">Trouver un logement</a></li>
@@ -45,7 +53,7 @@
         </div>
     </div>
     <div class="border-t border-white/10 py-5 text-center">
-        <div class="text-xl sm:text-2xl md:text-3xl font-black tracking-[0.2em] text-white/90 uppercase font-mono">N0UTTA S4RL</div>
         <div class="mt-2 text-xs text-white/40">© {{ date('Y') }} Flux. Tous droits réservés.</div>
+        <div class="mt-2 text-xl font-black tracking-[0.2em] text-white/90 uppercase font-mono">Développé par Noutta Sarl</div>
     </div>
 </footer>

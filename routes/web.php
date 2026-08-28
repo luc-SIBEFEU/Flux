@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('accueil');
+Route::view('/a-propos', 'a-propos')->name('a-propos');
+Route::view('/conditions-utilisation', 'conditions-utilisation')->name('conditions-utilisation');
+Route::view('/politique-confidentialite', 'politique-confidentialite')->name('politique-confidentialite');
 
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
@@ -33,6 +36,9 @@ Route::get('/logements/{logement}', [LogementController::class, 'show'])->name('
 Route::middleware('guest')->group(function () {
     Route::get('/connexion', [LoginController::class, 'create'])->name('login');
     Route::post('/connexion', [LoginController::class, 'store']);
+    Route::get('/mot-de-passe-oublie', [LoginController::class, 'forgotPassword'])->name('password.request');
+    Route::post('/mot-de-passe-oublie', [LoginController::class, 'findAccount'])->name('password.email');
+    Route::post('/mot-de-passe-oublie/confirmer', [LoginController::class, 'resetPassword'])->name('password.reset');
     Route::get('/inscription', [RegisterController::class, 'create'])->name('register');
     Route::post('/inscription', [RegisterController::class, 'store']);
     Route::get('/inscription/verifier', [RegisterController::class, 'formulaireVerification'])->name('register.verifier');
@@ -65,9 +71,33 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/hotels/{hotel}/avis', [Client\AvisController::class, 'store'])->name('avis.store');
     Route::post('/hotels/{hotel}/favori', [Client\FavoriController::class, 'toggle'])->name('favoris.toggle');
+    Route::post('/hotels/{hotel}/contacter', [Client\MessageContactController::class, 'contacterHotel'])->name('hotels.contacter');
 
     Route::post('/logements/{logement}/demande-baye', [Client\DemandeBayeController::class, 'store'])->name('demandes-baye.store');
     Route::post('/logements/{logement}/commentaire', [Client\CommentaireController::class, 'store'])->name('commentaires.store');
+    Route::post('/logements/{logement}/contacter', [Client\MessageContactController::class, 'contacterLogement'])->name('logements.contacter');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Notifications dashboard (cloche, tous rôles connectés)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index'])->name('index');
+    Route::post('/{notification}/lue', [\App\Http\Controllers\NotificationController::class, 'marquerLue'])->name('lue');
+    Route::post('/tout-lire', [\App\Http\Controllers\NotificationController::class, 'marquerToutesLues'])->name('tout-lire');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Forfaits (hôtelier & bailleur) — essai gratuit, souscription pro
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:hotelier,bailleur'])->prefix('forfait')->name('forfait.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\ForfaitController::class, 'index'])->name('index');
+    Route::post('/essai', [\App\Http\Controllers\ForfaitController::class, 'demarrerEssai'])->name('essai');
+    Route::post('/{forfait}/souscrire', [\App\Http\Controllers\ForfaitController::class, 'souscrire'])->name('souscrire');
 });
 
 /*
@@ -115,6 +145,19 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::get('/rapports', [Admin\RapportController::class, 'index'])->name('rapports.index');
 
+    Route::get('/forfaits', [Admin\ForfaitController::class, 'index'])->name('forfaits.index');
+    Route::put('/forfaits/{forfait}', [Admin\ForfaitController::class, 'update'])->name('forfaits.update');
+
+    Route::get('/transferts', [Admin\TransfertController::class, 'index'])->name('transferts.index');
+    Route::post('/transferts/{transfert}/reessayer', [Admin\TransfertController::class, 'reessayer'])->name('transferts.reessayer');
+    Route::post('/transferts/{transfert}/verifier', [Admin\TransfertController::class, 'verifier'])->name('transferts.verifier');
+    Route::post('/transferts/{transfert}/effectuer', [Admin\TransfertController::class, 'marquerEffectue'])->name('transferts.effectuer');
+
+    Route::get('/profil', [Admin\ProfileController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [Admin\ProfileController::class, 'update'])->name('profil.update');
+    Route::post('/contacts-paiement', [Admin\ContactPaiementController::class, 'store'])->name('contacts-paiement.store');
+    Route::delete('/contacts-paiement/{contact}', [Admin\ContactPaiementController::class, 'destroy'])->name('contacts-paiement.destroy');
+
     Route::get('/aide', [Admin\AideController::class, 'index'])->name('aide.index');
 });
 
@@ -143,6 +186,8 @@ Route::middleware(['auth', 'role:hotelier'])->prefix('hotelier')->name('hotelier
     Route::post('/reservations/{reservation}/annuler', [Hotelier\ReservationController::class, 'annuler'])->name('reservations.annuler');
 
     Route::get('/avis', [Hotelier\AvisController::class, 'index'])->name('avis.index');
+
+    Route::get('/messages', [Hotelier\MessageContactController::class, 'index'])->name('messages.index');
 
     Route::get('/profil', [Hotelier\ProfileController::class, 'edit'])->name('profil.edit');
     Route::put('/profil', [Hotelier\ProfileController::class, 'update'])->name('profil.update');
@@ -203,6 +248,8 @@ Route::middleware(['auth', 'role:bailleur'])->prefix('bailleur')->name('bailleur
     Route::get('/logements/{logement}/clients', [Bailleur\ClientController::class, 'parLogement'])->name('logements.clients');
 
     Route::get('/commentaires', [Bailleur\CommentaireController::class, 'index'])->name('commentaires.index');
+
+    Route::get('/messages', [Bailleur\MessageContactController::class, 'index'])->name('messages.index');
 
     Route::get('/profil', [Bailleur\ProfileController::class, 'edit'])->name('profil.edit');
     Route::put('/profil', [Bailleur\ProfileController::class, 'update'])->name('profil.update');

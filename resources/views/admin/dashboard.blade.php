@@ -1,17 +1,17 @@
 @extends('layouts.dashboard')
 @php($espaceRole = 'admin')
-@section('titre_page', 'Tableau de bord')
-@section('titre', 'Admin — Flux')
+@section('titre_page', __('sidebar.tableau_de_bord'))
+@section('titre', __('sidebar.espace_admin') . ' — Flux')
 
 @section('contenu')
 
 <!-- Cartes stats -->
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     @foreach([
-        ['icone'=>'users','label'=>'Clients','valeur'=>$stats['clients'],'couleur'=>'bleu'],
-        ['icone'=>'building','label'=>'Hôteliers','valeur'=>$stats['hoteliers'],'couleur'=>'bleu'],
-        ['icone'=>'key','label'=>'Bailleurs','valeur'=>$stats['bailleurs'],'couleur'=>'violet'],
-        ['icone'=>'bell','label'=>'Hôtels en attente','valeur'=>$stats['hotels_en_attente'],'couleur'=>'or'],
+        ['icone'=>'users','label'=>__('dashboard_stats.clients'),'valeur'=>$stats['clients'],'couleur'=>'bleu'],
+        ['icone'=>'building','label'=>__('dashboard_stats.hoteliers'),'valeur'=>$stats['hoteliers'],'couleur'=>'bleu'],
+        ['icone'=>'key','label'=>__('dashboard_stats.bailleurs'),'valeur'=>$stats['bailleurs'],'couleur'=>'violet'],
+        ['icone'=>'bell','label'=>__('dashboard_stats.hotels_en_attente'),'valeur'=>$stats['hotels_en_attente'],'couleur'=>'or'],
     ] as $c)
         <div class="bg-white rounded-2xl border border-black/5 p-5">
             <span class="inline-flex w-9 h-9 rounded-lg bg-flux-{{ $c['couleur'] }}-pale items-center justify-center mb-3">
@@ -26,25 +26,25 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Courbe : revenus -->
     <div class="lg:col-span-2 bg-white rounded-2xl border border-black/5 p-6">
-        <h3 class="font-medium mb-1">Revenus des 6 derniers mois</h3>
-        <p class="text-xs text-flux-noir/40 mb-4">Paiements réussis, toutes plateformes confondues</p>
+        <h3 class="font-medium mb-1">{{ __('dashboard_stats.revenus_6_mois') }}</h3>
+        <p class="text-xs text-flux-noir/40 mb-4">{{ __('dashboard_stats.paiements_reussis_toutes_plateformes') }}</p>
         <canvas id="revenusChart" height="110"></canvas>
     </div>
 
     <!-- Camembert : reservations par statut -->
     <div class="bg-white rounded-2xl border border-black/5 p-6">
-        <h3 class="font-medium mb-1">Réservations par statut</h3>
-        <p class="text-xs text-flux-noir/40 mb-4">Répartition globale</p>
+        <h3 class="font-medium mb-1">{{ __('dashboard_stats.reservations_par_statut') }}</h3>
+        <p class="text-xs text-flux-noir/40 mb-4">{{ __('dashboard_stats.repartition_globale') }}</p>
         <canvas id="statutChart" height="220"></canvas>
     </div>
 </div>
 
 <div class="mt-8 flex flex-wrap gap-3">
     <a href="{{ route('admin.hotels.index') }}" class="inline-flex items-center gap-2 bg-flux-bleu text-white text-sm font-medium px-4 py-2.5 rounded-lg">
-        <x-icon name="check-circle" class="w-4 h-4" /> {{ $stats['hotels_en_attente'] }} hôtel(s) à valider
+        <x-icon name="check-circle" class="w-4 h-4" /> {{ trans_choice('dashboard_stats.hotels_a_valider', $stats['hotels_en_attente'], ['n' => $stats['hotels_en_attente']]) }}
     </a>
     <a href="{{ route('admin.avis.index') }}" class="inline-flex items-center gap-2 bg-white border border-black/10 text-sm font-medium px-4 py-2.5 rounded-lg">
-        <x-icon name="star" class="w-4 h-4 text-flux-or" /> Modérer les avis
+        <x-icon name="star" class="w-4 h-4 text-flux-or" /> {{ __('dashboard_stats.moderer_avis') }}
     </a>
 </div>
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
             labels: revenusLabels,
             datasets: [{
-                label: 'Revenus (FCFA)',
+                label: @json(__('dashboard_stats.revenus_fcfa')),
                 data: revenusData,
                 borderColor: '#1B3A6B',
                 backgroundColor: 'rgba(27,58,107,0.08)',

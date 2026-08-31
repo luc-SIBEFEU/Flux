@@ -693,5 +693,39 @@
         "etape_confirmee": "Réservation confirmée",
         "etape_en_cours": "Séjour en cours",
         "etape_terminee": "Séjour terminé"
+    },
+    "dashboard_stats": {
+        "en_attente": "En attente",
+        "confirmees": "Confirmées",
+        "revenus_totaux": "Revenus totaux",
+        "reservations_6_mois": "Réservations des 6 derniers mois",
+        "toutes_categories_chambres": "Toutes catégories de chambres confondues",
+        "occupation_par_chambre": "Occupation par chambre",
+        "reservations_par_categorie": "Réservations par catégorie",
+        "loues": "Loués",
+        "baux_en_cours": "Baux en cours",
+        "nouvelles_demandes": "Nouvelles demandes",
+        "revenus_locatifs_6_mois": "Revenus locatifs des 6 derniers mois",
+        "loyers_payes": "Loyers payés",
+        "parc_logements": "Parc de logements",
+        "repartition_par_type": "Répartition par type",
+        "demandes_a_traiter": "{1} :n demande à traiter|[2,*] :n demandes à traiter",
+        "revenus_fcfa": "Revenus (FCFA)",
+        "clients": "Clients",
+        "hoteliers": "Hôteliers",
+        "bailleurs": "Bailleurs",
+        "hotels_en_attente": "Hôtels en attente",
+        "revenus_6_mois": "Revenus des 6 derniers mois",
+        "paiements_reussis_toutes_plateformes": "Paiements réussis, toutes plateformes confondues",
+        "reservations_par_statut": "Réservations par statut",
+        "repartition_globale": "Répartition globale",
+        "hotels_a_valider": "{1} :n hôtel à valider|[2,*] :n hôtels à valider",
+        "moderer_avis": "Modérer les avis"
+    },
+    "hotel": {
+        "ajouter_hotel": "Ajouter un hôtel"
+    },
+    "logement": {
+        "ajouter_logement": "Ajouter un logement"
     }
 }

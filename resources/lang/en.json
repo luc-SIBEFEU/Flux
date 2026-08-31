@@ -692,5 +692,39 @@
         "etape_confirmee": "Booking confirmed",
         "etape_en_cours": "Stay in progress",
         "etape_terminee": "Stay completed"
+    },
+    "dashboard_stats": {
+        "en_attente": "Pending",
+        "confirmees": "Confirmed",
+        "revenus_totaux": "Total revenue",
+        "reservations_6_mois": "Bookings over the last 6 months",
+        "toutes_categories_chambres": "All room categories combined",
+        "occupation_par_chambre": "Occupancy by room",
+        "reservations_par_categorie": "Bookings by category",
+        "loues": "Rented",
+        "baux_en_cours": "Active leases",
+        "nouvelles_demandes": "New requests",
+        "revenus_locatifs_6_mois": "Rental income over the last 6 months",
+        "loyers_payes": "Rent paid",
+        "parc_logements": "Property portfolio",
+        "repartition_par_type": "Breakdown by type",
+        "demandes_a_traiter": "{1} :n request to process|[2,*] :n requests to process",
+        "revenus_fcfa": "Revenue (FCFA)",
+        "clients": "Clients",
+        "hoteliers": "Hoteliers",
+        "bailleurs": "Landlords",
+        "hotels_en_attente": "Hotels pending",
+        "revenus_6_mois": "Revenue over the last 6 months",
+        "paiements_reussis_toutes_plateformes": "Successful payments, all platforms combined",
+        "reservations_par_statut": "Bookings by status",
+        "repartition_globale": "Overall breakdown",
+        "hotels_a_valider": "{1} :n hotel to approve|[2,*] :n hotels to approve",
+        "moderer_avis": "Moderate reviews"
+    },
+    "hotel": {
+        "ajouter_hotel": "Add a hotel"
+    },
+    "logement": {
+        "ajouter_logement": "Add a property"
     }
 }

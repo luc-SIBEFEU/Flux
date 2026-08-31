@@ -1,16 +1,16 @@
 @extends('layouts.dashboard')
 @php($espaceRole = 'hotelier')
-@section('titre_page', 'Tableau de bord')
-@section('titre', 'Hôtelier — Flux')
+@section('titre_page', __('sidebar.tableau_de_bord'))
+@section('titre', __('sidebar.espace_hotelier') . ' — Flux')
 
 @section('contenu')
 
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     @foreach([
-        ['icone'=>'building','label'=>'Mes hôtels','valeur'=>$stats['hotels'],'couleur'=>'bleu'],
-        ['icone'=>'calendar','label'=>'En attente','valeur'=>$stats['reservations_en_attente'],'couleur'=>'or'],
-        ['icone'=>'check-circle','label'=>'Confirmées','valeur'=>$stats['reservations_confirmees'],'couleur'=>'bleu'],
-        ['icone'=>'coins','label'=>'Revenus totaux','valeur'=>number_format($stats['revenus_total'],0,',',' ').' F','couleur'=>'or'],
+        ['icone'=>'building','label'=>__('sidebar.mes_hotels'),'valeur'=>$stats['hotels'],'couleur'=>'bleu'],
+        ['icone'=>'calendar','label'=>__('dashboard_stats.en_attente'),'valeur'=>$stats['reservations_en_attente'],'couleur'=>'or'],
+        ['icone'=>'check-circle','label'=>__('dashboard_stats.confirmees'),'valeur'=>$stats['reservations_confirmees'],'couleur'=>'bleu'],
+        ['icone'=>'coins','label'=>__('dashboard_stats.revenus_totaux'),'valeur'=>number_format($stats['revenus_total'],0,',',' ').' F','couleur'=>'or'],
     ] as $c)
         <div class="bg-white rounded-2xl border border-black/5 p-5">
             <span class="inline-flex w-9 h-9 rounded-lg bg-flux-{{ $c['couleur'] }}-pale items-center justify-center mb-3">
@@ -24,21 +24,21 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 bg-white rounded-2xl border border-black/5 p-6">
-        <h3 class="font-medium mb-1">Réservations des 6 derniers mois</h3>
-        <p class="text-xs text-flux-noir/40 mb-4">Toutes catégories de chambres confondues</p>
+        <h3 class="font-medium mb-1">{{ __('dashboard_stats.reservations_6_mois') }}</h3>
+        <p class="text-xs text-flux-noir/40 mb-4">{{ __('dashboard_stats.toutes_categories_chambres') }}</p>
         <canvas id="reservationsChart" height="110"></canvas>
     </div>
 
     <div class="bg-white rounded-2xl border border-black/5 p-6">
-        <h3 class="font-medium mb-1">Occupation par chambre</h3>
-        <p class="text-xs text-flux-noir/40 mb-4">Réservations par catégorie</p>
+        <h3 class="font-medium mb-1">{{ __('dashboard_stats.occupation_par_chambre') }}</h3>
+        <p class="text-xs text-flux-noir/40 mb-4">{{ __('dashboard_stats.reservations_par_categorie') }}</p>
         <canvas id="chambresChart" height="220"></canvas>
     </div>
 </div>
 
 <div class="mt-8">
     <a href="{{ route('hotelier.hotels.create') }}" class="inline-flex items-center gap-2 bg-flux-bleu text-white text-sm font-medium px-4 py-2.5 rounded-lg">
-        <x-icon name="plus" class="w-4 h-4" /> Ajouter un hôtel
+        <x-icon name="plus" class="w-4 h-4" /> {{ __('hotel.ajouter_hotel') }}
     </a>
 </div>
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
             labels: {!! json_encode(array_keys($reservationsParMois->toArray())) !!},
             datasets: [{
-                label: 'Réservations',
+                label: @json(__('sidebar.reservations')),
                 data: {!! json_encode(array_values($reservationsParMois->toArray())) !!},
                 borderColor: '#1B3A6B',
                 backgroundColor: 'rgba(27,58,107,0.08)',

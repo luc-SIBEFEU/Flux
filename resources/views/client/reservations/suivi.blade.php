@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @php $espaceRole = 'client'; @endphp
-@section('titre_page', 'Suivi de séjour')
-@section('titre', 'Mon séjour — Mon espace')
+@section('titre_page', __('reservation.suivi_sejour'))
+@section('titre', __('reservation.mon_sejour_titre'))
 
 @section('contenu')
 
@@ -18,11 +18,11 @@
 
         <div class="grid grid-cols-2 gap-4 mt-6">
             <div class="bg-flux-brume rounded-xl p-4">
-                <p class="text-xs text-flux-noir/40">Chambre</p>
+                <p class="text-xs text-flux-noir/40">{{ __('mail.chambre') }}</p>
                 <p class="font-medium">{{ $reservation->categorieChambre->nom }}</p>
             </div>
             <div class="bg-flux-brume rounded-xl p-4">
-                <p class="text-xs text-flux-noir/40">Période</p>
+                <p class="text-xs text-flux-noir/40">{{ __('mail.periode') }}</p>
                 <p class="font-medium">{{ $reservation->date_arrivee->format('d/m/Y') }} → {{ $reservation->date_depart->format('d/m/Y') }}</p>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <!-- Timeline du séjour -->
         <div class="mt-8">
             <div class="flex items-center">
-                @foreach(['Réservation confirmée', "Séjour en cours", 'Séjour terminé'] as $i => $label)
+                @foreach([__('reservation.etape_confirmee'), __('reservation.etape_en_cours'), __('reservation.etape_terminee')] as $i => $label)
                     <div class="flex-1 flex flex-col items-center text-center">
                         <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold
                                     {{ $i <= $etapeActuelle ? 'bg-flux-bleu text-white' : 'bg-black/10 text-flux-noir/40' }}">
@@ -46,19 +46,19 @@
         </div>
 
         <div class="mt-8 flex items-center justify-between border-t border-black/5 pt-5">
-            <span class="text-flux-noir/50 text-sm">Montant total</span>
+            <span class="text-flux-noir/50 text-sm">{{ __('mail.montant_total') }}</span>
             <span class="font-display text-xl text-flux-bleu">{{ number_format($reservation->prix_total,0,',',' ') }} FCFA</span>
         </div>
 
         @php $badgesPaiement = ['en_attente'=>'bg-flux-or/20 text-flux-or','reussi'=>'bg-green-50 text-green-600','echoue'=>'bg-red-50 text-red-500','rembourse'=>'bg-black/5 text-flux-noir/50']; @endphp
         <div class="mt-3 flex items-center justify-between">
-            <span class="text-flux-noir/50 text-sm">Paiement</span>
-            <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badgesPaiement[$reservation->statut_paiement] ?? '' }}">{{ ucfirst(str_replace('_',' ', $reservation->statut_paiement)) }}</span>
+            <span class="text-flux-noir/50 text-sm">{{ __('reservation.paiement_label') }}</span>
+            <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badgesPaiement[$reservation->statut_paiement] ?? '' }}">{{ __('reservation.statut_paiement_' . $reservation->statut_paiement) }}</span>
         </div>
         @if ($reservation->peutReessayerPaiement())
             <a href="{{ route('paiements.formulaire', ['reservation', $reservation->id]) }}"
                class="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-white bg-red-500 rounded-lg py-2.5">
-                Réessayer le paiement
+                {{ __('reservation.reessayer_paiement') }}
             </a>
         @endif
     </div>

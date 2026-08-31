@@ -670,5 +670,27 @@
         "payer_loyer": "Pay the rent",
         "loyer_de": "Rent for",
         "payer_montant": "Pay :montant FCFA"
+    },
+    "reservation": {
+        "tab_en_attente": "Pending",
+        "tab_confirmees": "Confirmed",
+        "tab_annulees": "Cancelled",
+        "statut_en_attente": "Pending",
+        "statut_confirmee": "Confirmed",
+        "statut_annulee": "Cancelled",
+        "statut_terminee": "Completed",
+        "paiement_label": "Payment",
+        "statut_paiement_en_attente": "Pending",
+        "statut_paiement_reussi": "Successful",
+        "statut_paiement_echoue": "Failed",
+        "statut_paiement_rembourse": "Refunded",
+        "reessayer_paiement": "Retry payment",
+        "suivre_sejour": "Track my stay →",
+        "aucune_dans_categorie": "No bookings in this category.",
+        "suivi_sejour": "Stay tracking",
+        "mon_sejour_titre": "My stay — My space",
+        "etape_confirmee": "Booking confirmed",
+        "etape_en_cours": "Stay in progress",
+        "etape_terminee": "Stay completed"
     }
 }

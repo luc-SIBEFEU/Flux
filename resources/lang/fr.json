@@ -671,5 +671,27 @@
         "payer_loyer": "Payer le loyer",
         "loyer_de": "Loyer de",
         "payer_montant": "Payer :montant FCFA"
+    },
+    "reservation": {
+        "tab_en_attente": "En attente",
+        "tab_confirmees": "Confirmées",
+        "tab_annulees": "Annulées",
+        "statut_en_attente": "En attente",
+        "statut_confirmee": "Confirmée",
+        "statut_annulee": "Annulée",
+        "statut_terminee": "Terminée",
+        "paiement_label": "Paiement",
+        "statut_paiement_en_attente": "En attente",
+        "statut_paiement_reussi": "Réussi",
+        "statut_paiement_echoue": "Échoué",
+        "statut_paiement_rembourse": "Remboursé",
+        "reessayer_paiement": "Réessayer le paiement",
+        "suivre_sejour": "Suivre mon séjour →",
+        "aucune_dans_categorie": "Aucune réservation dans cette catégorie.",
+        "suivi_sejour": "Suivi de séjour",
+        "mon_sejour_titre": "Mon séjour — Mon espace",
+        "etape_confirmee": "Réservation confirmée",
+        "etape_en_cours": "Séjour en cours",
+        "etape_terminee": "Séjour terminé"
     }
 }

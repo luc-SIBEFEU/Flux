@@ -19,7 +19,8 @@ class ProformaBayeMail extends Mailable
 
     public function build()
     {
-        $mail = $this->subject('Votre pro-forma de location — Flux')
+        $mail = $this->locale($this->baye->client->locale ?? 'fr')
+            ->subject('Votre pro-forma de location — Flux')
             ->markdown('mail.proforma-baye', ['baye' => $this->baye]);
 
         if ($this->baye->proforma_pdf) {

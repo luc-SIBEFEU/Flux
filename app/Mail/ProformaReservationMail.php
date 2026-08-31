@@ -19,7 +19,8 @@ class ProformaReservationMail extends Mailable
 
     public function build()
     {
-        $mail = $this->subject('Votre pro-forma de séjour — Flux')
+        $mail = $this->locale($this->reservation->client->locale ?? 'fr')
+            ->subject('Votre pro-forma de séjour — Flux')
             ->markdown('mail.proforma-reservation', ['reservation' => $this->reservation]);
 
         if ($this->reservation->proforma_pdf) {

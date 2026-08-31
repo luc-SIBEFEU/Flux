@@ -1,9 +1,9 @@
 @component('mail::message')
-# Votre inscription n'a pas été retenue
+# {{ __('mail.inscription_rejetee_titre') }}
 
-Bonjour {{ $user->nom }},
+{{ __('mail.bonjour', ['nom' => $user->nom]) }},
 
-Après examen, votre inscription en tant que **{{ $user->role }}** sur Flux n'a pas pu être validée.
+{{ __('mail.inscription_rejetee_corps', ['role' => $user->role]) }}
 
 @if($user->motif_rejet_compte)
 @component('mail::panel')
@@ -11,12 +11,12 @@ Après examen, votre inscription en tant que **{{ $user->role }}** sur Flux n'a 
 @endcomponent
 @endif
 
-Vous pouvez soumettre une nouvelle inscription en corrigeant les informations concernées.
+{{ __('mail.nouvelle_inscription_possible') }}
 
 @component('mail::button', ['url' => route('register', ['type' => $user->role])])
-Nouvelle inscription
+{{ __('mail.nouvelle_inscription_bouton') }}
 @endcomponent
 
-Merci,<br>
-L'équipe {{ config('app.name') }}
+{{ __('mail.merci') }},<br>
+{{ __('mail.equipe') }} {{ config('app.name') }}
 @endcomponent

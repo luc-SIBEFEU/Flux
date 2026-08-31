@@ -1,19 +1,19 @@
 @component('mail::message')
-# Nouvelle inscription à valider
+# {{ __('mail.nouvelle_inscription_titre') }}
 
-Un nouveau compte **{{ $user->role }}** vient d'être créé et attend votre validation.
+{{ __('mail.nouveau_compte_corps', ['role' => $user->role]) }}
 
 @component('mail::panel')
-**Nom :** {{ $user->nom }}<br>
-**E-mail :** {{ $user->email }}<br>
-**Téléphone :** {{ $user->telephone ?? '—' }}<br>
-**Rôle :** {{ ucfirst($user->role) }}
+**{{ __('common.nom') }} :** {{ $user->nom }}<br>
+**{{ __('auth.email') }} :** {{ $user->email }}<br>
+**{{ __('common.telephone') }} :** {{ $user->telephone ?? '—' }}<br>
+**{{ __('mail.role') }} :** {{ ucfirst($user->role) }}
 @endcomponent
 
 @component('mail::button', ['url' => route('admin.users.index', ['role' => $user->role])])
-Examiner les inscriptions
+{{ __('mail.examiner_inscriptions') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

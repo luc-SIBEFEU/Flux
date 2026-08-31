@@ -17,7 +17,8 @@ class HotelRejeteMail extends Mailable
 
     public function build()
     {
-        return $this->subject("Votre hôtel « {$this->hotel->nom} » n'a pas été validé")
+        return $this->locale($this->hotel->hotelier->locale ?? 'fr')
+            ->subject("Votre hôtel « {$this->hotel->nom} » n'a pas été validé")
             ->markdown('mail.hotel-rejete', ['hotel' => $this->hotel]);
     }
 }

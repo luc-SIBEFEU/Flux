@@ -1,14 +1,14 @@
 @component('mail::message')
-# Nouveau message d'un client
+# {{ __('mail.nouveau_message_client_titre') }}
 
-**{{ $messageContact->client->nom }}** souhaite être contacté au sujet de « {{ $messageContact->contactable->nom }} ».
+{{ __('mail.souhaite_contact', ['client' => $messageContact->client->nom, 'objet' => $messageContact->contactable->nom]) }}
 
 @component('mail::panel')
-**Téléphone :** {{ $messageContact->telephone_client }}<br>
-**Message :**<br>
+**{{ __('common.telephone') }} :** {{ $messageContact->telephone_client }}<br>
+**{{ __('contact.message') }} :**<br>
 {{ $messageContact->message }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

@@ -1,14 +1,14 @@
 @component('mail::message')
-# Bail terminé
+# {{ __('mail.baye_termine_titre') }}
 
-Le bail de **{{ $baye->client->nom }}** pour le logement de {{ $baye->logement->quartier }}, {{ $baye->logement->ville }} est arrivé à son terme (moratoire écoulé).
+{{ __('mail.baye_termine_corps', ['client' => $baye->client->nom, 'quartier' => $baye->logement->quartier, 'ville' => $baye->logement->ville]) }}
 
-Le logement est de nouveau visible sur le site et peut être proposé à un nouveau locataire.
+{{ __('mail.baye_termine_dispo') }}
 
 @component('mail::button', ['url' => route('bailleur.bayes.index')])
-Voir mes locations
+{{ __('mail.voir_mes_locations') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

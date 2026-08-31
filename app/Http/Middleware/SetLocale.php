@@ -15,9 +15,12 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Récupérer la langue depuis la session
-        $locale = session('locale') ?? config('app.locale');
-        
+        // Priorité : session (choix explicite pendant la navigation), sinon la préférence
+        // enregistrée sur le compte de l'utilisateur connecté, sinon la langue par défaut.
+        $locale = session('locale')
+            ?? $request->user()?->locale
+            ?? config('app.locale');
+
         // Vérifier que la locale est supportée
         if (!in_array($locale, ['fr', 'en'])) {
             $locale = config('app.locale');

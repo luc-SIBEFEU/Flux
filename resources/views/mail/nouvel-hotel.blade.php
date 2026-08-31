@@ -1,18 +1,18 @@
 @component('mail::message')
-# Nouvel hôtel à valider
+# {{ __('mail.nouvel_hotel_titre') }}
 
-L'hôtelier **{{ $hotel->hotelier->nom }}** vient de soumettre un nouvel hôtel.
+{{ __('mail.nouvel_hotel_corps', ['hotelier' => $hotel->hotelier->nom]) }}
 
 @component('mail::panel')
-**Nom :** {{ $hotel->nom }}<br>
-**Ville :** {{ $hotel->ville }}<br>
-**Étoiles :** {{ $hotel->nombre_etoiles }}
+**{{ __('common.nom') }} :** {{ $hotel->nom }}<br>
+**{{ __('common.ville') }} :** {{ $hotel->ville }}<br>
+**{{ __('mail.etoiles') }} :** {{ $hotel->nombre_etoiles }}
 @endcomponent
 
 @component('mail::button', ['url' => route('admin.hotels.index')])
-Examiner les hôtels en attente
+{{ __('mail.examiner_hotels_attente') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

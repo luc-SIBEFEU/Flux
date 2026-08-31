@@ -1,14 +1,14 @@
 @component('mail::message')
-# Hôtel validé ✅
+# {{ __('mail.hotel_valide_titre') }} ✅
 
-Bonjour {{ $hotel->hotelier->nom }},
+{{ __('mail.bonjour', ['nom' => $hotel->hotelier->nom]) }},
 
-Votre hôtel **{{ $hotel->nom }}** a été validé et est maintenant visible sur le site.
+{{ __('mail.hotel_valide_corps', ['nom' => $hotel->nom]) }}
 
 @component('mail::button', ['url' => route('hotels.show', $hotel)])
-Voir la fiche hôtel
+{{ __('mail.voir_fiche_hotel') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

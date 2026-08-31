@@ -18,7 +18,8 @@ class ReservationTermineeMail extends Mailable
 
     public function build()
     {
-        return $this->subject("Séjour terminé — {$this->reservation->hotel->nom}")
+        return $this->locale($this->reservation->hotel->hotelier->locale ?? 'fr')
+            ->subject("Séjour terminé — {$this->reservation->hotel->nom}")
             ->markdown('mail.reservation-terminee', ['reservation' => $this->reservation]);
     }
 }

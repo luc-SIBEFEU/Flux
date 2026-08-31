@@ -17,7 +17,8 @@ class HotelValideMail extends Mailable
 
     public function build()
     {
-        return $this->subject("Votre hôtel « {$this->hotel->nom} » a été validé")
+        return $this->locale($this->hotel->hotelier->locale ?? 'fr')
+            ->subject("Votre hôtel « {$this->hotel->nom} » a été validé")
             ->markdown('mail.hotel-valide', ['hotel' => $this->hotel]);
     }
 }

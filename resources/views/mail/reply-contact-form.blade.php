@@ -1,8 +1,8 @@
-# Réponse à votre message de contact
+# {{ __('mail.reponse_contact_titre') }}
 
-Bonjour {{ $contact->nom }},
+{{ __('mail.bonjour', ['nom' => $contact->nom]) }},
 
-Merci de nous avoir contactés. Voici la réponse de notre équipe :
+{{ __('mail.voici_reponse') }}
 
 ---
 
@@ -10,17 +10,17 @@ Merci de nous avoir contactés. Voici la réponse de notre équipe :
 
 ---
 
-**Informations du message initial :**
+**{{ __('mail.infos_message_initial') }} :**
 
-| Champ | Valeur |
+| {{ __('mail.champ') }} | {{ __('mail.valeur') }} |
 | --- | --- |
-| **Sujet** | {{ $contact->sujet }} |
-| **Type de demande** | {{ $contact->type_demande }} |
-| **Reçu le** | {{ $contact->created_at->format('d/m/Y à H:i') }} |
-| **Répondu le** | {{ $contact->reponse_date->format('d/m/Y à H:i') }} |
+| **{{ __('contact.sujet') }}** | {{ $contact->sujet }} |
+| **{{ __('contact.type_demande') }}** | {{ $contact->type_demande }} |
+| **{{ __('mail.recu_le') }}** | {{ $contact->created_at->format('d/m/Y à H:i') }} |
+| **{{ __('mail.repondu_le') }}** | {{ $contact->reponse_date->format('d/m/Y à H:i') }} |
 
-Si vous avez d'autres questions, n'hésitez pas à nous contacter à nouveau.
+{{ __('mail.autres_questions') }}
 
 ---
 
-*Merci de votre confiance en Flux !*
+*{{ __('mail.merci_confiance_flux') }}*

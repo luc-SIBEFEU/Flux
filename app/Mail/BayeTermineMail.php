@@ -18,7 +18,8 @@ class BayeTermineMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Bail terminé — logement de nouveau disponible')
+        return $this->locale($this->baye->logement->bailleur->locale ?? 'fr')
+            ->subject('Bail terminé — logement de nouveau disponible')
             ->markdown('mail.baye-terminee', ['baye' => $this->baye]);
     }
 }

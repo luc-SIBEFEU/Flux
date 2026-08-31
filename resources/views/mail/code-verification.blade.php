@@ -1,18 +1,18 @@
 @component('mail::message')
-# Vérifiez votre adresse e-mail
+# {{ __('mail.verifiez_email_titre') }}
 
-Bonjour {{ $user->nom }},
+{{ __('mail.bonjour', ['nom' => $user->nom]) }},
 
-Merci de vous être inscrit sur **Flux**. Utilisez le code ci-dessous pour finaliser la création de votre compte.
+{{ __('mail.merci_inscription') }}
 
 @component('mail::panel')
 <div style="text-align:center; font-size:28px; font-weight:bold; letter-spacing:6px;">{{ $user->code_verification }}</div>
 @endcomponent
 
-Ce code expire dans 15 minutes.
+{{ __('mail.code_expire_15min') }}
 
-Si vous n'êtes pas à l'origine de cette inscription, ignorez simplement cet e-mail.
+{{ __('mail.si_pas_origine_inscription') }}
 
-Merci,<br>
-L'équipe {{ config('app.name') }}
+{{ __('mail.merci') }},<br>
+{{ __('mail.equipe') }} {{ config('app.name') }}
 @endcomponent

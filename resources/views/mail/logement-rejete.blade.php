@@ -1,9 +1,9 @@
 @component('mail::message')
-# Logement non validé
+# {{ __('mail.logement_non_valide_titre') }}
 
-Bonjour {{ $logement->bailleur->nom }},
+{{ __('mail.bonjour', ['nom' => $logement->bailleur->nom]) }},
 
-Votre logement ({{ ucfirst($logement->type) }}, {{ $logement->quartier }}) n'a pas été validé.
+{{ __('mail.logement_non_valide_corps', ['type' => ucfirst($logement->type), 'quartier' => $logement->quartier]) }}
 
 @if($logement->motif_rejet)
 @component('mail::panel')
@@ -11,12 +11,12 @@ Votre logement ({{ ucfirst($logement->type) }}, {{ $logement->quartier }}) n'a p
 @endcomponent
 @endif
 
-Vous pouvez le modifier et le soumettre à nouveau depuis votre espace.
+{{ __('mail.modifier_soumettre_espace') }}
 
 @component('mail::button', ['url' => route('bailleur.logements.edit', $logement)])
-Modifier mon logement
+{{ __('mail.modifier_mon_logement') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

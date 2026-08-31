@@ -17,7 +17,8 @@ class MessageContactMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Nouveau message client — Flux')
+        return $this->locale($this->messageContact->destinataire->locale ?? 'fr')
+            ->subject('Nouveau message client — Flux')
             ->markdown('mail.message-contact', ['messageContact' => $this->messageContact]);
     }
 }

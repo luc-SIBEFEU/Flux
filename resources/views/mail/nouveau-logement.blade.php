@@ -1,18 +1,18 @@
 @component('mail::message')
-# Nouveau logement à valider
+# {{ __('mail.nouveau_logement_titre') }}
 
-Le bailleur **{{ $logement->bailleur->nom }}** vient de soumettre un nouveau logement.
+{{ __('mail.nouveau_logement_corps', ['bailleur' => $logement->bailleur->nom]) }}
 
 @component('mail::panel')
-**Type :** {{ ucfirst($logement->type) }} ({{ $logement->categorie }})<br>
-**Ville :** {{ $logement->ville }}, {{ $logement->quartier }}<br>
-**Prix :** {{ number_format($logement->prix_mois, 0, ',', ' ') }} FCFA / mois
+**{{ __('common.type') }} :** {{ ucfirst($logement->type) }} ({{ $logement->categorie }})<br>
+**{{ __('common.ville') }} :** {{ $logement->ville }}, {{ $logement->quartier }}<br>
+**{{ __('common.prix') }} :** {{ number_format($logement->prix_mois, 0, ',', ' ') }} FCFA / {{ __('forfait.mois') }}
 @endcomponent
 
 @component('mail::button', ['url' => route('admin.logements.index')])
-Examiner les logements en attente
+{{ __('mail.examiner_logements_attente') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

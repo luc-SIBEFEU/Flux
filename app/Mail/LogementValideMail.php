@@ -17,7 +17,8 @@ class LogementValideMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Votre logement a été validé')
+        return $this->locale($this->logement->bailleur->locale ?? 'fr')
+            ->subject('Votre logement a été validé')
             ->markdown('mail.logement-valide', ['logement' => $this->logement]);
     }
 }

@@ -18,7 +18,13 @@ class LocaleController extends Controller
         
         // Sauvegarder la locale dans la session
         session(['locale' => $locale]);
-        
+
+        // Si un utilisateur est connecté, on mémorise aussi son choix sur son compte
+        // pour que ses e-mails transactionnels (envoyés hors session) soient dans la bonne langue.
+        if ($request->user()) {
+            $request->user()->update(['locale' => $locale]);
+        }
+
         // Rediriger vers la page précédente ou l'accueil
         return back()->with('success', $locale === 'fr' 
             ? 'Langue changée en français.' 

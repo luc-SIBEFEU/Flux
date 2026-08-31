@@ -1,14 +1,14 @@
 @component('mail::message')
-# Logement validé ✅
+# {{ __('mail.logement_valide_titre') }} ✅
 
-Bonjour {{ $logement->bailleur->nom }},
+{{ __('mail.bonjour', ['nom' => $logement->bailleur->nom]) }},
 
-Votre logement ({{ ucfirst($logement->type) }}, {{ $logement->quartier }}) a été validé et est maintenant visible sur le site.
+{{ __('mail.logement_valide_corps', ['type' => ucfirst($logement->type), 'quartier' => $logement->quartier]) }}
 
 @component('mail::button', ['url' => route('logements.show', $logement)])
-Voir l'annonce
+{{ __('mail.voir_annonce') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

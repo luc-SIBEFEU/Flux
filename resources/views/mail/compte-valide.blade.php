@@ -1,14 +1,14 @@
 @component('mail::message')
-# Votre compte a été validé ✅
+# {{ __('mail.compte_valide_titre') }} ✅
 
-Bonjour {{ $user->nom }},
+{{ __('mail.bonjour', ['nom' => $user->nom]) }},
 
-Bonne nouvelle : votre compte **{{ $user->role }}** sur Flux vient d'être validé par notre équipe. Vous pouvez dès à présent vous connecter à votre espace.
+{{ __('mail.compte_valide_corps', ['role' => $user->role]) }}
 
 @component('mail::button', ['url' => route('login')])
-Me connecter
+{{ __('mail.me_connecter') }}
 @endcomponent
 
-Merci,<br>
-L'équipe {{ config('app.name') }}
+{{ __('mail.merci') }},<br>
+{{ __('mail.equipe') }} {{ config('app.name') }}
 @endcomponent

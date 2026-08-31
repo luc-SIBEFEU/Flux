@@ -17,7 +17,8 @@ class CompteRejeteMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Votre inscription Flux n\'a pas été retenue')
+        return $this->locale($this->user->locale ?? 'fr')
+            ->subject('Votre inscription Flux n\'a pas été retenue')
             ->markdown('mail.compte-rejete', ['user' => $this->user]);
     }
 }

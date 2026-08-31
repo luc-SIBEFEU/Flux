@@ -17,7 +17,8 @@ class CompteValideMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Votre compte Flux a été validé')
+        return $this->locale($this->user->locale ?? 'fr')
+            ->subject('Votre compte Flux a été validé')
             ->markdown('mail.compte-valide', ['user' => $this->user]);
     }
 }

@@ -17,7 +17,8 @@ class CodeVerificationMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Votre code de vérification Flux')
+        return $this->locale($this->user->locale ?? 'fr')
+            ->subject('Votre code de vérification Flux')
             ->markdown('mail.code-verification', ['user' => $this->user]);
     }
 }

@@ -1,27 +1,27 @@
-# Nouveau message de contact — Flux
+# {{ __('mail.nouveau_message_contact_titre') }} — Flux
 
-Bonjour,
+{{ __('mail.bonjour_simple') }},
 
-Un nouveau message a été reçu via le formulaire de contact.
+{{ __('mail.nouveau_message_recu') }}
 
-**Informations du contact :**
+**{{ __('mail.infos_contact') }} :**
 
-| Champ | Valeur |
+| {{ __('mail.champ') }} | {{ __('mail.valeur') }} |
 | --- | --- |
-| **Nom** | {{ $contact->nom }} |
-| **Email** | {{ $contact->email }} |
-| **Type de demande** | {{ $contact->type_demande }} |
-| **Sujet** | {{ $contact->sujet }} |
-| **Date** | {{ $contact->created_at->format('d/m/Y à H:i') }} |
+| **{{ __('common.nom') }}** | {{ $contact->nom }} |
+| **{{ __('auth.email') }}** | {{ $contact->email }} |
+| **{{ __('contact.type_demande') }}** | {{ $contact->type_demande }} |
+| **{{ __('contact.sujet') }}** | {{ $contact->sujet }} |
+| **{{ __('common.date') }}** | {{ $contact->created_at->format('d/m/Y à H:i') }} |
 
-**Message :**
+**{{ __('contact.message') }} :**
 
 {{ $contact->message }}
 
 @component('mail::button', ['url' => route('admin.contacts.show', $contact)])
-Voir le détail du message
+{{ __('mail.voir_detail_message') }}
 @endcomponent
 
 ---
 
-*Cet email a été généré automatiquement. Veuillez ne pas y répondre directement.*
+*{{ __('mail.email_auto_genere') }}*

@@ -17,7 +17,8 @@ class MotDePasseReinitialiseMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Votre nouveau mot de passe Flux')
+        return $this->locale($this->user->locale ?? 'fr')
+            ->subject('Votre nouveau mot de passe Flux')
             ->markdown('mail.mot-de-passe-reinitialise', [
                 'user' => $this->user,
                 'temporaryPassword' => $this->temporaryPassword,

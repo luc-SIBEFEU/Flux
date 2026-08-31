@@ -1,9 +1,9 @@
 @component('mail::message')
-# Hôtel non validé
+# {{ __('mail.hotel_non_valide_titre') }}
 
-Bonjour {{ $hotel->hotelier->nom }},
+{{ __('mail.bonjour', ['nom' => $hotel->hotelier->nom]) }},
 
-Votre hôtel **{{ $hotel->nom }}** n'a pas été validé.
+{{ __('mail.hotel_non_valide_corps', ['nom' => $hotel->nom]) }}
 
 @if($hotel->motif_rejet)
 @component('mail::panel')
@@ -11,12 +11,12 @@ Votre hôtel **{{ $hotel->nom }}** n'a pas été validé.
 @endcomponent
 @endif
 
-Vous pouvez le modifier et le soumettre à nouveau.
+{{ __('mail.modifier_soumettre') }}
 
 @component('mail::button', ['url' => route('hotelier.hotels.edit', $hotel)])
-Modifier mon hôtel
+{{ __('mail.modifier_mon_hotel') }}
 @endcomponent
 
-Merci,<br>
+{{ __('mail.merci') }},<br>
 {{ config('app.name') }}
 @endcomponent

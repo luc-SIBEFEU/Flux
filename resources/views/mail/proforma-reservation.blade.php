@@ -1,15 +1,15 @@
 @component('mail::message')
-# Merci pour votre séjour !
+# {{ __('mail.merci_sejour_titre') }}
 
-Bonjour {{ $reservation->client->nom }},
+{{ __('mail.bonjour', ['nom' => $reservation->client->nom]) }},
 
-Votre séjour à l'hôtel **{{ $reservation->hotel->nom }}** est terminé. Vous trouverez votre pro-forma en pièce jointe.
+{{ __('mail.sejour_termine_corps', ['hotel' => $reservation->hotel->nom]) }}
 
 @component('mail::panel')
-**Période :** {{ $reservation->date_arrivee->format('d/m/Y') }} → {{ $reservation->date_depart->format('d/m/Y') }}<br>
-**Montant total :** {{ number_format($reservation->prix_total, 0, ',', ' ') }} FCFA
+**{{ __('mail.periode') }} :** {{ $reservation->date_arrivee->format('d/m/Y') }} → {{ $reservation->date_depart->format('d/m/Y') }}<br>
+**{{ __('mail.montant_total') }} :** {{ number_format($reservation->prix_total, 0, ',', ' ') }} FCFA
 @endcomponent
 
-Merci de votre confiance,<br>
-L'équipe {{ config('app.name') }}
+{{ __('mail.merci_confiance') }},<br>
+{{ __('mail.equipe') }} {{ config('app.name') }}
 @endcomponent

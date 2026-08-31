@@ -17,7 +17,8 @@ class LogementRejeteMail extends Mailable
 
     public function build()
     {
-        return $this->subject("Votre logement n'a pas été validé")
+        return $this->locale($this->logement->bailleur->locale ?? 'fr')
+            ->subject("Votre logement n'a pas été validé")
             ->markdown('mail.logement-rejete', ['logement' => $this->logement]);
     }
 }

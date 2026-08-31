@@ -1,15 +1,15 @@
 @php
 $liens = [
-    ['route' => 'bailleur.dashboard', 'icone' => 'chart', 'label' => 'Tableau de bord'],
-    ['route' => 'bailleur.logements.index', 'icone' => 'building', 'label' => 'Mes logements'],
-    ['route' => 'bailleur.minicites.index', 'icone' => 'map-pin', 'label' => 'Mes mini-cités'],
-    ['route' => 'bailleur.demandes.index', 'icone' => 'bell', 'label' => 'Demandes de baye'],
-    ['route' => 'bailleur.bayes.index', 'icone' => 'key', 'label' => 'Locations en cours'],
-    ['route' => 'bailleur.commentaires.index', 'icone' => 'star', 'label' => 'Commentaires'],
-    ['route' => 'bailleur.messages.index', 'icone' => 'mail', 'label' => 'Messages'],
-    ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => 'Mon forfait'],
-    ['route' => 'bailleur.profil.edit', 'icone' => 'user', 'label' => 'Mon profil'],
-    ['route' => 'bailleur.aide.index', 'icone' => 'sparkles', 'label' => 'Guide & notice'],
+    ['route' => 'bailleur.dashboard', 'icone' => 'chart', 'label' => __('sidebar.tableau_de_bord')],
+    ['route' => 'bailleur.logements.index', 'icone' => 'building', 'label' => __('sidebar.mes_logements')],
+    ['route' => 'bailleur.minicites.index', 'icone' => 'map-pin', 'label' => __('sidebar.mes_minicites')],
+    ['route' => 'bailleur.demandes.index', 'icone' => 'bell', 'label' => __('sidebar.demandes_baye')],
+    ['route' => 'bailleur.bayes.index', 'icone' => 'key', 'label' => __('sidebar.locations_en_cours')],
+    ['route' => 'bailleur.commentaires.index', 'icone' => 'star', 'label' => __('sidebar.commentaires')],
+    ['route' => 'bailleur.messages.index', 'icone' => 'mail', 'label' => __('sidebar.messages')],
+    ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => __('sidebar.mon_forfait')],
+    ['route' => 'bailleur.profil.edit', 'icone' => 'user', 'label' => __('sidebar.mon_profil')],
+    ['route' => 'bailleur.aide.index', 'icone' => 'sparkles', 'label' => __('sidebar.guide_notice')],
 ];
 @endphp
 
@@ -20,7 +20,7 @@ $liens = [
         </span>
         <div>
             <div class="font-display text-lg leading-none">Flux</div>
-            <div class="text-xs text-white/40 mt-1">Espace bailleur</div>
+            <div class="text-xs text-white/40 mt-1">{{ __('sidebar.espace_bailleur') }}</div>
         </div>
     </a>
 

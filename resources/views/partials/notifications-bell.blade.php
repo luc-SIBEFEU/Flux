@@ -4,7 +4,7 @@
 @endphp
 
 <div class="relative" x-data="{ open: false }">
-    <button @click="open = !open" @click.outside="open = false" class="relative p-2 text-flux-noir/40 hover:text-flux-noir" title="Notifications">
+    <button @click="open = !open" @click.outside="open = false" class="relative p-2 text-flux-noir/40 hover:text-flux-noir" title="{{ __('notifications.titre') }}">
         <x-icon name="bell" class="w-5 h-5" />
         @if ($nonLues > 0)
             <span class="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-red-500 text-white text-[10px] leading-4 text-center font-medium">
@@ -16,11 +16,11 @@
     <div x-show="open" x-cloak x-transition
          class="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-white rounded-xl shadow-xl border border-black/5 z-50">
         <div class="flex items-center justify-between px-4 py-3 border-b border-black/5">
-            <span class="text-sm font-medium text-flux-noir">Notifications</span>
+            <span class="text-sm font-medium text-flux-noir">{{ __('notifications.titre') }}</span>
             @if ($nonLues > 0)
                 <form method="POST" action="{{ route('notifications.tout-lire') }}">
                     @csrf
-                    <button class="text-xs text-flux-bleu hover:underline">Tout marquer lu</button>
+                    <button class="text-xs text-flux-bleu hover:underline">{{ __('notifications.tout_marquer_lu') }}</button>
                 </form>
             @endif
         </div>
@@ -38,7 +38,7 @@
                 </button>
             </form>
         @empty
-            <p class="px-4 py-6 text-sm text-flux-noir/40 text-center">Aucune notification pour le moment.</p>
+            <p class="px-4 py-6 text-sm text-flux-noir/40 text-center">{{ __('notifications.aucune') }}</p>
         @endforelse
     </div>
 </div>

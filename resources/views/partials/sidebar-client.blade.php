@@ -1,10 +1,10 @@
 @php
 $liens = [
-    ['route' => 'client.reservations.index', 'icone' => 'calendar', 'label' => 'Mes réservations'],
-    ['route' => 'client.favoris.index', 'icone' => 'heart', 'label' => 'Mes favoris'],
-    ['route' => 'client.bayes.index', 'icone' => 'key', 'label' => 'Mes locations'],
-    ['route' => 'client.profil.edit', 'icone' => 'user', 'label' => 'Mon profil'],
-    ['route' => 'client.aide.index', 'icone' => 'sparkles', 'label' => 'Guide & notice'],
+    ['route' => 'client.reservations.index', 'icone' => 'calendar', 'label' => __('sidebar.mes_reservations')],
+    ['route' => 'client.favoris.index', 'icone' => 'heart', 'label' => __('sidebar.mes_favoris')],
+    ['route' => 'client.bayes.index', 'icone' => 'key', 'label' => __('sidebar.mes_locations')],
+    ['route' => 'client.profil.edit', 'icone' => 'user', 'label' => __('sidebar.mon_profil')],
+    ['route' => 'client.aide.index', 'icone' => 'sparkles', 'label' => __('sidebar.guide_notice')],
 ];
 @endphp
 
@@ -15,7 +15,7 @@ $liens = [
         </span>
         <div>
             <div class="font-display text-lg leading-none">Flux</div>
-            <div class="text-xs text-white/40 mt-1">Mon espace</div>
+            <div class="text-xs text-white/40 mt-1">{{ __('sidebar.mon_espace') }}</div>
         </div>
     </a>
 

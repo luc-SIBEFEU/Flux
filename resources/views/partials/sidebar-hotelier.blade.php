@@ -1,13 +1,13 @@
 @php
 $liens = [
-    ['route' => 'hotelier.dashboard', 'icone' => 'chart', 'label' => 'Tableau de bord'],
-    ['route' => 'hotelier.hotels.index', 'icone' => 'building', 'label' => 'Mes hôtels'],
-    ['route' => 'hotelier.reservations.index', 'icone' => 'calendar', 'label' => 'Réservations'],
-    ['route' => 'hotelier.avis.index', 'icone' => 'star', 'label' => 'Avis clients'],
-    ['route' => 'hotelier.messages.index', 'icone' => 'mail', 'label' => 'Messages'],
-    ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => 'Mon forfait'],
-    ['route' => 'hotelier.profil.edit', 'icone' => 'user', 'label' => 'Mon profil'],
-    ['route' => 'hotelier.aide.index', 'icone' => 'sparkles', 'label' => 'Guide & notice'],
+    ['route' => 'hotelier.dashboard', 'icone' => 'chart', 'label' => __('sidebar.tableau_de_bord')],
+    ['route' => 'hotelier.hotels.index', 'icone' => 'building', 'label' => __('sidebar.mes_hotels')],
+    ['route' => 'hotelier.reservations.index', 'icone' => 'calendar', 'label' => __('sidebar.reservations')],
+    ['route' => 'hotelier.avis.index', 'icone' => 'star', 'label' => __('sidebar.avis_clients')],
+    ['route' => 'hotelier.messages.index', 'icone' => 'mail', 'label' => __('sidebar.messages')],
+    ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => __('sidebar.mon_forfait')],
+    ['route' => 'hotelier.profil.edit', 'icone' => 'user', 'label' => __('sidebar.mon_profil')],
+    ['route' => 'hotelier.aide.index', 'icone' => 'sparkles', 'label' => __('sidebar.guide_notice')],
 ];
 @endphp
 
@@ -18,7 +18,7 @@ $liens = [
         </span>
         <div>
             <div class="font-display text-lg leading-none">Flux</div>
-            <div class="text-xs text-white/40 mt-1">Espace hôtelier</div>
+            <div class="text-xs text-white/40 mt-1">{{ __('sidebar.espace_hotelier') }}</div>
         </div>
     </a>
 

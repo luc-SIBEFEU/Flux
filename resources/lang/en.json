@@ -42,7 +42,8 @@
         "type": "Type",
         "ville": "City",
         "prix": "Price",
-        "telephone": "Phone"
+        "telephone": "Phone",
+        "ajouter": "Add"
     },
     "navigation": {
         "hotels": "Hotels",
@@ -54,7 +55,8 @@
         "conditions": "Terms & Conditions",
         "confidentialite": "Privacy Policy",
         "forum": "Forum",
-        "actualites": "News"
+        "actualites": "News",
+        "deconnexion": "Log out"
     },
     "auth": {
         "email": "Email",
@@ -212,7 +214,17 @@
         "conditions": "Terms",
         "confidentialite": "Privacy",
         "droits_reserves": "All rights reserved",
-        "reseaux_sociaux": "Follow us"
+        "reseaux_sociaux": "Follow us",
+        "tagline": "Hotel booking and rental matchmaking, all in one place.",
+        "contactez_nous": "Contact us for any question or assistance.",
+        "a_propos_de_flux": "About Flux",
+        "trouver_logement": "Find a place to live",
+        "devenir_bailleur": "Become a landlord",
+        "trouver_hotel": "Find a hotel",
+        "devenir_hotelier": "Become a hotelier",
+        "paiement": "Payment",
+        "paiements_securises": "Secure payments via aangaraa-pay.com",
+        "developpe_par": "Developed by Noutta Sarl"
     },
     "pages": {
         "accueil_titre": "Home — Flux",
@@ -412,5 +424,56 @@
         "sejour_termine_titre": "Stay ended",
         "sejour_termine_hotelier_corps": "**:client**'s stay at **:hotel** has just ended.",
         "voir_mes_reservations": "View my bookings"
+    },
+    "sidebar": {
+        "tableau_de_bord": "Dashboard",
+        "mon_profil": "My profile",
+        "guide_notice": "Guide & instructions",
+        "mon_forfait": "My plan",
+        "messages": "Messages",
+        "mon_espace": "My space",
+        "espace_hotelier": "Hotelier space",
+        "espace_bailleur": "Landlord space",
+        "espace_admin": "Admin space",
+        "mes_reservations": "My bookings",
+        "mes_favoris": "My favorites",
+        "mes_locations": "My rentals",
+        "mes_hotels": "My hotels",
+        "reservations": "Bookings",
+        "avis_clients": "Client reviews",
+        "mes_logements": "My properties",
+        "mes_minicites": "My mini-estates",
+        "demandes_baye": "Lease requests",
+        "locations_en_cours": "Active rentals",
+        "commentaires": "Comments",
+        "actualites": "News",
+        "contacts": "Contacts",
+        "hotels_a_valider": "Hotels to approve",
+        "logements_a_valider": "Properties to approve",
+        "comptes_a_valider": "Accounts to approve",
+        "clients_hoteliers_bailleurs": "Clients, hoteliers & landlords",
+        "moderation_avis": "Review moderation",
+        "rapports_financiers": "Financial reports",
+        "forfaits": "Plans",
+        "reversements": "Payouts",
+        "tous_les_hotels": "All hotels",
+        "tous_les_logements": "All properties",
+        "tous_les_baux": "All leases",
+        "toutes_les_reservations": "All bookings"
+    },
+    "dashboard": {
+        "titre_defaut": "Dashboard — Flux",
+        "titre_defaut_court": "Dashboard",
+        "ouvrir_menu": "Open menu",
+        "voir_le_site": "View site"
+    },
+    "notifications": {
+        "titre": "Notifications",
+        "tout_marquer_lu": "Mark all as read",
+        "aucune": "No notifications yet."
+    },
+    "galerie": {
+        "galerie_photo": "Photo gallery",
+        "confirmer_suppression": "Delete this photo?"
     }
 }

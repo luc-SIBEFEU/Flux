@@ -1,7 +1,7 @@
 @extends('layouts.dashboard', ['espaceRole' => auth()->user()->role, 'espaceLabel' => ''])
 
-@section('titre', 'Notifications — Flux')
-@section('titre_page', 'Notifications')
+@section('titre', __('notifications.titre') . ' — Flux')
+@section('titre_page', __('notifications.titre'))
 
 @section('contenu')
     <div class="bg-white rounded-2xl border border-black/5 divide-y divide-black/5">
@@ -18,7 +18,7 @@
                 </button>
             </form>
         @empty
-            <p class="px-5 py-10 text-sm text-flux-noir/40 text-center">Aucune notification pour le moment.</p>
+            <p class="px-5 py-10 text-sm text-flux-noir/40 text-center">{{ __('notifications.aucune') }}</p>
         @endforelse
     </div>
 

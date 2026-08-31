@@ -42,7 +42,8 @@
         "type": "Type",
         "ville": "Ville",
         "prix": "Prix",
-        "telephone": "Téléphone"
+        "telephone": "Téléphone",
+        "ajouter": "Ajouter"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -54,7 +55,8 @@
         "conditions": "Conditions d'utilisation",
         "confidentialite": "Politique de confidentialité",
         "forum": "Forum",
-        "actualites": "Actualités"
+        "actualites": "Actualités",
+        "deconnexion": "Déconnexion"
     },
     "auth": {
         "email": "Email",
@@ -212,7 +214,17 @@
         "conditions": "Conditions",
         "confidentialite": "Confidentialité",
         "droits_reserves": "Tous droits réservés",
-        "reseaux_sociaux": "Suivez-nous"
+        "reseaux_sociaux": "Suivez-nous",
+        "tagline": "Réservation hôtelière et mise en relation locative, réunies au même endroit.",
+        "contactez_nous": "Contactez-nous pour toute question ou assistance.",
+        "a_propos_de_flux": "À propos de Flux",
+        "trouver_logement": "Trouver un logement",
+        "devenir_bailleur": "Devenir bailleur",
+        "trouver_hotel": "Trouver un hôtel",
+        "devenir_hotelier": "Devenir hôtelier",
+        "paiement": "Paiement",
+        "paiements_securises": "Paiements sécurisés via aangaraa-pay.com",
+        "developpe_par": "Développé par Noutta Sarl"
     },
     "pages": {
         "accueil_titre": "Accueil — Flux",
@@ -413,5 +425,56 @@
         "sejour_termine_titre": "Séjour terminé",
         "sejour_termine_hotelier_corps": "Le séjour de **:client** à l'hôtel **:hotel** vient de se terminer.",
         "voir_mes_reservations": "Voir mes réservations"
+    },
+    "sidebar": {
+        "tableau_de_bord": "Tableau de bord",
+        "mon_profil": "Mon profil",
+        "guide_notice": "Guide & notice",
+        "mon_forfait": "Mon forfait",
+        "messages": "Messages",
+        "mon_espace": "Mon espace",
+        "espace_hotelier": "Espace hôtelier",
+        "espace_bailleur": "Espace bailleur",
+        "espace_admin": "Espace admin",
+        "mes_reservations": "Mes réservations",
+        "mes_favoris": "Mes favoris",
+        "mes_locations": "Mes locations",
+        "mes_hotels": "Mes hôtels",
+        "reservations": "Réservations",
+        "avis_clients": "Avis clients",
+        "mes_logements": "Mes logements",
+        "mes_minicites": "Mes mini-cités",
+        "demandes_baye": "Demandes de baye",
+        "locations_en_cours": "Locations en cours",
+        "commentaires": "Commentaires",
+        "actualites": "Actualités",
+        "contacts": "Contacts",
+        "hotels_a_valider": "Hôtels à valider",
+        "logements_a_valider": "Logements à valider",
+        "comptes_a_valider": "Comptes à valider",
+        "clients_hoteliers_bailleurs": "Clients, hôteliers & bailleurs",
+        "moderation_avis": "Modération des avis",
+        "rapports_financiers": "Rapports financiers",
+        "forfaits": "Forfaits",
+        "reversements": "Reversements",
+        "tous_les_hotels": "Tous les hôtels",
+        "tous_les_logements": "Tous les logements",
+        "tous_les_baux": "Tous les baux",
+        "toutes_les_reservations": "Toutes les réservations"
+    },
+    "dashboard": {
+        "titre_defaut": "Tableau de bord — Flux",
+        "titre_defaut_court": "Tableau de bord",
+        "ouvrir_menu": "Ouvrir le menu",
+        "voir_le_site": "Voir le site"
+    },
+    "notifications": {
+        "titre": "Notifications",
+        "tout_marquer_lu": "Tout marquer lu",
+        "aucune": "Aucune notification pour le moment."
+    },
+    "galerie": {
+        "galerie_photo": "Galerie photo",
+        "confirmer_suppression": "Supprimer cette photo ?"
     }
 }

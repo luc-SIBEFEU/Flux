@@ -586,5 +586,30 @@
             "automatisations_titre": "Automatisations",
             "automatisations_desc": "Deux tâches planifiées tournent chaque jour : la clôture des séjours (envoi du pro-forma) et le traitement des baux expirés (libération du logement une fois le moratoire écoulé). Elles doivent être exécutées via <code class=\"bg-flux-brume px-1.5 py-0.5 rounded\">php artisan schedule:work</code> ou une tâche cron."
         }
+    },
+    "form": {
+        "photo_profil": "Photo de profil",
+        "nom_complet": "Nom complet",
+        "email": "E-mail",
+        "telephone": "Téléphone",
+        "genre": "Genre",
+        "ne_pas_preciser": "Ne pas préciser",
+        "homme": "Homme",
+        "femme": "Femme",
+        "nouveau_mdp": "Nouveau mot de passe",
+        "confirmation": "Confirmation",
+        "enregistrer": "Enregistrer",
+        "email_non_modifiable": "E-mail non modifiable",
+        "numero": "Numéro"
+    },
+    "profil": {
+        "titre_client": "Profil — Mon espace",
+        "titre_hotelier": "Profil — Hôtelier",
+        "titre_bailleur": "Profil — Bailleur",
+        "titre_admin": "Profil — Admin",
+        "mon_profil": "Mon profil",
+        "contacts_paiement_bailleur": "Contacts de paiement (réception des loyers)",
+        "contacts_paiement_admin": "Contacts de paiement (réception des forfaits pro)",
+        "contacts_paiement_admin_desc": "Numéros MTN MoMo / Orange Money sur lesquels les hôteliers/bailleurs paient leur forfait pro."
     }
 }

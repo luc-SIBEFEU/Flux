@@ -585,5 +585,30 @@
             "automatisations_titre": "Automations",
             "automatisations_desc": "Two scheduled tasks run every day: closing out stays (sending the pro-forma) and processing expired leases (freeing up the property once the grace period has elapsed). They must be run via <code class=\"bg-flux-brume px-1.5 py-0.5 rounded\">php artisan schedule:work</code> or a cron job."
         }
+    },
+    "form": {
+        "photo_profil": "Profile picture",
+        "nom_complet": "Full name",
+        "email": "Email",
+        "telephone": "Phone",
+        "genre": "Gender",
+        "ne_pas_preciser": "Prefer not to say",
+        "homme": "Male",
+        "femme": "Female",
+        "nouveau_mdp": "New password",
+        "confirmation": "Confirmation",
+        "enregistrer": "Save",
+        "email_non_modifiable": "Email cannot be changed",
+        "numero": "Number"
+    },
+    "profil": {
+        "titre_client": "Profile — My space",
+        "titre_hotelier": "Profile — Hotelier",
+        "titre_bailleur": "Profile — Landlord",
+        "titre_admin": "Profile — Admin",
+        "mon_profil": "My profile",
+        "contacts_paiement_bailleur": "Payment contacts (rent collection)",
+        "contacts_paiement_admin": "Payment contacts (pro plan payments)",
+        "contacts_paiement_admin_desc": "MTN MoMo / Orange Money numbers hoteliers/landlords use to pay for their pro plan."
     }
 }

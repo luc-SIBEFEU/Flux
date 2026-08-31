@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @php($espaceRole = 'hotelier')
-@section('titre_page', 'Mon profil')
-@section('titre', 'Profil — Hôtelier')
+@section('titre_page', __('profil.mon_profil'))
+@section('titre', __('profil.titre_hotelier'))
 
 @section('contenu')
 
@@ -12,29 +12,29 @@
         <img src="{{ $user->avatar ? asset('storage/'.$user->avatar) : 'https://ui-avatars.com/api/?name='.urlencode($user->nom) }}"
              class="w-16 h-16 rounded-full object-cover">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Photo de profil</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('form.photo_profil') }}</label>
             <input type="file" name="avatar" accept="image/*" class="block mt-1 text-sm">
         </div>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Nom complet</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('form.nom_complet') }}</label>
         <input type="text" name="nom" required value="{{ old('nom', $user->nom) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
     </div>
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">E-mail</label>
-        <div class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">{{ $user->email }}</div><span style="color: #e91b1b; font-size: 0.75rem;">E-mail non modifiable</span>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('form.email') }}</label>
+        <div class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">{{ $user->email }}</div><span style="color: #e91b1b; font-size: 0.75rem;">{{ __('form.email_non_modifiable') }}</span>
 
         <input type="email" name="email" required value="{{ old('email', $user->email) }}"
                class="hidden mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
     </div>
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Genre</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('form.genre') }}</label>
         <select name="genre" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none">
-            <option value="">Ne pas préciser</option>
-            <option value="homme" {{ $user->genre=='homme'?'selected':'' }}>Homme</option>
-            <option value="femme" {{ $user->genre=='femme'?'selected':'' }}>Femme</option>
+            <option value="">{{ __('form.ne_pas_preciser') }}</option>
+            <option value="homme" {{ $user->genre=='homme'?'selected':'' }}>{{ __('form.homme') }}</option>
+            <option value="femme" {{ $user->genre=='femme'?'selected':'' }}>{{ __('form.femme') }}</option>
         </select>
     </div>
 
@@ -42,17 +42,17 @@
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Nouveau mot de passe</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('form.nouveau_mdp') }}</label>
             <input type="password" name="password" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Confirmation</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('form.confirmation') }}</label>
             <input type="password" name="password_confirmation" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
     </div>
 
     <button type="submit" class="inline-flex items-center gap-2 bg-flux-bleu text-white font-semibold px-6 py-3 rounded-lg">
-        Enregistrer
+        {{ __('form.enregistrer') }}
     </button>
 </form>
 @endsection

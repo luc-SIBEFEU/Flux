@@ -43,7 +43,10 @@
         "ville": "Ville",
         "prix": "Prix",
         "telephone": "Téléphone",
-        "ajouter": "Ajouter"
+        "ajouter": "Ajouter",
+        "filtrer_par_ville": "Filtrer par ville...",
+        "tout": "Tout",
+        "mois_abrege": "mois"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -626,6 +629,47 @@
         "confirme": "Paiement confirmé !",
         "echoue": "Paiement échoué",
         "message_envoye_desc": "Un message a été envoyé sur le numéro fourni. Approuvez la transaction pour finaliser le paiement.",
-        "transaction_echouee_desc": "La transaction n'a pas abouti. Vous pouvez réessayer."
+        "transaction_echouee_desc": "La transaction n'a pas abouti. Vous pouvez réessayer.",
+        "titre_mon_espace": "Paiement — Mon espace",
+        "methode_paiement": "Méthode de paiement"
+    },
+    "favoris": {
+        "titre": "Favoris — Mon espace",
+        "aucun": "Aucun hôtel en favori pour le moment."
+    },
+    "baye": {
+        "titre_mes_locations": "Mes locations — Mon espace",
+        "statut_nouveau": "Nouveaux",
+        "statut_en_cours": "En cours",
+        "statut_termine": "Terminés",
+        "badge_statut_nouveau": "Nouveau",
+        "badge_statut_en_cours": "En cours",
+        "badge_statut_termine": "Terminé",
+        "etat_paiement_a_jour": "à jour",
+        "etat_paiement_en_retard": "en retard",
+        "etat_paiement_solde": "soldé",
+        "mois_compte": "{1} :n mois|[2,*] :n mois",
+        "aucune_location": "Aucune location en cours.",
+        "detail_location": "Détail de la location",
+        "ma_location_titre": "Ma location — Mon espace",
+        "debut_bail": "Début du bail",
+        "fin_prevue": "Fin prévue",
+        "echeances_loyer": "Échéances de loyer",
+        "paiement_initial_label": "Paiement initial (caution + durée minimum)",
+        "echeance": "Échéance",
+        "paye": "Payé",
+        "payer": "Payer",
+        "aucune_echeance": "Aucune échéance générée pour le moment.",
+        "prolonger_contrat": "Prolonger le contrat",
+        "nombre_de_mois": "Nombre de mois",
+        "demander_prolongation": "Demander une prolongation",
+        "prolongation_statut_en_attente": "En attente",
+        "prolongation_statut_approuvee": "Approuvée",
+        "prolongation_statut_rejetee": "Rejetée"
+    },
+    "loyer": {
+        "payer_loyer": "Payer le loyer",
+        "loyer_de": "Loyer de",
+        "payer_montant": "Payer :montant FCFA"
     }
 }

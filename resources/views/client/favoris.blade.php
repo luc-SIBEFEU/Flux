@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 @php $espaceRole = 'client'; @endphp
-@section('titre_page', 'Mes favoris')
-@section('titre', 'Favoris — Mon espace')
+@section('titre_page', __('sidebar.mes_favoris'))
+@section('titre', __('favoris.titre'))
 
 @section('contenu')
 
 <form method="GET" class="flex items-center gap-2 border border-black/10 rounded-lg px-3 py-2 bg-white mb-6 max-w-xs">
     <x-icon name="map-pin" class="w-4 h-4 text-flux-noir/40" />
-    <input type="text" name="ville" value="{{ request('ville') }}" placeholder="Filtrer par ville..." class="outline-none text-sm w-full">
+    <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" class="outline-none text-sm w-full">
 </form>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -33,7 +33,7 @@
     @empty
         <div class="col-span-full text-center py-16 text-flux-noir/40">
             <x-icon name="heart" class="w-10 h-10 mx-auto mb-3" />
-            Aucun hôtel en favori pour le moment.
+            {{ __('favoris.aucun') }}
         </div>
     @endforelse
 </div>

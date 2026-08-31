@@ -43,7 +43,10 @@
         "ville": "City",
         "prix": "Price",
         "telephone": "Phone",
-        "ajouter": "Add"
+        "ajouter": "Add",
+        "filtrer_par_ville": "Filter by city...",
+        "tout": "All",
+        "mois_abrege": "months"
     },
     "navigation": {
         "hotels": "Hotels",
@@ -625,6 +628,47 @@
         "confirme": "Payment confirmed!",
         "echoue": "Payment failed",
         "message_envoye_desc": "A message has been sent to the number provided. Approve the transaction to complete the payment.",
-        "transaction_echouee_desc": "The transaction did not go through. You can try again."
+        "transaction_echouee_desc": "The transaction did not go through. You can try again.",
+        "titre_mon_espace": "Payment — My space",
+        "methode_paiement": "Payment method"
+    },
+    "favoris": {
+        "titre": "Favorites — My space",
+        "aucun": "No favorite hotels yet."
+    },
+    "baye": {
+        "titre_mes_locations": "My rentals — My space",
+        "statut_nouveau": "New",
+        "statut_en_cours": "Ongoing",
+        "statut_termine": "Ended",
+        "badge_statut_nouveau": "New",
+        "badge_statut_en_cours": "Ongoing",
+        "badge_statut_termine": "Ended",
+        "etat_paiement_a_jour": "up to date",
+        "etat_paiement_en_retard": "overdue",
+        "etat_paiement_solde": "settled",
+        "mois_compte": "{1} :n month|[2,*] :n months",
+        "aucune_location": "No active rentals.",
+        "detail_location": "Rental details",
+        "ma_location_titre": "My rental — My space",
+        "debut_bail": "Lease start",
+        "fin_prevue": "Expected end",
+        "echeances_loyer": "Rent due dates",
+        "paiement_initial_label": "Initial payment (deposit + minimum duration)",
+        "echeance": "Due",
+        "paye": "Paid",
+        "payer": "Pay",
+        "aucune_echeance": "No due date generated yet.",
+        "prolonger_contrat": "Extend the lease",
+        "nombre_de_mois": "Number of months",
+        "demander_prolongation": "Request an extension",
+        "prolongation_statut_en_attente": "Pending",
+        "prolongation_statut_approuvee": "Approved",
+        "prolongation_statut_rejetee": "Rejected"
+    },
+    "loyer": {
+        "payer_loyer": "Pay the rent",
+        "loyer_de": "Rent for",
+        "payer_montant": "Pay :montant FCFA"
     }
 }

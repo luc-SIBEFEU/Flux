@@ -5,9 +5,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Bailleur;
 use App\Http\Controllers\Client;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Hotelier;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LogementController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
@@ -17,10 +19,18 @@ use Illuminate\Support\Facades\Route;
 | Public
 |--------------------------------------------------------------------------
 */
+// Changer la langue
+Route::get('/langue/{locale}', [LocaleController::class, 'setLocale'])->name('locale.set');
+
 Route::get('/', [HomeController::class, 'index'])->name('accueil');
 Route::view('/a-propos', 'a-propos')->name('a-propos');
 Route::view('/conditions-utilisation', 'conditions-utilisation')->name('conditions-utilisation');
 Route::view('/politique-confidentialite', 'politique-confidentialite')->name('politique-confidentialite');
+Route::view('/aide-faq', 'aide-faq')->name('aide-faq');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
@@ -157,6 +167,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/profil', [Admin\ProfileController::class, 'update'])->name('profil.update');
     Route::post('/contacts-paiement', [Admin\ContactPaiementController::class, 'store'])->name('contacts-paiement.store');
     Route::delete('/contacts-paiement/{contact}', [Admin\ContactPaiementController::class, 'destroy'])->name('contacts-paiement.destroy');
+
+    Route::get('/contacts', [Admin\AdminContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{contact}', [Admin\AdminContactController::class, 'show'])->name('contacts.show');
+    Route::post('/contacts/{contact}/repondre', [ContactController::class, 'reply'])->name('contacts.reply');
+    Route::post('/contacts/{contact}/marquer-lu', [Admin\AdminContactController::class, 'markAsRead'])->name('contacts.mark-read');
+    Route::delete('/contacts/{contact}', [Admin\AdminContactController::class, 'destroy'])->name('contacts.destroy');
 
     Route::get('/aide', [Admin\AideController::class, 'index'])->name('aide.index');
 });

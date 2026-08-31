@@ -2,6 +2,7 @@
 $liens = [
     ['route' => 'admin.dashboard', 'icone' => 'chart', 'label' => 'Tableau de bord'],
     ['route' => 'admin.actualites.index', 'icone' => 'bell', 'label' => 'Actualités'],
+    ['route' => 'admin.contacts.index', 'icone' => 'phone', 'label' => 'Contacts'],
     ['route' => 'admin.hotels.index', 'icone' => 'building', 'label' => 'Hôtels à valider'],
     ['route' => 'admin.logements.index', 'icone' => 'key', 'label' => 'Logements à valider'],
     ['route' => 'admin.users.en-attente', 'icone' => 'user', 'label' => 'Comptes à valider'],

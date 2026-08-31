@@ -21,6 +21,8 @@
                 <li><a href="{{ route('a-propos') }}" class="hover:text-flux-or">À propos de Flux</a></li>
                 <li><a href="{{ route('conditions-utilisation') }}" class="hover:text-flux-or">Conditions d'utilisation</a></li>
                 <li><a href="{{ route('politique-confidentialite') }}" class="hover:text-flux-or">Politique de confidentialité</a></li>
+                <li><a href="{{ route('aide-faq') }}" class="hover:text-flux-or">FAQ</a></li>
+                <li><a href="{{ route('contact') }}" class="hover:text-flux-or">Contact</a></li>
             </ul>
         </div>
         <div>

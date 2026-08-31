@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('titre', 'Flux — Hôtels & Logements')</title>
+    <title>@yield('titre', __('layouts.app.title'))</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('icons/bootstrap-icons.css') }}">
     <script defer src="{{ asset('js/cdn.min.js') }}"></script>

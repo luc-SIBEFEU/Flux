@@ -99,7 +99,7 @@
                 @endforelse
             </div>
 
-            <div class="mt-8">{{ $logements->links() }}</div>
+            <div class="mt-8 rounded-xl">{{ $logements->links() }}</div>
         </div>
     </div>
 </div>

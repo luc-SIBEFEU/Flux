@@ -118,7 +118,7 @@
             <p class="text-flux-noir mt-4 leading-relaxed">Contacts</p>
             <p class="flex"><x-icon name="mail" /> <a href="mailto:noutta.cm@gmail.com" class="text-flux-bleu">noutta.cm@gmail.com</a></p>
             <p class="flex"><x-icon name="phone" /> +237 671 22 32 44 /+237 696 11 75 74</p>
-            <p class="flex"><x-icon name="map-pin" /> Ambam</p>
+            <p class="flex"><x-icon name="map-pin" /> Ambam - Cameroun</p>
         </div>
         <p class="text-flux-or mt-6 text-sm font-medium uppercase tracking-widest">PARTENAIRES : </p>
         <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-7 gap-4 overflow-x-auto pb-4 sm:overflow-visible sm:pb-0">

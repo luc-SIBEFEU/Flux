@@ -240,7 +240,8 @@
         "password_reset_titre": "Mot de passe oublié — Flux",
         "password_confirm_titre": "Confirmer votre identité — Flux",
         "verify_titre": "Vérification — Flux",
-        "home_titre": "Flux — Réservez un hôtel ou trouvez un logement"
+        "home_titre": "Flux — Réservez un hôtel ou trouvez un logement",
+        "politique_titre": "Politique de confidentialité"
     },
     "layouts": {
         "app": {
@@ -476,5 +477,46 @@
     "galerie": {
         "galerie_photo": "Galerie photo",
         "confirmer_suppression": "Supprimer cette photo ?"
+    },
+    "legal": {
+        "conditions": {
+            "s1_titre": "1. Objet du service",
+            "s1_corps": "Flux est une plateforme de mise en relation qui permet de consulter des offres d'hôtels et de logements, puis de contacter les professionnels ou propriétaires concernés. Flux facilite la recherche et la réservation, mais n'est pas partie au contrat conclu entre l'utilisateur et le prestataire.",
+            "s2_titre": "2. Accès et compte",
+            "s2_corps": "L'accès aux fonctionnalités de Flux peut nécessiter la création d'un compte. L'utilisateur s'engage à fournir des informations exactes, à conserver ses identifiants confidentiels et à signaler sans délai toute utilisation non autorisée de son compte.",
+            "s3_titre": "3. Offres et réservations",
+            "s3_corps": "Les offres sont publiées sous la responsabilité des hôteliers et bailleurs. L'utilisateur doit vérifier les informations de l'annonce avant toute réservation ou demande. Les conditions, disponibilités, prix et modalités d'annulation applicables sont celles communiquées au moment de la réservation.",
+            "s4_titre": "4. Paiements",
+            "s4_corps": "Lorsque le paiement est proposé sur Flux, il est effectué via les moyens indiqués sur la plateforme. L'utilisateur s'engage à utiliser un moyen de paiement dont il est autorisé à disposer. Toute anomalie de paiement doit être signalée au support dans les meilleurs délais.",
+            "s5_titre": "5. Comportement des utilisateurs",
+            "s5_corps": "Il est interdit d'utiliser Flux pour publier des informations fausses, contourner un paiement, porter atteinte aux droits d'autrui, diffuser un contenu illicite ou perturber le fonctionnement du service. Flux peut suspendre ou supprimer un compte en cas de manquement.",
+            "s6_titre": "6. Responsabilités",
+            "s6_corps": "Flux met en œuvre des moyens raisonnables pour assurer la disponibilité et la fiabilité du service. Toutefois, Flux ne garantit pas l'absence d'interruption et ne peut être tenu responsable des informations publiées par les prestataires, de leurs services ou des événements indépendants de sa volonté.",
+            "s7_titre": "7. Données personnelles",
+            "s7_corps": "Les données collectées sont utilisées pour fournir et sécuriser le service, gérer les comptes et traiter les demandes. Elles sont traitées conformément à la réglementation applicable. L'utilisateur peut contacter Flux pour toute question relative à ses données.",
+            "s8_titre": "8. Contact et évolution",
+            "s8_corps": "Pour toute question concernant ces conditions, contactez-nous à <a href=\"mailto:noutta.cm@gmail.com\" class=\"text-flux-bleu font-medium hover:underline\">noutta.cm@gmail.com</a>. Flux peut faire évoluer ces conditions; la version publiée sur cette page est la version applicable.",
+            "hero_label": "Cadre d'utilisation"
+        },
+        "derniere_maj": "Dernière mise à jour",
+        "politique": {
+            "s1_titre": "1. Notre engagement",
+            "s1_corps": "Flux accorde une importance particulière à la protection de vos données personnelles. Cette politique explique quelles informations sont collectées lorsque vous utilisez la plateforme, pourquoi elles sont utilisées et quels sont vos droits.",
+            "s2_titre": "2. Données collectées",
+            "s2_corps": "Lors de la création d'un compte ou de l'utilisation de nos services, nous pouvons collecter votre nom, adresse e-mail, numéro de téléphone, sexe, rôle de compte et informations nécessaires au traitement de vos réservations, demandes de logement et paiements.",
+            "s3_titre": "3. Utilisation des données",
+            "s3_corps": "Vos données nous permettent de créer et sécuriser votre compte, traiter vos réservations et demandes, faciliter les échanges avec les hôteliers et bailleurs, gérer les paiements, vous envoyer les notifications utiles et améliorer le fonctionnement de Flux.",
+            "s4_titre": "4. Partage des informations",
+            "s4_corps": "Nous ne vendons pas vos données personnelles. Certaines informations strictement nécessaires peuvent être communiquées au prestataire concerné par une réservation ou une demande, ainsi qu'aux services techniques et de paiement indispensables à l'exécution du service.",
+            "s5_titre": "5. Conservation et sécurité",
+            "s5_corps": "Nous conservons vos données pendant la durée nécessaire à la gestion de votre compte, à l'exécution de nos services et au respect de nos obligations légales. Des mesures techniques et organisationnelles raisonnables sont mises en œuvre pour protéger vos informations contre l'accès, la modification ou la divulgation non autorisés.",
+            "s6_titre": "6. Cookies et données techniques",
+            "s6_corps": "Flux peut utiliser des cookies ou des technologies similaires nécessaires au fonctionnement de la session, à la sécurité et à la mémorisation de certaines préférences. Des données techniques peuvent également être recueillies pour assurer la stabilité et la sécurité de la plateforme.",
+            "s7_titre": "7. Vos droits",
+            "s7_corps": "Selon la réglementation applicable, vous pouvez demander l'accès, la rectification ou la suppression de vos données, ainsi que la limitation ou l'opposition à certains traitements. Pour exercer vos droits, écrivez-nous à <a href=\"mailto:noutta.cm@gmail.com\" class=\"text-flux-bleu font-medium hover:underline\">noutta.cm@gmail.com</a>.",
+            "s8_titre": "8. Évolution de la politique",
+            "s8_corps": "Cette politique peut être mise à jour pour tenir compte de l'évolution de Flux, de ses services ou de la réglementation. La version publiée sur cette page indique la date de sa dernière mise à jour.",
+            "hero_label": "Protection de vos données"
+        }
     }
 }

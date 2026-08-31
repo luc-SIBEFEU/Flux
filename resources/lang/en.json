@@ -233,13 +233,14 @@
         "a_propos_titre": "About Flux",
         "contact_titre": "Contact Us",
         "aide_faq_titre": "Help - FAQ",
-        "conditions_titre": "Terms & Conditions",
+        "conditions_titre": "Terms of use",
         "confidentialite_titre": "Privacy Policy",
         "register_titre": "Register — Flux",
         "password_reset_titre": "Forgot password — Flux",
         "password_confirm_titre": "Confirm identity — Flux",
         "verify_titre": "Verification — Flux",
-        "home_titre": "Home — Flux"
+        "home_titre": "Home — Flux",
+        "politique_titre": "Privacy policy"
     },
     "layouts": {
         "app": {
@@ -475,5 +476,46 @@
     "galerie": {
         "galerie_photo": "Photo gallery",
         "confirmer_suppression": "Delete this photo?"
+    },
+    "legal": {
+        "conditions": {
+            "s1_titre": "1. Purpose of the service",
+            "s1_corps": "Flux is a matchmaking platform that lets you browse hotel and housing listings and contact the relevant professionals or owners. Flux facilitates search and booking but is not a party to the contract between the user and the provider.",
+            "s2_titre": "2. Access and account",
+            "s2_corps": "Access to Flux's features may require creating an account. The user agrees to provide accurate information, keep their credentials confidential, and promptly report any unauthorized use of their account.",
+            "s3_titre": "3. Listings and bookings",
+            "s3_corps": "Listings are published under the responsibility of hoteliers and landlords. The user must verify the listing's information before making any booking or request. The terms, availability, prices, and cancellation conditions in effect are those communicated at the time of booking.",
+            "s4_titre": "4. Payments",
+            "s4_corps": "When payment is offered on Flux, it is made through the means indicated on the platform. The user agrees to use a payment method they are authorized to use. Any payment anomaly must be reported to support as soon as possible.",
+            "s5_titre": "5. User conduct",
+            "s5_corps": "It is forbidden to use Flux to publish false information, circumvent payment, infringe on others' rights, distribute unlawful content, or disrupt the service. Flux may suspend or delete an account in the event of a breach.",
+            "s6_titre": "6. Liability",
+            "s6_corps": "Flux uses reasonable means to ensure the availability and reliability of the service. However, Flux does not guarantee uninterrupted service and cannot be held liable for information published by providers, their services, or events beyond its control.",
+            "s7_titre": "7. Personal data",
+            "s7_corps": "The data collected is used to provide and secure the service, manage accounts, and process requests. It is processed in accordance with applicable regulations. The user may contact Flux with any questions regarding their data.",
+            "s8_titre": "8. Contact and changes",
+            "s8_corps": "For any questions about these terms, contact us at <a href=\"mailto:noutta.cm@gmail.com\" class=\"text-flux-bleu font-medium hover:underline\">noutta.cm@gmail.com</a>. Flux may update these terms; the version published on this page is the applicable version.",
+            "hero_label": "Terms of use"
+        },
+        "derniere_maj": "Last updated",
+        "politique": {
+            "s1_titre": "1. Our commitment",
+            "s1_corps": "Flux places great importance on protecting your personal data. This policy explains what information is collected when you use the platform, why it is used, and what your rights are.",
+            "s2_titre": "2. Data collected",
+            "s2_corps": "When creating an account or using our services, we may collect your name, email address, phone number, gender, account role, and information needed to process your bookings, housing requests, and payments.",
+            "s3_titre": "3. Use of data",
+            "s3_corps": "Your data allows us to create and secure your account, process your bookings and requests, facilitate communication with hoteliers and landlords, manage payments, send you useful notifications, and improve how Flux works.",
+            "s4_titre": "4. Sharing of information",
+            "s4_corps": "We do not sell your personal data. Certain strictly necessary information may be shared with the provider involved in a booking or request, as well as with the technical and payment services essential to carrying out the service.",
+            "s5_titre": "5. Retention and security",
+            "s5_corps": "We retain your data for as long as necessary to manage your account, carry out our services, and comply with our legal obligations. Reasonable technical and organizational measures are implemented to protect your information against unauthorized access, alteration, or disclosure.",
+            "s6_titre": "6. Cookies and technical data",
+            "s6_corps": "Flux may use cookies or similar technologies necessary for session operation, security, and remembering certain preferences. Technical data may also be collected to ensure the platform's stability and security.",
+            "s7_titre": "7. Your rights",
+            "s7_corps": "Depending on applicable regulations, you may request access to, correction of, or deletion of your data, as well as the restriction of or objection to certain processing. To exercise your rights, write to us at <a href=\"mailto:noutta.cm@gmail.com\" class=\"text-flux-bleu font-medium hover:underline\">noutta.cm@gmail.com</a>.",
+            "s8_titre": "8. Policy updates",
+            "s8_corps": "This policy may be updated to reflect changes to Flux, its services, or applicable regulations. The version published on this page indicates the date of its last update.",
+            "hero_label": "Protecting your data"
+        }
     }
 }

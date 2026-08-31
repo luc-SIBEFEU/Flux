@@ -610,5 +610,21 @@
         "contacts_paiement_bailleur": "Payment contacts (rent collection)",
         "contacts_paiement_admin": "Payment contacts (pro plan payments)",
         "contacts_paiement_admin_desc": "MTN MoMo / Orange Money numbers hoteliers/landlords use to pay for their pro plan."
+    },
+    "paiement": {
+        "titre": "Payment",
+        "reservation_a": "Booking at :hotel",
+        "forfait_x": ":nom plan",
+        "loyer_de": "Rent for :mois",
+        "montant_a_payer": "Amount due",
+        "numero_momo": "Mobile Money number (MTN or Orange)",
+        "operateur_detecte": "The carrier (MTN or Orange) is detected automatically from the number.",
+        "payer_maintenant": "Pay now",
+        "en_cours_titre": "Payment in progress",
+        "confirmez_telephone": "Confirm on your phone",
+        "confirme": "Payment confirmed!",
+        "echoue": "Payment failed",
+        "message_envoye_desc": "A message has been sent to the number provided. Approve the transaction to complete the payment.",
+        "transaction_echouee_desc": "The transaction did not go through. You can try again."
     }
 }

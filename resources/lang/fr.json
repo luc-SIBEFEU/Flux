@@ -611,5 +611,21 @@
         "contacts_paiement_bailleur": "Contacts de paiement (réception des loyers)",
         "contacts_paiement_admin": "Contacts de paiement (réception des forfaits pro)",
         "contacts_paiement_admin_desc": "Numéros MTN MoMo / Orange Money sur lesquels les hôteliers/bailleurs paient leur forfait pro."
+    },
+    "paiement": {
+        "titre": "Paiement",
+        "reservation_a": "Réservation à :hotel",
+        "forfait_x": "Forfait :nom",
+        "loyer_de": "Loyer de :mois",
+        "montant_a_payer": "Montant à payer",
+        "numero_momo": "Numéro Mobile Money (MTN ou Orange)",
+        "operateur_detecte": "L'opérateur (MTN ou Orange) est détecté automatiquement à partir du numéro.",
+        "payer_maintenant": "Payer maintenant",
+        "en_cours_titre": "Paiement en cours",
+        "confirmez_telephone": "Confirmez sur votre téléphone",
+        "confirme": "Paiement confirmé !",
+        "echoue": "Paiement échoué",
+        "message_envoye_desc": "Un message a été envoyé sur le numéro fourni. Approuvez la transaction pour finaliser le paiement.",
+        "transaction_echouee_desc": "La transaction n'a pas abouti. Vous pouvez réessayer."
     }
 }

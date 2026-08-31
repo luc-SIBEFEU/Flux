@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titre', 'Paiement en cours — Flux')
+@section('titre', __('paiement.en_cours_titre') . ' — Flux')
 
 @section('contenu')
 <div class="max-w-md mx-auto px-4 py-20 text-center" x-data="paiementAttente('{{ route('paiements.statut', $paiement) }}', '{{ match($type) { 'reservation' => route('client.reservations.index'), 'abonnement' => route('forfait.index'), default => route('client.bayes.index') } }}')" x-init="demarrer()">
@@ -8,15 +8,15 @@
         <x-icon name="check-circle" class="w-8 h-8 text-white" x-show="statut === 'reussi'" x-cloak />
     </div>
 
-    <h1 class="font-display text-2xl mb-2" x-show="statut === 'en_attente'">Confirmez sur votre téléphone</h1>
-    <h1 class="font-display text-2xl mb-2" x-show="statut === 'reussi'" x-cloak>Paiement confirmé !</h1>
-    <h1 class="font-display text-2xl mb-2" x-show="statut === 'echoue'" x-cloak>Paiement échoué</h1>
+    <h1 class="font-display text-2xl mb-2" x-show="statut === 'en_attente'">{{ __('paiement.confirmez_telephone') }}</h1>
+    <h1 class="font-display text-2xl mb-2" x-show="statut === 'reussi'" x-cloak>{{ __('paiement.confirme') }}</h1>
+    <h1 class="font-display text-2xl mb-2" x-show="statut === 'echoue'" x-cloak>{{ __('paiement.echoue') }}</h1>
 
     <p class="text-flux-noir/50 text-sm" x-show="statut === 'en_attente'">
-        Un message a été envoyé sur le numéro fourni. Approuvez la transaction pour finaliser le paiement.
+        {{ __('paiement.message_envoye_desc') }}
     </p>
     <p class="text-flux-noir/50 text-sm" x-show="statut === 'echoue'" x-cloak>
-        La transaction n'a pas abouti. Vous pouvez réessayer.
+        {{ __('paiement.transaction_echouee_desc') }}
     </p>
 
     <div class="mt-8" x-show="statut === 'en_attente'">

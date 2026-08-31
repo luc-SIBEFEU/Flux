@@ -518,5 +518,73 @@
             "s8_corps": "Cette politique peut être mise à jour pour tenir compte de l'évolution de Flux, de ses services ou de la réglementation. La version publiée sur cette page indique la date de sa dernière mise à jour.",
             "hero_label": "Protection de vos données"
         }
+    },
+    "aide": {
+        "guide_notice": "Guide & notice",
+        "titre_client": "Guide — Mon espace",
+        "titre_hotelier": "Guide — Hôtelier",
+        "titre_bailleur": "Guide — Bailleur",
+        "titre_admin": "Guide — Admin",
+        "client": {
+            "reserver_hotel_titre": "Réserver un hôtel",
+            "reserver_hotel_li1": "Le coût total s'affiche en direct sur le formulaire de réservation dès que vous choisissez vos dates.",
+            "reserver_hotel_li2": "Après validation, vous êtes redirigé vers le paiement (MTN MoMo ou Orange Money) : un message est envoyé sur votre téléphone à approuver.",
+            "reserver_hotel_li3": "Votre réservation passe en « confirmée » dès que le paiement est validé.",
+            "reserver_hotel_li4": "Une fois votre séjour terminé, un pro-forma vous est envoyé par e-mail et reste téléchargeable depuis « Mes réservations ».",
+            "louer_logement_titre": "Louer un logement",
+            "louer_logement_li1": "Depuis la fiche d'un logement, indiquez la durée souhaitée (au moins égale à la durée minimum exigée) et contactez le bailleur.",
+            "louer_logement_li2": "Une fois le bailleur d'accord, vous devez régler un <strong>paiement initial</strong> qui couvre la caution et les mois de la durée minimum.",
+            "louer_logement_li3": "Les mois suivants peuvent être payés <strong>à votre rythme</strong> (fin de mois, tous les deux mois...) depuis « Mes locations ».",
+            "louer_logement_li4": "Vous pouvez demander une <strong>prolongation</strong> de votre bail ; elle doit être validée par le bailleur.",
+            "louer_logement_li5": "À la fin du bail (moratoire inclus), un pro-forma récapitulatif vous est envoyé par e-mail.",
+            "favoris_avis_titre": "Favoris & avis",
+            "favoris_avis_desc": "Ajoutez des hôtels en favoris pour les retrouver facilement. Vos avis et notes sur un hôtel ou un logement sont visibles publiquement après modération (pour les hôtels) ou immédiatement (pour les logements)."
+        },
+        "hotelier": {
+            "creer_hotel_titre": "Créer un hôtel",
+            "creer_hotel_li1": "Renseignez le nom, la ville, le nombre d'étoiles et une image de couverture.",
+            "creer_hotel_li2": "Votre hôtel n'est <strong>pas visible immédiatement</strong> : il passe en attente de validation par un administrateur. Vous recevez un e-mail dès qu'il est validé ou rejeté.",
+            "creer_hotel_li3": "Toute modification ultérieure repasse également l'hôtel en validation.",
+            "creer_hotel_li4": "Ajoutez ensuite la galerie photo, les réseaux sociaux et vos contacts de paiement (MTN MoMo / Orange Money) depuis la fiche de l'hôtel.",
+            "categories_chambres_titre": "Catégories de chambres",
+            "categories_chambres_desc": "Chaque hôtel peut avoir plusieurs catégories de chambres (nom, capacité, prix par nuit, équipements). C'est ce que les clients réservent depuis la fiche de votre hôtel.",
+            "reservations_titre": "Réservations",
+            "reservations_li1": "Une réservation client apparaît « en attente » jusqu'à confirmation de son paiement.",
+            "reservations_li2": "Vous pouvez confirmer ou annuler une réservation manuellement si besoin.",
+            "reservations_li3": "À la date de départ, le séjour est automatiquement clôturé : vous recevez un e-mail, et le client reçoit son pro-forma.",
+            "avis_titre": "Avis clients",
+            "avis_desc": "Les avis affichés ont été approuvés par un administrateur. Vous pouvez les consulter mais pas les modifier."
+        },
+        "bailleur": {
+            "ajouter_logement_titre": "Ajouter un logement",
+            "ajouter_logement_li1": "Comme pour les hôtels, un logement n'est visible sur le site qu'après validation par un administrateur (à la création et après chaque modification).",
+            "ajouter_logement_li2": "<strong>Les villas sont automatiquement meublées</strong> — le champ catégorie se verrouille sur « meublé ».",
+            "ajouter_logement_li3": "Vous pouvez regrouper plusieurs logements identiques dans une <strong>mini-cité</strong> et générer plusieurs exemplaires en une fois.",
+            "ajouter_logement_li4": "Le <strong>moratoire</strong> (7 jours par défaut, modifiable par logement) est le délai après la fin d'un bail avant que le logement redevienne visible — le temps de le libérer ou qu'une prolongation soit demandée.",
+            "demandes_baye_titre": "Demandes de baye",
+            "demandes_baye_li1": "Quand un client vous contacte, une demande apparaît avec la durée souhaitée (au moins la durée minimum de votre logement).",
+            "demandes_baye_li2": "En validant, un bail est créé et un <strong>paiement initial</strong> (caution + durée minimum) est demandé au client ; le logement passe en « loué ».",
+            "demandes_baye_li3": "Les mois suivants sont payés par le client à son rythme — vous suivez l'état des paiements dans « Locations en cours ».",
+            "prolongations_titre": "Prolongations & fin de bail",
+            "prolongations_li1": "Toute demande de prolongation d'un client doit être <strong>validée par vous</strong> avant de s'appliquer.",
+            "prolongations_li2": "Une fois le bail terminé (moratoire écoulé), le logement redevient automatiquement visible sur le site — vous recevez un e-mail de confirmation avec le pro-forma récapitulatif du bail.",
+            "recevoir_loyers_titre": "Recevoir vos loyers",
+            "recevoir_loyers_desc": "Ajoutez vos numéros MTN MoMo / Orange Money dans votre profil : c'est là que les paiements de vos locataires sont dirigés."
+        },
+        "admin": {
+            "validations_titre": "Validations à effectuer",
+            "validations_li1": "<strong>Comptes à valider</strong> : chaque inscription hôtelier/bailleur doit être examinée avant que la personne puisse se connecter. Vous recevez un e-mail à chaque nouvelle demande.",
+            "validations_li2": "<strong>Hôtels à valider</strong> : un hôtel créé par un hôtelier n'est visible sur le site qu'après votre approbation.",
+            "validations_li3": "<strong>Logements à valider</strong> : même principe pour les logements ajoutés par les bailleurs — y compris après une modification.",
+            "validations_li4": "En cas de rejet, indiquez toujours un motif : il est transmis par e-mail à la personne concernée.",
+            "moderation_titre": "Modération",
+            "moderation_desc": "Les avis clients sur les hôtels n'apparaissent publiquement qu'après votre approbation dans « Modération des avis ». La note moyenne de l'hôtel est recalculée automatiquement à chaque validation.",
+            "consultation_titre": "Consultation en lecture seule",
+            "consultation_desc": "« Tous les hôtels », « Tous les logements », « Tous les baux » et « Toutes les réservations » vous donnent une vue complète sur l'activité de la plateforme. Vous pouvez tout consulter mais rien modifier directement — la gestion reste entre les mains de l'hôtelier, du bailleur ou du client concerné.",
+            "rapports_titre": "Rapports financiers",
+            "rapports_desc": "Le revenu total, la répartition par hôtel et par ville sont calculés à partir des paiements confirmés (MTN MoMo / Orange Money). Les paiements en attente ou échoués n'y figurent pas.",
+            "automatisations_titre": "Automatisations",
+            "automatisations_desc": "Deux tâches planifiées tournent chaque jour : la clôture des séjours (envoi du pro-forma) et le traitement des baux expirés (libération du logement une fois le moratoire écoulé). Elles doivent être exécutées via <code class=\"bg-flux-brume px-1.5 py-0.5 rounded\">php artisan schedule:work</code> ou une tâche cron."
+        }
     }
 }

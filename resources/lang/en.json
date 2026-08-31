@@ -517,5 +517,73 @@
             "s8_corps": "This policy may be updated to reflect changes to Flux, its services, or applicable regulations. The version published on this page indicates the date of its last update.",
             "hero_label": "Protecting your data"
         }
+    },
+    "aide": {
+        "guide_notice": "Guide & instructions",
+        "titre_client": "Guide — My space",
+        "titre_hotelier": "Guide — Hotelier",
+        "titre_bailleur": "Guide — Landlord",
+        "titre_admin": "Guide — Admin",
+        "client": {
+            "reserver_hotel_titre": "Booking a hotel",
+            "reserver_hotel_li1": "The total cost updates live on the booking form as soon as you choose your dates.",
+            "reserver_hotel_li2": "After confirming, you're redirected to payment (MTN MoMo or Orange Money): a message is sent to your phone for you to approve.",
+            "reserver_hotel_li3": "Your booking becomes \"confirmed\" as soon as the payment is validated.",
+            "reserver_hotel_li4": "Once your stay is over, a pro-forma is emailed to you and stays downloadable from \"My bookings\".",
+            "louer_logement_titre": "Renting a place",
+            "louer_logement_li1": "From a property listing, enter your desired duration (at least the required minimum) and contact the landlord.",
+            "louer_logement_li2": "Once the landlord agrees, you must pay an <strong>initial payment</strong> covering the deposit and the minimum-duration months.",
+            "louer_logement_li3": "Following months can be paid <strong>at your own pace</strong> (end of month, every two months...) from \"My rentals\".",
+            "louer_logement_li4": "You can request an <strong>extension</strong> of your lease; it must be approved by the landlord.",
+            "louer_logement_li5": "At the end of the lease (grace period included), a summary pro-forma is emailed to you.",
+            "favoris_avis_titre": "Favorites & reviews",
+            "favoris_avis_desc": "Add hotels to your favorites to find them easily. Your reviews and ratings on a hotel or property are publicly visible after moderation (for hotels) or immediately (for properties)."
+        },
+        "hotelier": {
+            "creer_hotel_titre": "Creating a hotel",
+            "creer_hotel_li1": "Enter the name, city, number of stars, and a cover image.",
+            "creer_hotel_li2": "Your hotel is <strong>not immediately visible</strong>: it goes into pending approval by an admin. You receive an email as soon as it's approved or rejected.",
+            "creer_hotel_li3": "Any later change also puts the hotel back into approval.",
+            "creer_hotel_li4": "Then add the photo gallery, social links, and your payment contacts (MTN MoMo / Orange Money) from the hotel page.",
+            "categories_chambres_titre": "Room categories",
+            "categories_chambres_desc": "Each hotel can have several room categories (name, capacity, nightly price, amenities). This is what clients book from your hotel's page.",
+            "reservations_titre": "Bookings",
+            "reservations_li1": "A client booking shows as \"pending\" until its payment is confirmed.",
+            "reservations_li2": "You can manually confirm or cancel a booking if needed.",
+            "reservations_li3": "On the departure date, the stay is closed automatically: you receive an email, and the client receives their pro-forma.",
+            "avis_titre": "Client reviews",
+            "avis_desc": "Displayed reviews have been approved by an admin. You can view them but not edit them."
+        },
+        "bailleur": {
+            "ajouter_logement_titre": "Adding a property",
+            "ajouter_logement_li1": "As with hotels, a property is only visible on the site after approval by an admin (upon creation and after each edit).",
+            "ajouter_logement_li2": "<strong>Villas are automatically furnished</strong> — the category field locks to \"furnished\".",
+            "ajouter_logement_li3": "You can group several identical properties into a <strong>mini-estate</strong> and generate several copies at once.",
+            "ajouter_logement_li4": "The <strong>grace period</strong> (7 days by default, adjustable per property) is the delay after a lease ends before the property becomes visible again — time to vacate it or for an extension to be requested.",
+            "demandes_baye_titre": "Lease requests",
+            "demandes_baye_li1": "When a client contacts you, a request appears with the desired duration (at least your property's minimum duration).",
+            "demandes_baye_li2": "By approving, a lease is created and an <strong>initial payment</strong> (deposit + minimum duration) is requested from the client; the property becomes \"rented\".",
+            "demandes_baye_li3": "The following months are paid by the client at their own pace — you track payment status in \"Active rentals\".",
+            "prolongations_titre": "Extensions & lease end",
+            "prolongations_li1": "Any extension request from a client must be <strong>approved by you</strong> before it applies.",
+            "prolongations_li2": "Once the lease ends (grace period elapsed), the property automatically becomes visible on the site again — you receive a confirmation email with the lease's summary pro-forma.",
+            "recevoir_loyers_titre": "Receiving your rent",
+            "recevoir_loyers_desc": "Add your MTN MoMo / Orange Money numbers in your profile: that's where your tenants' payments are sent."
+        },
+        "admin": {
+            "validations_titre": "Approvals to handle",
+            "validations_li1": "<strong>Accounts to approve</strong>: every hotelier/landlord application must be reviewed before the person can log in. You receive an email for each new request.",
+            "validations_li2": "<strong>Hotels to approve</strong>: a hotel created by a hotelier is only visible on the site after your approval.",
+            "validations_li3": "<strong>Properties to approve</strong>: same principle for properties added by landlords — including after an edit.",
+            "validations_li4": "If rejecting, always provide a reason: it is emailed to the person concerned.",
+            "moderation_titre": "Moderation",
+            "moderation_desc": "Client reviews on hotels only appear publicly after your approval in \"Review moderation\". The hotel's average rating is recalculated automatically with each approval.",
+            "consultation_titre": "Read-only overview",
+            "consultation_desc": "\"All hotels\", \"All properties\", \"All leases\", and \"All bookings\" give you a complete view of platform activity. You can view everything but not edit anything directly — management stays with the relevant hotelier, landlord, or client.",
+            "rapports_titre": "Financial reports",
+            "rapports_desc": "Total revenue and the breakdown by hotel and city are calculated from confirmed payments (MTN MoMo / Orange Money). Pending or failed payments are not included.",
+            "automatisations_titre": "Automations",
+            "automatisations_desc": "Two scheduled tasks run every day: closing out stays (sending the pro-forma) and processing expired leases (freeing up the property once the grace period has elapsed). They must be run via <code class=\"bg-flux-brume px-1.5 py-0.5 rounded\">php artisan schedule:work</code> or a cron job."
+        }
     }
 }

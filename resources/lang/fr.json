@@ -833,7 +833,8 @@
     "messages_page": {
         "intro_hotelier": "Messages envoyés par des clients intéressés par vos hôtels en forfait <strong>free</strong> (non réservables en ligne). Passez en :lien pour activer la réservation en ligne.",
         "forfait_pro": "forfait pro",
-        "aucun_message": "Aucun message pour le moment."
+        "aucun_message": "Aucun message pour le moment.",
+        "intro_bailleur": "Messages envoyés par des clients intéressés par vos logements en forfait <strong>free</strong> (non réservables en ligne). Passez en :lien pour activer la réservation en ligne."
     },
     "demande": {
         "tab_nouvelles": "Nouvelles",
@@ -844,5 +845,15 @@
         "statut_validee": "Validée",
         "statut_rejetee": "Rejetée",
         "aucune_demande": "Aucune demande pour le moment."
+    },
+    "minicite": {
+        "minicite_compte": "{0} 0 mini-cité|{1} :n mini-cité|[2,*] :n mini-cités",
+        "nouvelle_minicite": "Nouvelle mini-cité",
+        "confirmer_suppression": "Supprimer cette mini-cité ?",
+        "aucune_minicite": "Aucune mini-cité pour le moment.",
+        "modifier_minicite": "Modifier la mini-cité",
+        "minicite_singulier": "Mini-cité",
+        "nom_minicite": "Nom de la mini-cité",
+        "creer_minicite": "Créer la mini-cité"
     }
 }

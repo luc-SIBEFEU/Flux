@@ -23,7 +23,7 @@
         <div class="bg-white border border-black/10 rounded-2xl p-5">
             <h3 class="font-medium">{{ $mc->nom }}</h3>
             <p class="text-sm text-flux-noir/50 flex items-center gap-1 mt-1"><x-icon name="map-pin" class="w-3.5 h-3.5" /> {{ $mc->quartier }}, {{ $mc->ville }}</p>
-            <p class="text-xs text-flux-noir/40 mt-2">{{ $mc->logements_count }} logement(s)</p>
+            <p class="text-xs text-flux-noir/40 mt-2">{{ trans_choice('logement.logement_compte', $mc->logements_count, ['n' => $mc->logements_count]) }}</p>
 
             <div class="flex gap-3 mt-4">
                 <a href="{{ route('bailleur.minicites.edit', $mc) }}" class="inline-flex items-center gap-1.5 text-sm text-flux-violet font-medium">

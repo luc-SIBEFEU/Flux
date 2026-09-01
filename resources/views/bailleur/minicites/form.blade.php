@@ -41,7 +41,7 @@
     </div>
 
     <button type="submit" class="inline-flex items-center gap-2 bg-flux-violet text-white font-semibold px-6 py-3 rounded-lg">
-        {{ $minicite->exists ? 'Enregistrer' : 'Créer la mini-cité' }}
+        {{ $minicite->exists ? __('form.enregistrer') : __('minicite.creer_minicite') }}
     </button>
 </form>
 

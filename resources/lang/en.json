@@ -832,7 +832,8 @@
     "messages_page": {
         "intro_hotelier": "Messages sent by clients interested in your hotels on the <strong>free</strong> plan (not bookable online). Upgrade to :lien to enable online booking.",
         "forfait_pro": "the pro plan",
-        "aucun_message": "No messages yet."
+        "aucun_message": "No messages yet.",
+        "intro_bailleur": "Messages sent by clients interested in your properties on the <strong>free</strong> plan (not bookable online). Upgrade to :lien to enable online booking."
     },
     "demande": {
         "tab_nouvelles": "New",
@@ -843,5 +844,15 @@
         "statut_validee": "Approved",
         "statut_rejetee": "Rejected",
         "aucune_demande": "No requests yet."
+    },
+    "minicite": {
+        "minicite_compte": "{0} 0 mini-estates|{1} :n mini-estate|[2,*] :n mini-estates",
+        "nouvelle_minicite": "New mini-estate",
+        "confirmer_suppression": "Delete this mini-estate?",
+        "aucune_minicite": "No mini-estates yet.",
+        "modifier_minicite": "Edit mini-estate",
+        "minicite_singulier": "Mini-estate",
+        "nom_minicite": "Mini-estate name",
+        "creer_minicite": "Create mini-estate"
     }
 }

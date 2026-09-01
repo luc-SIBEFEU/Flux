@@ -882,5 +882,20 @@
         "desactiver": "Disable",
         "reactiver": "Reactivate",
         "confirmer_suppression_compte": "Delete this account?"
+    },
+    "actualite": {
+        "en_cours": "Ongoing",
+        "a_venir": "Upcoming",
+        "passees": "Past",
+        "nouvelle_actualite": "New announcement",
+        "confirmer_suppression": "Delete this announcement?",
+        "date_debut": "Start date",
+        "date_fin": "End date",
+        "ordre_carrousel": "Order in the homepage carousel",
+        "ordre_desc": "Announcements are displayed in ascending order (0 first).",
+        "image": "Image",
+        "publier": "Publish",
+        "modifier_actualite": "Edit announcement",
+        "actualite_singulier": "Announcement"
     }
 }

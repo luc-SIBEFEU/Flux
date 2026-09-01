@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
 @php($espaceRole = 'admin')
-@section('titre_page', $actualite->exists ? 'Modifier l\'actualité' : 'Nouvelle actualité')
-@section('titre', 'Actualité — Admin')
+@section('titre_page', $actualite->exists ? __('actualite.modifier_actualite') : __('actualite.nouvelle_actualite'))
+@section('titre', __('actualite.actualite_singulier') . ' — ' . __('sidebar.espace_admin'))
 
 @section('contenu')
 <div class="mb-7">
 <a href="{{ route('admin.actualites.index') }}" class="inline-flex items-center gap-2 text-sm text-flux-bleu font-medium">
-    Actualités</a> > {{ $actualite->exists ? 'modifier' : 'Nouvelle actualité' }}</h2>
+    {{ __('sidebar.actualites') }}</a> > {{ $actualite->exists ? __('common.modifier') : __('actualite.nouvelle_actualite') }}</h2>
 </div>
 <form action="{{ $actualite->exists ? route('admin.actualites.update', $actualite) : route('admin.actualites.store') }}"
       method="POST" enctype="multipart/form-data" class="bg-white border border-black/10 rounded-2xl p-6 max-w-2xl space-y-5">
@@ -14,39 +14,39 @@
     @if($actualite->exists) @method('PUT') @endif
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Nom</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('common.nom') }}</label>
         <input type="text" name="nom" required value="{{ old('nom', $actualite->nom) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Description</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('common.description') }}</label>
         <textarea name="description" rows="4" required
                   class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">{{ old('description', $actualite->description) }}</textarea>
     </div>
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Date de début</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('actualite.date_debut') }}</label>
             <input type="date" name="date_debut" required value="{{ old('date_debut', optional($actualite->date_debut)->format('Y-m-d')) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Date de fin</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('actualite.date_fin') }}</label>
             <input type="date" name="date_fin" required value="{{ old('date_fin', optional($actualite->date_fin)->format('Y-m-d')) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Ordre dans le carrousel de l'accueil</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('actualite.ordre_carrousel') }}</label>
         <input type="number" name="ordre" min="0" value="{{ old('ordre', $actualite->ordre ?? 0) }}"
                class="mt-1 w-32 border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
-        <p class="text-xs text-flux-noir/40 mt-1">Les actualités s'affichent par ordre croissant (0 en premier).</p>
+        <p class="text-xs text-flux-noir/40 mt-1">{{ __('actualite.ordre_desc') }}</p>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Image</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('actualite.image') }}</label>
         @if($actualite->image)
             <img src="{{ asset('storage/'.$actualite->image) }}" class="w-32 h-20 object-cover rounded-lg mt-2 mb-2">
         @endif
@@ -54,7 +54,7 @@
     </div>
 
     <button type="submit" class="inline-flex items-center gap-2 bg-flux-bleu text-white font-semibold px-6 py-3 rounded-lg">
-        {{ $actualite->exists ? 'Enregistrer' : 'Publier' }}
+        {{ $actualite->exists ? __('form.enregistrer') : __('actualite.publier') }}
     </button>
 </form>
 @endsection

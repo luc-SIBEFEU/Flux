@@ -883,5 +883,20 @@
         "desactiver": "Désactiver",
         "reactiver": "Réactiver",
         "confirmer_suppression_compte": "Supprimer ce compte ?"
+    },
+    "actualite": {
+        "en_cours": "En cours",
+        "a_venir": "À venir",
+        "passees": "Passées",
+        "nouvelle_actualite": "Nouvelle actualité",
+        "confirmer_suppression": "Supprimer cette actualité ?",
+        "date_debut": "Date de début",
+        "date_fin": "Date de fin",
+        "ordre_carrousel": "Ordre dans le carrousel de l'accueil",
+        "ordre_desc": "Les actualités s'affichent par ordre croissant (0 en premier).",
+        "image": "Image",
+        "publier": "Publier",
+        "modifier_actualite": "Modifier l'actualité",
+        "actualite_singulier": "Actualité"
     }
 }

@@ -1,23 +1,23 @@
 @extends('layouts.dashboard')
 @php $espaceRole = 'hotelier'; @endphp
-@section('titre_page', 'Mes hôtels')
-@section('titre', 'Mes hôtels — Hôtelier')
+@section('titre_page', __('sidebar.mes_hotels'))
+@section('titre', __('sidebar.mes_hotels') . ' — ' . __('sidebar.espace_hotelier'))
 
 @section('contenu')
 
 <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-    <p class="text-sm text-flux-noir/50">{{ $hotels->count() }} hôtel(s)</p>
+    <p class="text-sm text-flux-noir/50">{{ trans_choice('hotel.hotel_compte', $hotels->count(), ['n' => $hotels->count()]) }}</p>
     <div class="flex gap-3">
         <form method="GET" class="flex gap-2">
             <select name="statut" onchange="this.form.submit()" class="border border-black/10 rounded-lg px-3 py-2.5 text-sm bg-white">
-                <option value="">Tous les statuts</option>
-                <option value="en_attente" {{ request('statut')=='en_attente'?'selected':'' }}>En attente</option>
-                <option value="valide" {{ request('statut')=='valide'?'selected':'' }}>Validés</option>
-                <option value="rejete" {{ request('statut')=='rejete'?'selected':'' }}>Rejetés</option>
+                <option value="">{{ __('common.tous_les_statuts') }}</option>
+                <option value="en_attente" {{ request('statut')=='en_attente'?'selected':'' }}>{{ __('common.statut_en_attente') }}</option>
+                <option value="valide" {{ request('statut')=='valide'?'selected':'' }}>{{ __('common.statut_valides') }}</option>
+                <option value="rejete" {{ request('statut')=='rejete'?'selected':'' }}>{{ __('common.statut_rejetes') }}</option>
             </select>
         </form>
         <a href="{{ route('hotelier.hotels.create') }}" class="inline-flex items-center gap-2 bg-flux-bleu text-white text-sm font-medium px-4 py-2.5 rounded-lg">
-            <x-icon name="plus" class="w-4 h-4" /> Ajouter un hôtel
+            <x-icon name="plus" class="w-4 h-4" /> {{ __('hotel.ajouter_hotel') }}
         </a>
     </div>
 </div>
@@ -31,7 +31,7 @@
                     $badges = ['en_attente'=>'bg-flux-or/90 text-flux-noir','valide'=>'bg-flux-bleu text-white','rejete'=>'bg-red-500 text-white'];
                 @endphp
                 <span class="absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full {{ $badges[$hotel->statut] }}">
-                    {{ ucfirst(str_replace('_',' ',$hotel->statut)) }}
+                    {{ __('hotel.statut_' . $hotel->statut) }}
                 </span>
             </div>
             <div class="p-5">
@@ -40,15 +40,15 @@
 
                 <div class="flex flex-wrap gap-3 mt-4">
                     <a href="{{ route('hotelier.hotels.edit', $hotel) }}" class="inline-flex items-center gap-1.5 text-sm text-flux-bleu font-medium">
-                        <x-icon name="pencil" class="w-4 h-4" /> Modifier
+                        <x-icon name="pencil" class="w-4 h-4" /> {{ __('common.modifier') }}
                     </a>
                     <a href="{{ route('hotelier.hotels.chambres.index', $hotel) }}" class="inline-flex items-center gap-1.5 text-sm text-flux-noir/70 font-medium">
-                        <x-icon name="key" class="w-4 h-4" /> Chambres
+                        <x-icon name="key" class="w-4 h-4" /> {{ __('hotel.chambres') }}
                     </a>
-                    <form action="{{ route('hotelier.hotels.destroy', $hotel) }}" method="POST" onsubmit="return confirm('Supprimer cet hôtel ?')">
+                    <form action="{{ route('hotelier.hotels.destroy', $hotel) }}" method="POST" onsubmit="return confirm('{{ __('hotel.confirmer_suppression') }}')">
                         @csrf @method('DELETE')
                         <button class="inline-flex items-center gap-1.5 text-sm text-red-500 font-medium">
-                            <x-icon name="trash" class="w-4 h-4" /> Supprimer
+                            <x-icon name="trash" class="w-4 h-4" /> {{ __('common.supprimer') }}
                         </button>
                     </form>
                 </div>

@@ -46,7 +46,12 @@
         "ajouter": "Add",
         "filtrer_par_ville": "Filter by city...",
         "tout": "All",
-        "mois_abrege": "months"
+        "mois_abrege": "months",
+        "tous_les_statuts": "All statuses",
+        "statut_en_attente": "Pending",
+        "statut_valides": "Approved",
+        "statut_rejetes": "Rejected",
+        "description": "Description"
     },
     "navigation": {
         "hotels": "Hotels",
@@ -722,7 +727,30 @@
         "moderer_avis": "Moderate reviews"
     },
     "hotel": {
-        "ajouter_hotel": "Add a hotel"
+        "ajouter_hotel": "Add a hotel",
+        "hotel_compte": "{0} 0 hotels|{1} :n hotel|[2,*] :n hotels",
+        "statut_en_attente": "Pending",
+        "statut_valide": "Approved",
+        "statut_rejete": "Rejected",
+        "chambres": "Rooms",
+        "confirmer_suppression": "Delete this hotel?",
+        "modifier_hotel": "Edit hotel",
+        "nouvel_hotel": "New hotel",
+        "hotel_singulier": "Hotel",
+        "nom_hotel": "Hotel name",
+        "nombre_etoiles": "Number of stars",
+        "etoile_compte": "{1} :n star|[2,*] :n stars",
+        "adresse_quartier": "Address (District)",
+        "lien_google_maps": "Google Maps link",
+        "latitude_gm": "Latitude (Google Maps)",
+        "longitude_gm": "Longitude (Google Maps)",
+        "equipements": "Amenities",
+        "image_couverture": "Cover image",
+        "visible_apres_validation": "This hotel will be visible on the site after approval by an admin.",
+        "creer_hotel": "Create hotel",
+        "reseaux_sociaux": "Social media",
+        "site_web": "Website",
+        "contacts_paiement_momo": "Payment contacts (MTN MoMo / Orange Money)"
     },
     "logement": {
         "ajouter_logement": "Add a property"

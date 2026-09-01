@@ -46,7 +46,12 @@
         "ajouter": "Ajouter",
         "filtrer_par_ville": "Filtrer par ville...",
         "tout": "Tout",
-        "mois_abrege": "mois"
+        "mois_abrege": "mois",
+        "tous_les_statuts": "Tous les statuts",
+        "statut_en_attente": "En attente",
+        "statut_valides": "Validés",
+        "statut_rejetes": "Rejetés",
+        "description": "Description"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -723,7 +728,30 @@
         "moderer_avis": "Modérer les avis"
     },
     "hotel": {
-        "ajouter_hotel": "Ajouter un hôtel"
+        "ajouter_hotel": "Ajouter un hôtel",
+        "hotel_compte": "{0} 0 hôtel|{1} :n hôtel|[2,*] :n hôtels",
+        "statut_en_attente": "En attente",
+        "statut_valide": "Validé",
+        "statut_rejete": "Rejeté",
+        "chambres": "Chambres",
+        "confirmer_suppression": "Supprimer cet hôtel ?",
+        "modifier_hotel": "Modifier l'hôtel",
+        "nouvel_hotel": "Nouvel hôtel",
+        "hotel_singulier": "Hôtel",
+        "nom_hotel": "Nom de l'hôtel",
+        "nombre_etoiles": "Nombre d'étoiles",
+        "etoile_compte": "{1} :n étoile|[2,*] :n étoiles",
+        "adresse_quartier": "Adresse (Quartier)",
+        "lien_google_maps": "Lien Google Maps",
+        "latitude_gm": "Latitude (Google Maps)",
+        "longitude_gm": "Longitude (Google Maps)",
+        "equipements": "Équipements",
+        "image_couverture": "Image de couverture",
+        "visible_apres_validation": "Cet hôtel sera visible sur le site après validation par un administrateur.",
+        "creer_hotel": "Créer l'hôtel",
+        "reseaux_sociaux": "Réseaux sociaux",
+        "site_web": "Site web",
+        "contacts_paiement_momo": "Contacts de paiement (MTN MoMo / Orange Money)"
     },
     "logement": {
         "ajouter_logement": "Ajouter un logement"

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @php $espaceRole = 'hotelier'; @endphp
-@section('titre_page', $hotel->exists ? "Modifier l'hôtel" : 'Nouvel hôtel')
-@section('titre', 'Hôtel — Hôtelier')
+@section('titre_page', $hotel->exists ? __('hotel.modifier_hotel') : __('hotel.nouvel_hotel'))
+@section('titre', __('hotel.hotel_singulier') . ' — ' . __('sidebar.espace_hotelier'))
 
 @section('contenu')
 
@@ -11,58 +11,58 @@
     @if($hotel->exists) @method('PUT') @endif
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Nom de l'hôtel</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.nom_hotel') }}</label>
         <input type="text" name="nom" required value="{{ old('nom', $hotel->nom) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
     </div>
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Nombre d'étoiles</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.nombre_etoiles') }}</label>
             <select name="nombre_etoiles" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none">
                 @foreach([1,2,3,4,5] as $n)
-                    <option value="{{ $n }}" {{ old('nombre_etoiles', $hotel->nombre_etoiles)==$n?'selected':'' }}>{{ $n }} étoile(s)</option>
+                    <option value="{{ $n }}" {{ old('nombre_etoiles', $hotel->nombre_etoiles)==$n?'selected':'' }}>{{ trans_choice('hotel.etoile_compte', $n, ['n' => $n]) }}</option>
                 @endforeach
             </select>
         </div>
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Ville</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('common.ville') }}</label>
             <input type="text" name="ville" required value="{{ old('ville', $hotel->ville) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Adresse (Quartier)</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.adresse_quartier') }}</label>
         <input type="text" name="adresse" value="{{ old('adresse', $hotel->adresse) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
     </div>
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Lien Google Maps</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.lien_google_maps') }}</label>
             <input type="text" name="map" value="{{ old('latitude', $hotel->map) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Latitude (Google Maps)</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.latitude_gm') }}</label>
             <input type="text" name="latitude" value="{{ old('latitude', $hotel->latitude) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Longitude (Google Maps)</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.longitude_gm') }}</label>
             <input type="text" name="longitude" value="{{ old('longitude', $hotel->longitude) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">
         </div>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Description</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('common.description') }}</label>
         <textarea name="description" rows="4" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">{{ old('description', $hotel->description) }}</textarea>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Équipements</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.equipements') }}</label>
         <div class="flex flex-wrap gap-2 mt-2">
             @foreach($equipements as $eq)
                 <label>
@@ -75,7 +75,7 @@
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Image de couverture</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.image_couverture') }}</label>
         @if($hotel->image_couverture)
             <img src="{{ asset('storage/'.$hotel->image_couverture) }}" class="w-32 h-20 object-cover rounded-lg mt-2 mb-2">
         @endif
@@ -83,11 +83,11 @@
     </div>
 
     @if(!$hotel->exists)
-        <p class="text-xs text-flux-noir/40 flex items-center gap-1.5"><x-icon name="bell" class="w-3.5 h-3.5" /> Cet hôtel sera visible sur le site après validation par un administrateur.</p>
+        <p class="text-xs text-flux-noir/40 flex items-center gap-1.5"><x-icon name="bell" class="w-3.5 h-3.5" /> {{ __('hotel.visible_apres_validation') }}</p>
     @endif
 
     <button type="submit" class="inline-flex items-center gap-2 bg-flux-bleu text-white font-semibold px-6 py-3 rounded-lg">
-        {{ $hotel->exists ? 'Enregistrer' : "Créer l'hôtel" }}
+        {{ $hotel->exists ? __('form.enregistrer') : __('hotel.creer_hotel') }}
     </button>
 </form>
 
@@ -102,7 +102,7 @@
         ])
 
         <div class="bg-white border border-black/10 rounded-2xl p-6">
-            <h3 class="font-medium mb-4">Réseaux sociaux</h3>
+            <h3 class="font-medium mb-4">{{ __('hotel.reseaux_sociaux') }}</h3>
             <div class="space-y-2 mb-4">
                 @foreach($hotel->reseauxSociaux as $rs)
                     <div class="flex items-center justify-between text-sm bg-flux-brume rounded-lg px-3 py-2">
@@ -118,15 +118,15 @@
                     <option value="tiktok">TikTok</option>
                     <option value="whatsapp">WhatsApp</option>
                     <option value="x">X</option>
-                    <option value="site_web">Site web</option>
+                    <option value="site_web">{{ __('hotel.site_web') }}</option>
                 </select>
                 <input type="url" name="lien" required placeholder="https://..." class="flex-1 border border-black/10 rounded-lg px-3 py-2 text-sm">
-                <button class="bg-flux-bleu text-white text-sm font-medium px-4 py-2 rounded-lg">Ajouter</button>
+                <button class="bg-flux-bleu text-white text-sm font-medium px-4 py-2 rounded-lg">{{ __('common.ajouter') }}</button>
             </form>
         </div>
 
         <div class="bg-white border border-black/10 rounded-2xl p-6">
-            <h3 class="font-medium mb-4">Contacts de paiement (MTN MoMo / Orange Money)</h3>
+            <h3 class="font-medium mb-4">{{ __('hotel.contacts_paiement_momo') }}</h3>
             <div class="space-y-2 mb-4">
                 @foreach($hotel->contactsPaiement as $contact)
                     <div class="flex items-center justify-between text-sm bg-flux-brume rounded-lg px-3 py-2">
@@ -144,8 +144,8 @@
                     <option value="mtn_momo">MTN MoMo</option>
                     <option value="orange_money">Orange Money</option>
                 </select>
-                <input type="text" name="numero" required placeholder="Numéro" class="flex-1 border border-black/10 rounded-lg px-3 py-2 text-sm">
-                <button class="bg-flux-bleu text-white text-sm font-medium px-4 py-2 rounded-lg">Ajouter</button>
+                <input type="text" name="numero" required placeholder="{{ __('form.numero') }}" class="flex-1 border border-black/10 rounded-lg px-3 py-2 text-sm">
+                <button class="bg-flux-bleu text-white text-sm font-medium px-4 py-2 rounded-lg">{{ __('common.ajouter') }}</button>
             </form>
         </div>
     </div>

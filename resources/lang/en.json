@@ -793,7 +793,12 @@
         "infos_complementaires": "Additional information",
         "plusieurs_identiques": "I own several identical units",
         "creation_auto_exemplaires": "The site will automatically create this many identical properties, each with a different identifier.",
-        "creer_logement": "Create property"
+        "creer_logement": "Create property",
+        "locataire_singulier": "Tenant",
+        "tous_mes_logements": "All my properties",
+        "aucun_commentaire": "No comments for your properties.",
+        "retour_aux_logements": "Back to properties",
+        "aucun_locataire": "No tenants for this property."
     },
     "avis": {
         "titre": "Client reviews",
@@ -828,5 +833,15 @@
         "intro_hotelier": "Messages sent by clients interested in your hotels on the <strong>free</strong> plan (not bookable online). Upgrade to :lien to enable online booking.",
         "forfait_pro": "the pro plan",
         "aucun_message": "No messages yet."
+    },
+    "demande": {
+        "tab_nouvelles": "New",
+        "tab_validees": "Approved",
+        "tab_rejetees": "Rejected",
+        "valider": "Approve",
+        "rejeter": "Reject",
+        "statut_validee": "Approved",
+        "statut_rejetee": "Rejected",
+        "aucune_demande": "No requests yet."
     }
 }

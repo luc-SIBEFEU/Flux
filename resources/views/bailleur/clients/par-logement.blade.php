@@ -13,7 +13,7 @@
     </div>
     <div>
         <h2 class="font-medium capitalize">{{ $logement->type }} — {{ $logement->quartier }}, {{ $logement->ville }}</h2>
-        <p class="text-sm text-flux-noir/50">{{ number_format($logement->prix_mois,0,',',' ') }} FCFA / mois</p>
+        <p class="text-sm text-flux-noir/50">{{ number_format($logement->prix_mois,0,',',' ') }} FCFA / {{ __('forfait.mois') }}</p>
     </div>
 </div>
 

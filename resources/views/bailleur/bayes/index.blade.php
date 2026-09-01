@@ -31,14 +31,14 @@
                 <tr>
                     <td class="px-5 py-3 font-medium">{{ $baye->client->nom }}</td>
                     <td class="px-5 py-3 capitalize">{{ $baye->logement->type }} — {{ $baye->logement->quartier }}</td>
-                    <td class="px-5 py-3 whitespace-nowrap">{{ $baye->date_debut->format('d/m/y') }} · {{ $baye->duree_mois }} mois</td>
+                    <td class="px-5 py-3 whitespace-nowrap">{{ $baye->date_debut->format('d/m/y') }} · {{ trans_choice('baye.mois_compte', $baye->duree_mois, ['n' => $baye->duree_mois]) }}</td>
                     <td class="px-5 py-3">
                         @php $badges = ['nouveau'=>'bg-flux-or/20 text-flux-or','en_cours'=>'bg-flux-violet-pale text-flux-violet','termine'=>'bg-black/5 text-flux-noir/50']; @endphp
-                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$baye->statut] }}">{{ ucfirst(str_replace('_',' ',$baye->statut)) }}</span>
+                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$baye->statut] }}">{{ __('baye.badge_statut_' . $baye->statut) }}</span>
                     </td>
                     <td class="px-5 py-3">
                         @php $paiementBadges = ['a_jour'=>'bg-flux-bleu-pale text-flux-bleu','en_retard'=>'bg-red-50 text-red-500','solde'=>'bg-black/5 text-flux-noir/50']; @endphp
-                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $paiementBadges[$baye->etat_paiement] }}">{{ str_replace('_',' ',$baye->etat_paiement) }}</span>
+                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $paiementBadges[$baye->etat_paiement] }}">{{ __('baye.etat_paiement_' . $baye->etat_paiement) }}</span>
                     </td>
                 </tr>
             @endforeach

@@ -794,7 +794,12 @@
         "infos_complementaires": "Informations complémentaires",
         "plusieurs_identiques": "J'en possède plusieurs identiques",
         "creation_auto_exemplaires": "Le site créera automatiquement ce nombre de logements identiques, avec un identifiant différent pour chacun.",
-        "creer_logement": "Créer le logement"
+        "creer_logement": "Créer le logement",
+        "locataire_singulier": "Locataire",
+        "tous_mes_logements": "Tous mes logements",
+        "aucun_commentaire": "Aucun commentaire pour vos logements.",
+        "retour_aux_logements": "Retour aux logements",
+        "aucun_locataire": "Aucun locataire pour ce logement."
     },
     "avis": {
         "titre": "Avis clients",
@@ -829,5 +834,15 @@
         "intro_hotelier": "Messages envoyés par des clients intéressés par vos hôtels en forfait <strong>free</strong> (non réservables en ligne). Passez en :lien pour activer la réservation en ligne.",
         "forfait_pro": "forfait pro",
         "aucun_message": "Aucun message pour le moment."
+    },
+    "demande": {
+        "tab_nouvelles": "Nouvelles",
+        "tab_validees": "Validées",
+        "tab_rejetees": "Rejetées",
+        "valider": "Valider",
+        "rejeter": "Rejeter",
+        "statut_validee": "Validée",
+        "statut_rejetee": "Rejetée",
+        "aucune_demande": "Aucune demande pour le moment."
     }
 }

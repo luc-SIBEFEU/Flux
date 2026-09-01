@@ -51,7 +51,10 @@
         "statut_en_attente": "En attente",
         "statut_valides": "Validés",
         "statut_rejetes": "Rejetés",
-        "description": "Description"
+        "description": "Description",
+        "client": "Client",
+        "statut": "Statut",
+        "actions": "Actions"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -697,7 +700,12 @@
         "mon_sejour_titre": "Mon séjour — Mon espace",
         "etape_confirmee": "Réservation confirmée",
         "etape_en_cours": "Séjour en cours",
-        "etape_terminee": "Séjour terminé"
+        "etape_terminee": "Séjour terminé",
+        "tab_toutes": "Toutes",
+        "tab_terminees": "Terminées",
+        "hotel_chambre": "Hôtel / Chambre",
+        "confirmer": "Confirmer",
+        "annuler": "Annuler"
     },
     "dashboard_stats": {
         "en_attente": "En attente",
@@ -755,5 +763,39 @@
     },
     "logement": {
         "ajouter_logement": "Ajouter un logement"
+    },
+    "avis": {
+        "titre": "Avis clients",
+        "tous_mes_hotels": "Tous mes hôtels",
+        "toutes_les_notes": "Toutes les notes",
+        "note_et_plus": ":n/10 et plus",
+        "statut_en_attente": "En attente",
+        "statut_approuve": "Approuvé",
+        "statut_rejete": "Rejeté",
+        "aucun_avis_vos_hotels": "Aucun avis pour vos hôtels pour le moment."
+    },
+    "chambre": {
+        "modifier_categorie": "Modifier la catégorie",
+        "nouvelle_categorie": "Nouvelle catégorie de chambre",
+        "chambre_singulier": "Chambre",
+        "nom_categorie": "Nom de la catégorie",
+        "exemple_nom": "Ex: Chambre Deluxe",
+        "capacite_adultes": "Capacité adultes",
+        "capacite_enfants": "Capacité enfants",
+        "prix_nuit": "Prix / nuit (FCFA)",
+        "nombre_disponible": "Nombre disponible",
+        "creer_categorie": "Créer la catégorie",
+        "rechercher_categorie": "Rechercher une catégorie...",
+        "adulte_compte": "{1} :n adulte|[2,*] :n adultes",
+        "enfant_compte": "{0} :n enfant|{1} :n enfant|[2,*] :n enfants",
+        "par_nuit": "/nuit",
+        "reservation_compte": "{0} :n réservation|{1} :n réservation|[2,*] :n réservations",
+        "confirmer_suppression": "Supprimer cette catégorie ?",
+        "aucune_categorie": "Aucune catégorie de chambre pour cet hôtel."
+    },
+    "messages_page": {
+        "intro_hotelier": "Messages envoyés par des clients intéressés par vos hôtels en forfait <strong>free</strong> (non réservables en ligne). Passez en :lien pour activer la réservation en ligne.",
+        "forfait_pro": "forfait pro",
+        "aucun_message": "Aucun message pour le moment."
     }
 }

@@ -40,21 +40,21 @@
                     <td class="px-5 py-3 font-medium text-flux-bleu">{{ number_format($r->prix_total,0,',',' ') }} F</td>
                     <td class="px-5 py-3">
                         @php $badges = ['en_attente'=>'bg-flux-or/20 text-flux-or','confirmee'=>'bg-flux-bleu-pale text-flux-bleu','annulee'=>'bg-red-50 text-red-500','terminee'=>'bg-black/5 text-flux-noir/50']; @endphp
-                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$r->statut] ?? '' }}">{{ ucfirst(str_replace('_',' ',$r->statut)) }}</span>
+                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badges[$r->statut] ?? '' }}">{{ __('reservation.statut_' . $r->statut) }}</span>
                     </td>
                     <td class="px-5 py-3">
                         @php $badgesPaiement = ['en_attente'=>'bg-flux-or/20 text-flux-or','reussi'=>'bg-green-50 text-green-600','echoue'=>'bg-red-50 text-red-500','rembourse'=>'bg-black/5 text-flux-noir/50']; @endphp
-                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badgesPaiement[$r->statut_paiement] ?? '' }}">{{ ucfirst(str_replace('_',' ',$r->statut_paiement)) }}</span>
+                        <span class="text-xs px-2.5 py-1 rounded-full font-medium {{ $badgesPaiement[$r->statut_paiement] ?? '' }}">{{ __('reservation.statut_paiement_' . $r->statut_paiement) }}</span>
                     </td>
                     <td class="px-5 py-3 text-right whitespace-nowrap">
                         @if($r->statut === 'en_attente')
                             <form action="{{ route('hotelier.reservations.confirmer', $r) }}" method="POST" class="inline">
                                 @csrf
-                                <button class="text-flux-bleu text-xs font-medium mr-3">Confirmer</button>
+                                <button class="text-flux-bleu text-xs font-medium mr-3">{{ __('reservation.confirmer') }}</button>
                             </form>
                             <form action="{{ route('hotelier.reservations.annuler', $r) }}" method="POST" class="inline">
                                 @csrf
-                                <button class="text-red-500 text-xs font-medium">Annuler</button>
+                                <button class="text-red-500 text-xs font-medium">{{ __('reservation.annuler') }}</button>
                             </form>
                         @endif
                     </td>

@@ -51,7 +51,10 @@
         "statut_en_attente": "Pending",
         "statut_valides": "Approved",
         "statut_rejetes": "Rejected",
-        "description": "Description"
+        "description": "Description",
+        "client": "Client",
+        "statut": "Status",
+        "actions": "Actions"
     },
     "navigation": {
         "hotels": "Hotels",
@@ -696,7 +699,12 @@
         "mon_sejour_titre": "My stay — My space",
         "etape_confirmee": "Booking confirmed",
         "etape_en_cours": "Stay in progress",
-        "etape_terminee": "Stay completed"
+        "etape_terminee": "Stay completed",
+        "tab_toutes": "All",
+        "tab_terminees": "Completed",
+        "hotel_chambre": "Hotel / Room",
+        "confirmer": "Confirm",
+        "annuler": "Cancel"
     },
     "dashboard_stats": {
         "en_attente": "Pending",
@@ -754,5 +762,39 @@
     },
     "logement": {
         "ajouter_logement": "Add a property"
+    },
+    "avis": {
+        "titre": "Client reviews",
+        "tous_mes_hotels": "All my hotels",
+        "toutes_les_notes": "All ratings",
+        "note_et_plus": ":n/10 and up",
+        "statut_en_attente": "Pending",
+        "statut_approuve": "Approved",
+        "statut_rejete": "Rejected",
+        "aucun_avis_vos_hotels": "No reviews for your hotels yet."
+    },
+    "chambre": {
+        "modifier_categorie": "Edit category",
+        "nouvelle_categorie": "New room category",
+        "chambre_singulier": "Room",
+        "nom_categorie": "Category name",
+        "exemple_nom": "E.g. Deluxe Room",
+        "capacite_adultes": "Adult capacity",
+        "capacite_enfants": "Child capacity",
+        "prix_nuit": "Price / night (FCFA)",
+        "nombre_disponible": "Number available",
+        "creer_categorie": "Create category",
+        "rechercher_categorie": "Search a category...",
+        "adulte_compte": "{1} :n adult|[2,*] :n adults",
+        "enfant_compte": "{0} :n children|{1} :n child|[2,*] :n children",
+        "par_nuit": "/night",
+        "reservation_compte": "{0} :n booking|{1} :n booking|[2,*] :n bookings",
+        "confirmer_suppression": "Delete this category?",
+        "aucune_categorie": "No room category for this hotel."
+    },
+    "messages_page": {
+        "intro_hotelier": "Messages sent by clients interested in your hotels on the <strong>free</strong> plan (not bookable online). Upgrade to :lien to enable online booking.",
+        "forfait_pro": "the pro plan",
+        "aucun_message": "No messages yet."
     }
 }

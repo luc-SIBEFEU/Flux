@@ -1,13 +1,12 @@
 @extends('layouts.dashboard')
 @php $espaceRole = 'hotelier'; @endphp
-@section('titre_page', 'Messages')
-@section('titre', 'Messages — Hôtelier')
+@section('titre_page', __('sidebar.messages'))
+@section('titre', __('sidebar.messages') . ' — ' . __('sidebar.espace_hotelier'))
 
 @section('contenu')
 
 <p class="text-sm text-flux-noir/60 mb-6">
-    Messages envoyés par des clients intéressés par vos hôtels en forfait <strong>free</strong> (non réservables en ligne).
-    Passez en <a href="{{ route('forfait.index') }}" class="text-flux-bleu underline">forfait pro</a> pour activer la réservation en ligne.
+    {!! __('messages_page.intro_hotelier', ['lien' => '<a href="' . route('forfait.index') . '" class="text-flux-bleu underline">' . __('messages_page.forfait_pro') . '</a>']) !!}
 </p>
 
 <div class="space-y-4">
@@ -28,7 +27,7 @@
     @empty
         <div class="text-center py-16 text-flux-noir/40">
             <x-icon name="mail" class="w-10 h-10 mx-auto mb-3" />
-            Aucun message pour le moment.
+            {{ __('messages_page.aucun_message') }}
         </div>
     @endforelse
 </div>

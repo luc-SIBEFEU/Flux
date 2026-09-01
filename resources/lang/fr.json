@@ -855,5 +855,18 @@
         "minicite_singulier": "Mini-cité",
         "nom_minicite": "Nom de la mini-cité",
         "creer_minicite": "Créer la mini-cité"
+    },
+    "admin_valid": {
+        "validation_hotels": "Validation des hôtels",
+        "hotels_en_attente_compte": "{0} 0 hôtel en attente de validation|{1} :n hôtel en attente de validation|[2,*] :n hôtels en attente de validation",
+        "approuver": "Approuver",
+        "motif_rejet": "Motif du rejet",
+        "confirmer": "Confirmer",
+        "aucun_hotel_attente": "Aucun hôtel en attente. Tout est à jour !",
+        "validation_logements": "Validation des logements",
+        "logements_en_attente_compte": "{0} 0 logement en attente de validation|{1} :n logement en attente de validation|[2,*] :n logements en attente de validation",
+        "aucun_logement_attente": "Aucun logement en attente. Tout est à jour !",
+        "comptes_en_attente_compte": "{0} 0 compte hôtelier/bailleur en attente de validation|{1} :n compte hôtelier/bailleur en attente de validation|[2,*] :n comptes hôtelier/bailleur en attente de validation",
+        "aucun_compte_attente": "Aucun compte en attente. Tout est à jour !"
     }
 }

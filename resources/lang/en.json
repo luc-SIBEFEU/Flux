@@ -867,5 +867,20 @@
         "aucun_logement_attente": "No properties pending. All caught up!",
         "comptes_en_attente_compte": "{0} 0 hotelier/landlord accounts awaiting approval|{1} :n hotelier/landlord account awaiting approval|[2,*] :n hotelier/landlord accounts awaiting approval",
         "aucun_compte_attente": "No accounts pending. All caught up!"
+    },
+    "admin_users": {
+        "utilisateurs": "Users",
+        "rechercher_nom_email": "Search by name or email...",
+        "tous_les_roles": "All roles",
+        "role_clients": "Clients",
+        "role_client": "Client",
+        "role_hotelier": "Hotelier",
+        "role_bailleur": "Landlord",
+        "role_admin": "Admin",
+        "actif": "Active",
+        "desactive": "Disabled",
+        "desactiver": "Disable",
+        "reactiver": "Reactivate",
+        "confirmer_suppression_compte": "Delete this account?"
     }
 }

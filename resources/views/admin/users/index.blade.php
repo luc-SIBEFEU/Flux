@@ -44,13 +44,13 @@
                     <td class="px-5 py-3 capitalize">{{ $user->role }}</td>
                     <td class="px-5 py-3">
                         <span class="text-xs px-2.5 py-1 rounded-full {{ $user->actif ? 'bg-flux-bleu-pale text-flux-bleu' : 'bg-red-50 text-red-500' }}">
-                            {{ $user->actif ? 'Actif' : 'Désactivé' }}
+                            {{ $user->actif ? __('admin_users.actif') : __('admin_users.desactive') }}
                         </span>
                     </td>
                     <td class="px-5 py-3 text-right whitespace-nowrap">
                         <form action="{{ route('admin.users.toggle', $user) }}" method="POST" class="inline">
                             @csrf
-                            <button class="text-flux-bleu text-xs font-medium mr-3">{{ $user->actif ? 'Désactiver' : 'Réactiver' }}</button>
+                            <button class="text-flux-bleu text-xs font-medium mr-3">{{ $user->actif ? __('admin_users.desactiver') : __('admin_users.reactiver') }}</button>
                         </form>
                         <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer ce compte ?')">
                             @csrf @method('DELETE')

@@ -868,5 +868,20 @@
         "aucun_logement_attente": "Aucun logement en attente. Tout est à jour !",
         "comptes_en_attente_compte": "{0} 0 compte hôtelier/bailleur en attente de validation|{1} :n compte hôtelier/bailleur en attente de validation|[2,*] :n comptes hôtelier/bailleur en attente de validation",
         "aucun_compte_attente": "Aucun compte en attente. Tout est à jour !"
+    },
+    "admin_users": {
+        "utilisateurs": "Utilisateurs",
+        "rechercher_nom_email": "Rechercher par nom ou e-mail...",
+        "tous_les_roles": "Tous les rôles",
+        "role_clients": "Clients",
+        "role_client": "Client",
+        "role_hotelier": "Hôtelier",
+        "role_bailleur": "Bailleur",
+        "role_admin": "Admin",
+        "actif": "Actif",
+        "desactive": "Désactivé",
+        "desactiver": "Désactiver",
+        "reactiver": "Réactiver",
+        "confirmer_suppression_compte": "Supprimer ce compte ?"
     }
 }

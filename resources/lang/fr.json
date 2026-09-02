@@ -960,5 +960,37 @@
         "ecrivez_reponse": "Écrivez votre réponse ici...",
         "mail_auto_envoye": "Un mail sera automatiquement envoyé à :email",
         "envoyer_reponse": "Envoyer la réponse"
+    },
+    "admin_forfaits": {
+        "intro": "Le forfait free est gratuit et fixe. Vous pouvez modifier le prix, la durée et la description des formules pro ; les hôteliers/bailleurs déjà abonnés conservent leur période en cours au tarif souscrit.",
+        "type_free": "Free",
+        "type_pro": "Pro",
+        "gratuit_illimite": "Gratuit, illimité — ajout d'hôtels/logements sans réservation en ligne.",
+        "prix_fcfa": "Prix (FCFA)",
+        "duree_jours": "Durée (jours)",
+        "formule_proposee": "Formule proposée aux hôteliers/bailleurs"
+    },
+    "admin_rapports": {
+        "revenu_total": "Revenu total (toutes plateformes)",
+        "revenus_par_hotel": "Revenus par hôtel",
+        "top_hotels_ca": "Top des hôtels par chiffre d'affaires",
+        "repartition_ville": "Répartition par ville",
+        "part_revenus": "Part des revenus"
+    },
+    "admin_transferts": {
+        "intro": "Chaque paiement réussi (réservation ou loyer, forcément en forfait pro) déclenche automatiquement un versement vers le contact de paiement MoMo/OM de l'hôtelier/bailleur via AangaraaPay. Cette page ne liste que les cas nécessitant votre attention : contact manquant, échec, ou retrait resté en attente côté opérateur.",
+        "a_traiter": "À traiter",
+        "effectue": "Effectué",
+        "beneficiaire": "Bénéficiaire",
+        "objet": "Objet",
+        "aucun_contact": "Aucun contact enregistré",
+        "statut_a_traiter": "À traiter",
+        "statut_en_cours": "En cours",
+        "statut_effectue": "Effectué",
+        "statut_echoue": "Échoué",
+        "reessayer_versement": "Réessayer le versement",
+        "verifier_statut": "Vérifier le statut",
+        "marquer_effectue": "Marquer effectué manuellement",
+        "aucun_en_attente": "Aucun reversement en attente d'action."
     }
 }

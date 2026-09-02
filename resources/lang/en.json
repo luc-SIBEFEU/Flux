@@ -959,5 +959,37 @@
         "ecrivez_reponse": "Write your reply here...",
         "mail_auto_envoye": "An email will be automatically sent to :email",
         "envoyer_reponse": "Send reply"
+    },
+    "admin_forfaits": {
+        "intro": "The free plan is free and fixed. You can edit the price, duration, and description of the pro plans; hoteliers/landlords already subscribed keep their current period at the rate they signed up for.",
+        "type_free": "Free",
+        "type_pro": "Pro",
+        "gratuit_illimite": "Free, unlimited — add hotels/properties without online booking.",
+        "prix_fcfa": "Price (FCFA)",
+        "duree_jours": "Duration (days)",
+        "formule_proposee": "Plan offered to hoteliers/landlords"
+    },
+    "admin_rapports": {
+        "revenu_total": "Total revenue (all platforms)",
+        "revenus_par_hotel": "Revenue by hotel",
+        "top_hotels_ca": "Top hotels by revenue",
+        "repartition_ville": "Breakdown by city",
+        "part_revenus": "Share of revenue"
+    },
+    "admin_transferts": {
+        "intro": "Every successful payment (booking or rent, necessarily on the pro plan) automatically triggers a payout to the hotelier/landlord's MoMo/OM payment contact via AangaraaPay. This page only lists cases that need your attention: missing contact, failure, or a withdrawal still pending on the carrier's side.",
+        "a_traiter": "To process",
+        "effectue": "Completed",
+        "beneficiaire": "Beneficiary",
+        "objet": "Subject",
+        "aucun_contact": "No contact on file",
+        "statut_a_traiter": "To process",
+        "statut_en_cours": "In progress",
+        "statut_effectue": "Completed",
+        "statut_echoue": "Failed",
+        "reessayer_versement": "Retry the payout",
+        "verifier_statut": "Check status",
+        "marquer_effectue": "Mark as completed manually",
+        "aucun_en_attente": "No payouts awaiting action."
     }
 }

@@ -900,5 +900,15 @@
         "publier": "Publish",
         "modifier_actualite": "Edit announcement",
         "actualite_singulier": "Announcement"
+    },
+    "consultation": {
+        "consultation_admin": "Admin overview",
+        "lecture_seule_hotelier": "Read-only — admin views only, the hotelier makes changes.",
+        "lecture_seule_bailleur": "Read-only — admin views only, the landlord makes changes.",
+        "lecture_seule": "Read-only.",
+        "detail": "Details",
+        "voir": "View →",
+        "disponibilite": "Availability",
+        "validation": "Approval"
     }
 }

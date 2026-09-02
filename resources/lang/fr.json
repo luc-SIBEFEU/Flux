@@ -901,5 +901,15 @@
         "publier": "Publier",
         "modifier_actualite": "Modifier l'actualité",
         "actualite_singulier": "Actualité"
+    },
+    "consultation": {
+        "consultation_admin": "Consultation admin",
+        "lecture_seule_hotelier": "Lecture seule — l'admin consulte, seul l'hôtelier modifie.",
+        "lecture_seule_bailleur": "Lecture seule — l'admin consulte, seul le bailleur modifie.",
+        "lecture_seule": "Lecture seule.",
+        "detail": "Détail",
+        "voir": "Voir →",
+        "disponibilite": "Disponibilité",
+        "validation": "Validation"
     }
 }

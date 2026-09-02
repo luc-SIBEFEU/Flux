@@ -1057,5 +1057,16 @@
         "valider_reservation": "Valider la réservation",
         "paiement_etape_suivante": "Le paiement (MTN MoMo / Orange Money) sera demandé à l'étape suivante.",
         "nuit_s": "nuit(s)"
+    },
+    "pdf": {
+        "sejour": "Séjour",
+        "nuit_compte": "{1} :n nuit|[2,*] :n nuits",
+        "designation": "Désignation",
+        "occupants": "Occupants",
+        "genere_auto_sejour": "Document généré automatiquement par Flux à la fin du séjour",
+        "duree_bail": "Durée du bail",
+        "mois_th": "Mois",
+        "total_bail": "Total du bail",
+        "genere_auto_location": "Document généré automatiquement par Flux à la fin de la location"
     }
 }

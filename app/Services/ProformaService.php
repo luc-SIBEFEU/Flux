@@ -15,7 +15,14 @@ class ProformaService
 {
     public function genererReservation(Reservation $reservation): string
     {
-        $pdf = Pdf::loadView('pdf.proforma-reservation', ['reservation' => $reservation->load(['hotel', 'categorieChambre', 'client'])]);
+        $reservation->load(['hotel', 'categorieChambre', 'client']);
+
+        $localeOriginale = app()->getLocale();
+        app()->setLocale($reservation->client->locale ?? 'fr');
+
+        $pdf = Pdf::loadView('pdf.proforma-reservation', ['reservation' => $reservation]);
+
+        app()->setLocale($localeOriginale);
 
         $chemin = "proformas/reservation-{$reservation->id}.pdf";
         Storage::disk('public')->put($chemin, $pdf->output());
@@ -27,7 +34,14 @@ class ProformaService
 
     public function genererBaye(Baye $baye): string
     {
-        $pdf = Pdf::loadView('pdf.proforma-baye', ['baye' => $baye->load(['logement', 'client', 'bailleur', 'loyers'])]);
+        $baye->load(['logement', 'client', 'bailleur', 'loyers']);
+
+        $localeOriginale = app()->getLocale();
+        app()->setLocale($baye->client->locale ?? 'fr');
+
+        $pdf = Pdf::loadView('pdf.proforma-baye', ['baye' => $baye]);
+
+        app()->setLocale($localeOriginale);
 
         $chemin = "proformas/baye-{$baye->id}.pdf";
         Storage::disk('public')->put($chemin, $pdf->output());

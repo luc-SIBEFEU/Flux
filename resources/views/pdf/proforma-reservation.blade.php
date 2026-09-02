@@ -20,28 +20,28 @@
         <span class="badge">PRO-FORMA #{{ str_pad($reservation->id, 6, '0', STR_PAD_LEFT) }}</span>
     </div>
 
-    <p><strong>Client :</strong> {{ $reservation->client->nom }} — {{ $reservation->telephone_client }}</p>
-    <p><strong>Hôtel :</strong> {{ $reservation->hotel->nom }}, {{ $reservation->hotel->ville }}</p>
-    <p><strong>Séjour :</strong> {{ $reservation->date_arrivee->format('d/m/Y') }} → {{ $reservation->date_depart->format('d/m/Y') }}
-        ({{ $reservation->date_arrivee->diffInDays($reservation->date_depart) }} nuit(s))</p>
+    <p><strong>{{ __('common.client') }} :</strong> {{ $reservation->client->nom }} — {{ $reservation->telephone_client }}</p>
+    <p><strong>{{ __('hotel.hotel_singulier') }} :</strong> {{ $reservation->hotel->nom }}, {{ $reservation->hotel->ville }}</p>
+    <p><strong>{{ __('pdf.sejour') }} :</strong> {{ $reservation->date_arrivee->format('d/m/Y') }} → {{ $reservation->date_depart->format('d/m/Y') }}
+        ({{ trans_choice('pdf.nuit_compte', $reservation->date_arrivee->diffInDays($reservation->date_depart), ['n' => $reservation->date_arrivee->diffInDays($reservation->date_depart)]) }})</p>
 
     <table>
         <thead>
-            <tr><th>Désignation</th><th>Occupants</th><th>Montant</th></tr>
+            <tr><th>{{ __('pdf.designation') }}</th><th>{{ __('pdf.occupants') }}</th><th>{{ __('mail.montant') }}</th></tr>
         </thead>
         <tbody>
             <tr>
                 <td>{{ $reservation->categorieChambre->nom }}</td>
-                <td>{{ $reservation->nombre_adultes }} adulte(s), {{ $reservation->nombre_enfants }} enfant(s)</td>
+                <td>{{ trans_choice('chambre.adulte_compte', $reservation->nombre_adultes, ['n' => $reservation->nombre_adultes]) }}, {{ trans_choice('chambre.enfant_compte', $reservation->nombre_enfants, ['n' => $reservation->nombre_enfants]) }}</td>
                 <td>{{ number_format($reservation->prix_total, 0, ',', ' ') }} FCFA</td>
             </tr>
         </tbody>
     </table>
 
-    <p class="total">Total payé : {{ number_format($reservation->prix_total, 0, ',', ' ') }} FCFA</p>
+    <p class="total">{{ __('mail.total_paye') }} : {{ number_format($reservation->prix_total, 0, ',', ' ') }} FCFA</p>
 
     <div class="footer">
-        Document généré automatiquement par Flux à la fin du séjour — {{ now()->format('d/m/Y') }}
+        {{ __('pdf.genere_auto_sejour') }} — {{ now()->format('d/m/Y') }}
     </div>
 </body>
 </html>

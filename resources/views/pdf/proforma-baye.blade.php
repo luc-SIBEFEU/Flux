@@ -20,28 +20,28 @@
         <span class="badge">PRO-FORMA BAIL #{{ str_pad($baye->id, 6, '0', STR_PAD_LEFT) }}</span>
     </div>
 
-    <p><strong>Locataire :</strong> {{ $baye->client->nom }} — {{ $baye->client->telephone }}</p>
-    <p><strong>Bailleur :</strong> {{ $baye->bailleur->nom }}</p>
-    <p><strong>Logement :</strong> {{ ucfirst($baye->logement->type) }}, {{ $baye->logement->quartier }}, {{ $baye->logement->ville }}</p>
-    <p><strong>Durée du bail :</strong> {{ $baye->date_debut->format('d/m/Y') }} → {{ $baye->date_fin_prevue->format('d/m/Y') }} ({{ $baye->duree_mois }} mois)</p>
+    <p><strong>{{ __('logement.locataire_singulier') }} :</strong> {{ $baye->client->nom }} — {{ $baye->client->telephone }}</p>
+    <p><strong>{{ __('dashboard_stats.bailleurs') }} :</strong> {{ $baye->bailleur->nom }}</p>
+    <p><strong>{{ __('logement.logement_singulier') }} :</strong> {{ __('logement.type_' . $baye->logement->type) }}, {{ $baye->logement->quartier }}, {{ $baye->logement->ville }}</p>
+    <p><strong>{{ __('pdf.duree_bail') }} :</strong> {{ $baye->date_debut->format('d/m/Y') }} → {{ $baye->date_fin_prevue->format('d/m/Y') }} ({{ trans_choice('baye.mois_compte', $baye->duree_mois, ['n' => $baye->duree_mois]) }})</p>
 
     <table>
-        <thead><tr><th>Mois</th><th>Montant</th><th>Statut</th></tr></thead>
+        <thead><tr><th>{{ __('pdf.mois_th') }}</th><th>{{ __('mail.montant') }}</th><th>{{ __('common.statut') }}</th></tr></thead>
         <tbody>
             @foreach($baye->loyers as $loyer)
                 <tr>
                     <td>{{ \Carbon\Carbon::parse($loyer->mois_concerne)->translatedFormat('F Y') }}</td>
                     <td>{{ number_format($loyer->montant, 0, ',', ' ') }} FCFA</td>
-                    <td>{{ $loyer->statut === 'paye' ? 'Payé' : 'Non payé' }}</td>
+                    <td>{{ $loyer->statut === 'paye' ? __('baye.paye') : __('consultation.non_paye') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <p class="total">Total du bail : {{ number_format($baye->loyers->sum('montant'), 0, ',', ' ') }} FCFA</p>
+    <p class="total">{{ __('pdf.total_bail') }} : {{ number_format($baye->loyers->sum('montant'), 0, ',', ' ') }} FCFA</p>
 
     <div class="footer">
-        Document généré automatiquement par Flux à la fin de la location — {{ now()->format('d/m/Y') }}
+        {{ __('pdf.genere_auto_location') }} — {{ now()->format('d/m/Y') }}
     </div>
 </body>
 </html>

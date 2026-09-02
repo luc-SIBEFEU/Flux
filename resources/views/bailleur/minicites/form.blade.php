@@ -18,7 +18,7 @@
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Ville</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('common.ville') }}</label>
             <input type="text" name="ville" required value="{{ old('ville', $minicite->ville) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
         </div>

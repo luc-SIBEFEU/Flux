@@ -54,8 +54,8 @@
                     <button class="py-2 font-medium text-flux-noir/60">Déconnexion</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="block py-2 font-medium">Connexion</a>
-                <a href="{{ route('register') }}" class="block py-2 font-semibold text-flux-or">Créer un compte</a>
+                <a href="{{ route('login') }}" class="block py-2 font-medium">{{ __('common.connexion') }}</a>
+                <a href="{{ route('register') }}" class="block py-2 font-semibold text-flux-or">{{ __('auth.creer_compte') }}</a>
             @endauth
         </div>
     </nav>

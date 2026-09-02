@@ -19,13 +19,13 @@
     <table class="w-full text-sm min-w-[720px]">
         <thead class="bg-flux-brume text-flux-noir/50 text-xs uppercase">
             <tr>
-                <th class="text-left px-5 py-3">Client</th>
+                <th class="text-left px-5 py-3">{{ __('common.client') }}</th>
                 <th class="text-left px-5 py-3">Hôtel / Chambre</th>
                 <th class="text-left px-5 py-3">Période</th>
-                <th class="text-left px-5 py-3">Prix</th>
-                <th class="text-left px-5 py-3">Statut</th>
+                <th class="text-left px-5 py-3">{{ __('common.prix') }}</th>
+                <th class="text-left px-5 py-3">{{ __('common.statut') }}</th>
                 <th class="text-left px-5 py-3">Paiement</th>
-                <th class="text-right px-5 py-3">Actions</th>
+                <th class="text-right px-5 py-3">{{ __('common.actions') }}</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-black/5">

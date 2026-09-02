@@ -22,7 +22,7 @@
                 <th class="text-left px-5 py-3">Locataire</th>
                 <th class="text-left px-5 py-3">Logement</th>
                 <th class="text-left px-5 py-3">Période</th>
-                <th class="text-left px-5 py-3">Statut</th>
+                <th class="text-left px-5 py-3">{{ __('common.statut') }}</th>
                 <th class="text-left px-5 py-3">Paiement</th>
             </tr>
         </thead>

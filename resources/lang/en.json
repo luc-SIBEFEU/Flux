@@ -55,7 +55,8 @@
         "client": "Client",
         "statut": "Status",
         "actions": "Actions",
-        "appliquer_filtres": "Apply filters"
+        "appliquer_filtres": "Apply filters",
+        "mois_abrege_compte": "{1} :n month|[2,*] :n months"
     },
     "navigation": {
         "hotels": "Hotels",
@@ -1012,5 +1013,35 @@
         "meuble_minuscule": "furnished",
         "standard_minuscule": "standard",
         "aucun_resultat": "No properties match these criteria."
+    },
+    "hotel_show": {
+        "ajouter_favoris": "Add to favorites",
+        "a_propos": "About",
+        "chambres_disponibles": "Available rooms",
+        "reserver": "Book",
+        "contacter_hotelier": "Contact the hotelier",
+        "aucun_avis": "No reviews yet.",
+        "laisser_avis": "Leave a review",
+        "votre_experience": "Your experience...",
+        "note_sur_10": "Rating (out of 10)",
+        "pas_reservable_ligne": "This hotel can't be booked online",
+        "contactez_directement": "Contact the hotelier directly, they'll get back to you quickly.",
+        "votre_telephone": "Your phone number",
+        "votre_message": "Your message",
+        "envoyer_message": "Send message",
+        "connectez_vous_contacter": "Log in to contact the hotelier →"
+    },
+    "logement_show": {
+        "a": "in",
+        "aucun_commentaire": "No comments yet.",
+        "laisser_commentaire": "Leave a comment",
+        "note_sur_10_court": "Rating /10",
+        "duree_minimum": "Minimum duration",
+        "duree_souhaitee": "Desired duration (months, min. :n)",
+        "message_bailleur_optionnel": "Message for the landlord (optional)",
+        "envoyer_demande_bail": "Send a lease request",
+        "pas_gere_ligne": "This property isn't managed online: contact the landlord directly.",
+        "contacter_bailleur": "Contact the landlord",
+        "se_connecter_contacter": "Log in to contact"
     }
 }

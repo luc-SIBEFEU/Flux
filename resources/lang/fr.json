@@ -55,7 +55,8 @@
         "client": "Client",
         "statut": "Statut",
         "actions": "Actions",
-        "appliquer_filtres": "Appliquer les filtres"
+        "appliquer_filtres": "Appliquer les filtres",
+        "mois_abrege_compte": "{1} :n mois|[2,*] :n mois"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -1013,5 +1014,35 @@
         "meuble_minuscule": "meublé",
         "standard_minuscule": "standard",
         "aucun_resultat": "Aucun logement ne correspond à ces critères."
+    },
+    "hotel_show": {
+        "ajouter_favoris": "Ajouter aux favoris",
+        "a_propos": "À propos",
+        "chambres_disponibles": "Chambres disponibles",
+        "reserver": "Réserver",
+        "contacter_hotelier": "Contacter l'hôtelier",
+        "aucun_avis": "Aucun avis pour le moment.",
+        "laisser_avis": "Laisser un avis",
+        "votre_experience": "Votre expérience...",
+        "note_sur_10": "Note (sur 10)",
+        "pas_reservable_ligne": "Cet hôtel n'est pas réservable en ligne",
+        "contactez_directement": "Contactez directement l'hôtelier, il vous répondra rapidement.",
+        "votre_telephone": "Votre téléphone",
+        "votre_message": "Votre message",
+        "envoyer_message": "Envoyer le message",
+        "connectez_vous_contacter": "Connectez-vous pour contacter l'hôtelier →"
+    },
+    "logement_show": {
+        "a": "à",
+        "aucun_commentaire": "Aucun commentaire pour le moment.",
+        "laisser_commentaire": "Laisser un commentaire",
+        "note_sur_10_court": "Note /10",
+        "duree_minimum": "Durée minimum",
+        "duree_souhaitee": "Durée souhaitée (mois, min. :n)",
+        "message_bailleur_optionnel": "Message pour le bailleur (optionnel)",
+        "envoyer_demande_bail": "Envoyer une demande de bail",
+        "pas_gere_ligne": "Ce logement n'est pas géré en ligne : contactez directement le bailleur.",
+        "contacter_bailleur": "Contacter le bailleur",
+        "se_connecter_contacter": "Se connecter pour contacter"
     }
 }

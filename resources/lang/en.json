@@ -808,7 +808,10 @@
         "statut_en_attente": "Pending",
         "statut_approuve": "Approved",
         "statut_rejete": "Rejected",
-        "aucun_avis_vos_hotels": "No reviews for your hotels yet."
+        "aucun_avis_vos_hotels": "No reviews for your hotels yet.",
+        "avis_en_attente_compte": "{0} 0 reviews awaiting moderation|{1} :n review awaiting moderation|[2,*] :n reviews awaiting moderation",
+        "a_propos_de": "about",
+        "aucun_avis_attente": "No reviews pending."
     },
     "chambre": {
         "modifier_categorie": "Edit category",

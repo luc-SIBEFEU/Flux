@@ -809,7 +809,10 @@
         "statut_en_attente": "En attente",
         "statut_approuve": "Approuvé",
         "statut_rejete": "Rejeté",
-        "aucun_avis_vos_hotels": "Aucun avis pour vos hôtels pour le moment."
+        "aucun_avis_vos_hotels": "Aucun avis pour vos hôtels pour le moment.",
+        "avis_en_attente_compte": "{0} 0 avis en attente de modération|{1} :n avis en attente de modération|[2,*] :n avis en attente de modération",
+        "a_propos_de": "à propos de",
+        "aucun_avis_attente": "Aucun avis en attente."
     },
     "chambre": {
         "modifier_categorie": "Modifier la catégorie",

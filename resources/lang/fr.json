@@ -705,7 +705,9 @@
         "tab_terminees": "Terminées",
         "hotel_chambre": "Hôtel / Chambre",
         "confirmer": "Confirmer",
-        "annuler": "Annuler"
+        "annuler": "Annuler",
+        "reservation_singulier": "Réservation",
+        "retour_aux_reservations": "Retour aux réservations"
     },
     "dashboard_stats": {
         "en_attente": "En attente",
@@ -759,7 +761,8 @@
         "creer_hotel": "Créer l'hôtel",
         "reseaux_sociaux": "Réseaux sociaux",
         "site_web": "Site web",
-        "contacts_paiement_momo": "Contacts de paiement (MTN MoMo / Orange Money)"
+        "contacts_paiement_momo": "Contacts de paiement (MTN MoMo / Orange Money)",
+        "categories_chambres_compte": "Catégories de chambres (:n)"
     },
     "logement": {
         "ajouter_logement": "Ajouter un logement",
@@ -910,6 +913,22 @@
         "detail": "Détail",
         "voir": "Voir →",
         "disponibilite": "Disponibilité",
-        "validation": "Validation"
+        "validation": "Validation",
+        "dernieres_reservations_compte": "Dernières réservations (:n)",
+        "aucune_reservation": "Aucune réservation.",
+        "contacts_paiement": "Contacts de paiement",
+        "aucun_contact": "Aucun contact renseigné.",
+        "detail_logement": "Détail du logement",
+        "historique_baux_compte": "Historique des baux (:n)",
+        "aucun_bail": "Aucun bail pour ce logement.",
+        "detail_reservation": "Détail de la réservation",
+        "telecharger_proforma": "Télécharger le pro-forma",
+        "detail_bail": "Détail du bail",
+        "bail_singulier": "Bail",
+        "retour_aux_baux": "Retour aux baux",
+        "fin_moratoire": "Fin de moratoire",
+        "echeancier_loyers": "Échéancier des loyers",
+        "paiement_initial_court": "paiement initial",
+        "non_paye": "Non payé"
     }
 }

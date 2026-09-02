@@ -704,7 +704,9 @@
         "tab_terminees": "Completed",
         "hotel_chambre": "Hotel / Room",
         "confirmer": "Confirm",
-        "annuler": "Cancel"
+        "annuler": "Cancel",
+        "reservation_singulier": "Booking",
+        "retour_aux_reservations": "Back to bookings"
     },
     "dashboard_stats": {
         "en_attente": "Pending",
@@ -758,7 +760,8 @@
         "creer_hotel": "Create hotel",
         "reseaux_sociaux": "Social media",
         "site_web": "Website",
-        "contacts_paiement_momo": "Payment contacts (MTN MoMo / Orange Money)"
+        "contacts_paiement_momo": "Payment contacts (MTN MoMo / Orange Money)",
+        "categories_chambres_compte": "Room categories (:n)"
     },
     "logement": {
         "ajouter_logement": "Add a property",
@@ -909,6 +912,22 @@
         "detail": "Details",
         "voir": "View →",
         "disponibilite": "Availability",
-        "validation": "Approval"
+        "validation": "Approval",
+        "dernieres_reservations_compte": "Recent bookings (:n)",
+        "aucune_reservation": "No bookings.",
+        "contacts_paiement": "Payment contacts",
+        "aucun_contact": "No contact provided.",
+        "detail_logement": "Property details",
+        "historique_baux_compte": "Lease history (:n)",
+        "aucun_bail": "No leases for this property.",
+        "detail_reservation": "Booking details",
+        "telecharger_proforma": "Download the pro-forma",
+        "detail_bail": "Lease details",
+        "bail_singulier": "Lease",
+        "retour_aux_baux": "Back to leases",
+        "fin_moratoire": "Grace period ends",
+        "echeancier_loyers": "Rent schedule",
+        "paiement_initial_court": "initial payment",
+        "non_paye": "Not paid"
     }
 }

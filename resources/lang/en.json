@@ -1043,5 +1043,18 @@
         "pas_gere_ligne": "This property isn't managed online: contact the landlord directly.",
         "contacter_bailleur": "Contact the landlord",
         "se_connecter_contacter": "Log in to contact"
+    },
+    "reservation_form": {
+        "reserver": "Book",
+        "finaliser_reservation": "Complete your booking",
+        "date_arrivee": "Check-in date",
+        "date_depart": "Check-out date",
+        "adultes_max": "Adults (max :n)",
+        "enfants_max": "Children (max :n)",
+        "numero_telephone": "Phone number",
+        "selectionnez_dates": "Select your dates to see the total",
+        "valider_reservation": "Confirm booking",
+        "paiement_etape_suivante": "Payment (MTN MoMo / Orange Money) will be requested in the next step.",
+        "nuit_s": "night(s)"
     }
 }

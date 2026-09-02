@@ -1044,5 +1044,18 @@
         "pas_gere_ligne": "Ce logement n'est pas géré en ligne : contactez directement le bailleur.",
         "contacter_bailleur": "Contacter le bailleur",
         "se_connecter_contacter": "Se connecter pour contacter"
+    },
+    "reservation_form": {
+        "reserver": "Réserver",
+        "finaliser_reservation": "Finaliser la réservation",
+        "date_arrivee": "Date d'arrivée",
+        "date_depart": "Date de départ",
+        "adultes_max": "Adultes (max :n)",
+        "enfants_max": "Enfants (max :n)",
+        "numero_telephone": "Numéro de téléphone",
+        "selectionnez_dates": "Sélectionnez vos dates pour voir le total",
+        "valider_reservation": "Valider la réservation",
+        "paiement_etape_suivante": "Le paiement (MTN MoMo / Orange Money) sera demandé à l'étape suivante.",
+        "nuit_s": "nuit(s)"
     }
 }

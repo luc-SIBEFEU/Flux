@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titre', 'Hôtels — Flux')
+@section('titre', __('navigation.hotels') . ' — Flux')
 
 @section('contenu')
 
@@ -8,11 +8,11 @@
 
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-28 sm:pt-24 sm:pb-36">
-        <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">Hôtels</p>
+        <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">{{ __('navigation.hotels') }}</p>
         <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white max-w-2xl leading-[1.05]">
-            Votre séjour, du premier clic au dernier jour.
+            {{ __('hotels_page.hero_titre') }}
         </h1>
-        <p class="text-white/70 mt-4 max-w-lg">Réservez une chambre d'hôtel ou trouvez le logement à louer qui vous correspond, partout au pays.</p>
+        <p class="text-white/70 mt-4 max-w-lg">{{ __('hotels_page.hero_desc') }}</p>
     </div>
 <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
@@ -27,17 +27,17 @@
         
             <form method="GET" class="bg-white rounded-2xl shadow-xl p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <div class="flex items-center gap-2 text-flux-noir font-medium">
-                    <x-icon name="filter" class="w-4 h-4 text-flux-bleu" /> Filtrer
+                    <x-icon name="filter" class="w-4 h-4 text-flux-bleu" /> {{ __('common.filtrer') }}
                 </div>
 
                 <div>
-                    <label class="text-xs font-medium text-flux-noir/50">Destination</label>
-                    <input type="text" name="destination" value="{{ request('destination') }}" placeholder="Ville..."
+                    <label class="text-xs font-medium text-flux-noir/50">{{ __('hotels_page.destination') }}</label>
+                    <input type="text" name="destination" value="{{ request('destination') }}" placeholder="{{ __('hotels_page.ville_placeholder') }}"
                            class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2 text-sm outline-none focus:border-flux-bleu">
                 </div>
 
                 <div>
-                    <label class="text-xs font-medium text-flux-noir/50">Étoiles minimum</label>
+                    <label class="text-xs font-medium text-flux-noir/50">{{ __('hotels_page.etoiles_minimum') }}</label>
                     <div class="flex gap-2 mt-2">
                         @foreach([1,2,3,4,5] as $n)
                             <label class="flex-1">
@@ -49,12 +49,12 @@
                 </div>
 
                 <div>
-                    <label class="text-xs font-medium text-flux-noir/50">Note minimum (sur 10)</label>
+                    <label class="text-xs font-medium text-flux-noir/50">{{ __('hotels_page.note_minimum') }}</label>
                     <input type="range" min="0" max="10" name="note_min" value="{{ request('note_min', 0) }}" class="w-full mt-2 accent-flux-or">
                 </div>
 
                 <button type="submit" class="w-full bg-flux-bleu hover:bg-flux-bleu-vif text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
-                    Appliquer les filtres
+                    {{ __('common.appliquer_filtres') }}
                 </button>
 
             </form>
@@ -65,7 +65,7 @@
 
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-24">
         <div class="lg:col-span-4">
-            <p class="text-2xl text-flux-noir/50 mb-4">{{ $hotels->total() }}+ hôtel(s) disponibles</p>
+            <p class="text-2xl text-flux-noir/50 mb-4">{{ trans_choice('hotels_page.hotels_disponibles_compte', $hotels->total(), ['n' => $hotels->total()]) }}</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 @forelse($hotels as $hotel)
@@ -96,7 +96,7 @@
                 @empty
                     <div class="col-span-full text-center py-16 text-flux-noir/40">
                         <x-icon name="search" class="w-10 h-10 mx-auto mb-3" />
-                        Aucun hôtel ne correspond à ces critères.
+                        {{ __('hotels_page.aucun_resultat') }}
                     </div>
                 @endforelse
             </div>

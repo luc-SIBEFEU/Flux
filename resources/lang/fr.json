@@ -54,7 +54,8 @@
         "description": "Description",
         "client": "Client",
         "statut": "Statut",
-        "actions": "Actions"
+        "actions": "Actions",
+        "appliquer_filtres": "Appliquer les filtres"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -992,5 +993,25 @@
         "verifier_statut": "Vérifier le statut",
         "marquer_effectue": "Marquer effectué manuellement",
         "aucun_en_attente": "Aucun reversement en attente d'action."
+    },
+    "hotels_page": {
+        "hero_titre": "Votre séjour, du premier clic au dernier jour.",
+        "hero_desc": "Réservez une chambre d'hôtel ou trouvez le logement à louer qui vous correspond, partout au pays.",
+        "destination": "Destination",
+        "ville_placeholder": "Ville...",
+        "etoiles_minimum": "Étoiles minimum",
+        "note_minimum": "Note minimum (sur 10)",
+        "hotels_disponibles_compte": "{0} 0 hôtel disponible|{1} :n+ hôtel disponible|[2,*] :n+ hôtels disponibles",
+        "aucun_resultat": "Aucun hôtel ne correspond à ces critères."
+    },
+    "logements_page": {
+        "hero_titre": "Trouvez votre prochain chez-vous",
+        "hero_desc": "Trouvez un domicile qui correspond à vos besoins et préférences, partout au pays.",
+        "ville_quartier": "Ville / quartier",
+        "prix_max_mois": "Prix max / mois",
+        "logements_disponibles_compte": "{0} 0 logement disponible|{1} :n logement disponible|[2,*] :n logements disponibles",
+        "meuble_minuscule": "meublé",
+        "standard_minuscule": "standard",
+        "aucun_resultat": "Aucun logement ne correspond à ces critères."
     }
 }

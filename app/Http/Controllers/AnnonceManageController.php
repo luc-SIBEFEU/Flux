@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Annonce;
+use App\Support\HtmlAssainisseur;
 use Illuminate\Http\Request;
 
 /**
@@ -35,7 +36,7 @@ class AnnonceManageController extends Controller
         $this->authorizeForfaitPro();
 
         $data = $this->validated($request);
-        $data['contenu'] = $this->assainirHtml($data['contenu']);
+        $data['contenu'] = HtmlAssainisseur::nettoyer($data['contenu']);
         $data['user_id'] = auth()->id();
 
         if ($request->hasFile('image')) {
@@ -59,7 +60,7 @@ class AnnonceManageController extends Controller
         $this->authorizeProprietaire($annonce);
 
         $data = $this->validated($request);
-        $data['contenu'] = $this->assainirHtml($data['contenu']);
+        $data['contenu'] = HtmlAssainisseur::nettoyer($data['contenu']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('annonces', 'public');
@@ -100,29 +101,5 @@ class AnnonceManageController extends Controller
             'expire_le' => ['nullable', 'date', 'after_or_equal:today'],
             'image' => ['nullable', 'image', 'max:4096'],
         ]);
-    }
-
-    /**
-     * Nettoyage minimal du HTML produit par l'éditeur enrichi : liste blanche
-     * de balises de mise en forme, suppression des scripts/attributs actifs.
-     * Pas de dépendance externe (aucun purificateur HTML installé) — c'est
-     * volontairement strict plutôt que de risquer une balise dangereuse.
-     */
-    private function assainirHtml(string $html): string
-    {
-        $autorise = '<p><br><strong><b><em><i><u><s><a><ul><ol><li><h1><h2><h3><blockquote>';
-        $propre = strip_tags($html, $autorise);
-
-        // Retire tout attribut sauf href/target/rel sur les liens, et neutralise javascript:.
-        $propre = preg_replace_callback('/<a\s+([^>]*)>/i', function ($m) {
-            preg_match('/href\s*=\s*"([^"]*)"/i', $m[1], $href);
-            $url = $href[1] ?? '#';
-            if (stripos($url, 'javascript:') === 0) {
-                $url = '#';
-            }
-            return '<a href="' . e($url) . '" target="_blank" rel="noopener noreferrer">';
-        }, $propre);
-
-        return $propre;
     }
 }

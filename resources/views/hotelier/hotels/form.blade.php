@@ -56,10 +56,7 @@
         </div>
     </div>
 
-    <div>
-        <label class="text-xs font-medium text-flux-noir/50">{{ __('common.description') }}</label>
-        <textarea name="description" rows="4" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-bleu">{{ old('description', $hotel->description) }}</textarea>
-    </div>
+    <x-rich-editor name="description" :value="old('description', $hotel->description)" :label="__('common.description')" :rows="5" />
 
     <div>
         <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.equipements') }}</label>

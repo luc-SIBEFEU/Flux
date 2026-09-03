@@ -39,7 +39,7 @@
             @if($hotel->description)
                 <section>
                     <h2 class="font-display text-2xl mb-3">{{ __('hotel_show.a_propos') }}</h2>
-                    <p class="text-flux-noir/70 leading-relaxed">{{ $hotel->description }}</p>
+                    <div class="contenu-riche text-flux-noir/70">{!! $hotel->description !!}</div>
                 </section>
             @endif
 

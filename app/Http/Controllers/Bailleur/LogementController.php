@@ -9,6 +9,7 @@ use App\Models\Logement;
 use App\Models\Minicite;
 use App\Models\User;
 use App\Services\NotificationDashboardService;
+use App\Support\HtmlAssainisseur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,6 +43,7 @@ class LogementController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $data['info'] = HtmlAssainisseur::nettoyer($data['info'] ?? null);
         $nombre = (int) $request->input('nombre_exemplaires', 1);
         $equipements = $request->input('equipements', []);
 
@@ -81,6 +83,7 @@ class LogementController extends Controller
     {
         $this->authorizeProprietaire($logement);
         $data = $this->validated($request);
+        $data['info'] = HtmlAssainisseur::nettoyer($data['info'] ?? null);
         unset($data['nombre_exemplaires']);
 
         if ($data['type'] === 'villa') {

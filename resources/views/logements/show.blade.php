@@ -23,7 +23,7 @@
             @if($logement->info)
                 <section>
                     <h2 class="font-display text-2xl mb-3">{{ __('common.description') }}</h2>
-                    <p class="text-flux-noir/70 leading-relaxed">{{ $logement->info }}</p>
+                    <div class="contenu-riche text-flux-noir/70">{!! $logement->info !!}</div>
                 </section>
             @endif
 

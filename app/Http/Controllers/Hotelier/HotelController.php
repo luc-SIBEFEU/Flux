@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hotelier;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
+use App\Support\HtmlAssainisseur;
 use Illuminate\Http\Request;
 use App\Models\Equipement;
 
@@ -28,6 +29,7 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        $data['description'] = HtmlAssainisseur::nettoyer($data['description'] ?? null);
         $data['image_couverture'] = $request->file('image_couverture')->store('hotels', 'public');
         $data['hotelier_id'] = auth()->id();
         $data['statut'] = 'en_attente'; // doit être validé par l'admin
@@ -56,6 +58,7 @@ class HotelController extends Controller
     {
         $this->authorizeProprietaire($hotel);
         $data = $this->validated($request, false);
+        $data['description'] = HtmlAssainisseur::nettoyer($data['description'] ?? null);
 
         if ($request->hasFile('image_couverture')) {
             $data['image_couverture'] = $request->file('image_couverture')->store('hotels', 'public');

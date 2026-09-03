@@ -98,10 +98,7 @@
         </div>
     </div>
 
-    <div>
-        <label class="text-xs font-medium text-flux-noir/50">{{ __('logement.infos_complementaires') }}</label>
-        <textarea name="info" rows="3" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">{{ old('info', $logement->info) }}</textarea>
-    </div>
+    <x-rich-editor name="info" :value="old('info', $logement->info)" :label="__('logement.infos_complementaires')" :rows="4" />
 
     @if(!$logement->exists)
         <div class="bg-flux-violet-pale rounded-lg p-4">

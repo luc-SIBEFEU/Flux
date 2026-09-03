@@ -5,6 +5,7 @@ $liens = [
     ['route' => 'hotelier.reservations.index', 'icone' => 'calendar', 'label' => __('sidebar.reservations')],
     ['route' => 'hotelier.avis.index', 'icone' => 'star', 'label' => __('sidebar.avis_clients')],
     ['route' => 'hotelier.messages.index', 'icone' => 'mail', 'label' => __('sidebar.messages')],
+    ['route' => 'annonces.manage.index', 'icone' => 'megaphone', 'label' => __('sidebar.mes_annonces')],
     ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => __('sidebar.mon_forfait')],
     ['route' => 'hotelier.profil.edit', 'icone' => 'user', 'label' => __('sidebar.mon_profil')],
     ['route' => 'hotelier.aide.index', 'icone' => 'sparkles', 'label' => __('sidebar.guide_notice')],

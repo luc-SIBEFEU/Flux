@@ -40,3 +40,33 @@ body {
 /* Cache le scroll horizontal des cartes sur mobile sans perdre le "snap" */
 .carte-scroll { scrollbar-width: none; }
 .carte-scroll::-webkit-scrollbar { display: none; }
+
+/* Rendu du contenu HTML saisi via l'éditeur de texte enrichi (CKEditor) :
+   pas de plugin @tailwindcss/typography installé, donc ces règles sont
+   volontairement explicites plutôt que de dépendre de classes "prose". */
+.contenu-riche h1,
+.contenu-riche h2,
+.contenu-riche h3 {
+    font-family: var(--font-display);
+    color: var(--color-flux-noir);
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+}
+.contenu-riche h1 { font-size: 1.5rem; }
+.contenu-riche h2 { font-size: 1.25rem; }
+.contenu-riche h3 { font-size: 1.1rem; }
+.contenu-riche p { margin-bottom: 1em; }
+.contenu-riche ul, .contenu-riche ol { margin: 0 0 1em 1.25em; }
+.contenu-riche ul { list-style: disc; }
+.contenu-riche ol { list-style: decimal; }
+.contenu-riche li { margin-bottom: 0.35em; }
+.contenu-riche a { color: var(--color-flux-bleu-vif); text-decoration: underline; }
+.contenu-riche blockquote {
+    border-left: 3px solid var(--color-flux-or);
+    padding-left: 1em;
+    margin: 1em 0;
+    color: rgba(18, 19, 26, 0.6);
+    font-style: italic;
+}
+.contenu-riche strong { font-weight: 600; }

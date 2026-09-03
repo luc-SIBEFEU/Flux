@@ -19,6 +19,7 @@
             <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wide">Flux</h4>
             <ul class="space-y-2 text-sm">
                 <li><a href="{{ route('a-propos') }}" class="hover:text-flux-or">{{ __('footer.a_propos_de_flux') }}</a></li>
+                <li><a href="{{ route('annonces.index') }}" class="hover:text-flux-or">{{ __('footer.annonces') }}</a></li>
                 <li><a href="{{ route('conditions-utilisation') }}" class="hover:text-flux-or">{{ __('navigation.conditions') }}</a></li>
                 <li><a href="{{ route('politique-confidentialite') }}" class="hover:text-flux-or">{{ __('navigation.confidentialite') }}</a></li>
                 <li><a href="{{ route('aide-faq') }}" class="hover:text-flux-or">{{ __('navigation.faq') }}</a></li>

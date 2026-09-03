@@ -10,6 +10,7 @@
         <div class="hidden md:flex items-center gap-8 text-sm font-medium text-flux-noir/80">
             <a href="{{ route('hotels.index') }}" class="hover:text-flux-bleu transition-colors {{ request()->routeIs('hotels.*') ? 'text-flux-bleu' : '' }}">{{ __('navigation.hotels') }}</a>
             <a href="{{ route('logements.index') }}" class="hover:text-flux-violet transition-colors {{ request()->routeIs('logements.*') ? 'text-flux-violet' : '' }}">{{ __('navigation.logements') }}</a>
+            <a href="{{ route('annonces.index') }}" class="hover:text-flux-or transition-colors {{ request()->routeIs('annonces.*') ? 'text-flux-or' : '' }}">{{ __('navigation.annonces') }}</a>
             <a href="{{ route('a-propos') }}" class="hover:text-flux-bleu transition-colors {{ request()->routeIs('a-propos') ? 'text-flux-bleu' : '' }}">{{ __('navigation.a_propos') }}</a>
             <!-- <a href="{{ route('accueil') }}#actualites" class="hover:text-flux-bleu transition-colors">{{ __('navigation.actualites') }}</a> -->
         </div>
@@ -39,6 +40,7 @@
              class="absolute top-16 inset-x-0 bg-white border-b border-black/5 md:hidden px-4 py-4 space-y-3 shadow-lg">
             <a href="{{ route('hotels.index') }}" class="block py-2 font-medium">{{ __('navigation.hotels') }}</a>
             <a href="{{ route('logements.index') }}" class="block py-2 font-medium">{{ __('navigation.logements') }}</a>
+            <a href="{{ route('annonces.index') }}" class="block py-2 font-medium">{{ __('navigation.annonces') }}</a>
             <a href="{{ route('a-propos') }}" class="block py-2 font-medium">{{ __('navigation.a_propos') }}</a>
             {{-- <a href="{{ route('accueil') }}#actualites" class="block py-2 font-medium">{{ __('navigation.actualites') }}</a> --}}
             <hr class="border-black/5">
@@ -51,7 +53,7 @@
                 <a href="{{ route($espace) }}" class="block py-2 font-medium text-flux-bleu">{{ __('common.mon_espace') }}</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="py-2 font-medium text-flux-noir/60">Déconnexion</button>
+                    <button class="py-2 font-medium text-flux-noir/60">{{ __('navigation.deconnexion') }}</button>
                 </form>
             @else
                 <a href="{{ route('login') }}" class="block py-2 font-medium">{{ __('common.connexion') }}</a>

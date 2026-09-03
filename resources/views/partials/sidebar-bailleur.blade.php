@@ -7,6 +7,7 @@ $liens = [
     ['route' => 'bailleur.bayes.index', 'icone' => 'key', 'label' => __('sidebar.locations_en_cours')],
     ['route' => 'bailleur.commentaires.index', 'icone' => 'star', 'label' => __('sidebar.commentaires')],
     ['route' => 'bailleur.messages.index', 'icone' => 'mail', 'label' => __('sidebar.messages')],
+    ['route' => 'annonces.manage.index', 'icone' => 'megaphone', 'label' => __('sidebar.mes_annonces')],
     ['route' => 'forfait.index', 'icone' => 'sparkles', 'label' => __('sidebar.mon_forfait')],
     ['route' => 'bailleur.profil.edit', 'icone' => 'user', 'label' => __('sidebar.mon_profil')],
     ['route' => 'bailleur.aide.index', 'icone' => 'sparkles', 'label' => __('sidebar.guide_notice')],

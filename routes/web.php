@@ -38,6 +38,9 @@ Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.sh
 Route::get('/logements', [LogementController::class, 'index'])->name('logements.index');
 Route::get('/logements/{logement}', [LogementController::class, 'show'])->name('logements.show');
 
+Route::get('/annonces', [\App\Http\Controllers\AnnonceController::class, 'index'])->name('annonces.index');
+Route::get('/annonces/{annonce}', [\App\Http\Controllers\AnnonceController::class, 'show'])->name('annonces.show');
+
 /*
 |--------------------------------------------------------------------------
 | Authentification
@@ -112,6 +115,20 @@ Route::middleware(['auth', 'role:hotelier,bailleur'])->prefix('forfait')->name('
 
 /*
 |--------------------------------------------------------------------------
+| Annonces (hôtelier & bailleur) — publication réservée au forfait pro
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:hotelier,bailleur'])->prefix('mes-annonces')->name('annonces.manage.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\AnnonceManageController::class, 'index'])->name('index');
+    Route::get('/creer', [\App\Http\Controllers\AnnonceManageController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\AnnonceManageController::class, 'store'])->name('store');
+    Route::get('/{annonce}/modifier', [\App\Http\Controllers\AnnonceManageController::class, 'edit'])->name('edit');
+    Route::put('/{annonce}', [\App\Http\Controllers\AnnonceManageController::class, 'update'])->name('update');
+    Route::delete('/{annonce}', [\App\Http\Controllers\AnnonceManageController::class, 'destroy'])->name('destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Espace Admin
 |--------------------------------------------------------------------------
 */
@@ -152,6 +169,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/avis', [Admin\AvisController::class, 'index'])->name('avis.index');
     Route::post('/avis/{avi}/approuver', [Admin\AvisController::class, 'approuver'])->name('avis.approuver');
     Route::post('/avis/{avi}/rejeter', [Admin\AvisController::class, 'rejeter'])->name('avis.rejeter');
+
+    Route::get('/annonces', [Admin\AnnonceController::class, 'index'])->name('annonces.index');
+    Route::post('/annonces/{annonce}/masquer', [Admin\AnnonceController::class, 'masquer'])->name('annonces.masquer');
+    Route::post('/annonces/{annonce}/afficher', [Admin\AnnonceController::class, 'afficher'])->name('annonces.afficher');
 
     Route::get('/rapports', [Admin\RapportController::class, 'index'])->name('rapports.index');
 

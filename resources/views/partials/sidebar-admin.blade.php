@@ -8,6 +8,7 @@ $liens = [
     ['route' => 'admin.users.en-attente', 'icone' => 'user', 'label' => __('sidebar.comptes_a_valider')],
     ['route' => 'admin.users.index', 'icone' => 'users', 'label' => __('sidebar.clients_hoteliers_bailleurs')],
     ['route' => 'admin.avis.index', 'icone' => 'star', 'label' => __('sidebar.moderation_avis')],
+    ['route' => 'admin.annonces.index', 'icone' => 'megaphone', 'label' => __('admin_annonces.titre')],
     ['route' => 'admin.rapports.index', 'icone' => 'coins', 'label' => __('sidebar.rapports_financiers')],
     ['route' => 'admin.forfaits.index', 'icone' => 'sparkles', 'label' => __('sidebar.forfaits')],
     ['route' => 'admin.transferts.index', 'icone' => 'coins', 'label' => __('sidebar.reversements')],

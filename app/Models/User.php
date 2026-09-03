@@ -51,6 +51,7 @@ class User extends Authenticatable
     public function abonnements() { return $this->hasMany(Abonnement::class); }
     public function messagesContactRecus() { return $this->hasMany(MessageContact::class, 'destinataire_id'); }
     public function transferts() { return $this->hasMany(Transfert::class, 'beneficiaire_id'); }
+    public function annonces() { return $this->hasMany(Annonce::class); }
 
     /**
      * Uniquement pertinent pour hotelier/bailleur. Un utilisateur sans forfait_id

@@ -56,7 +56,9 @@
         "statut": "Statut",
         "actions": "Actions",
         "appliquer_filtres": "Appliquer les filtres",
-        "mois_abrege_compte": "{1} :n mois|[2,*] :n mois"
+        "mois_abrege_compte": "{1} :n mois|[2,*] :n mois",
+        "trier_par": "Trier par",
+        "tri_recent": "Plus récent"
     },
     "navigation": {
         "hotels": "Hôtels",
@@ -69,7 +71,8 @@
         "confidentialite": "Politique de confidentialité",
         "forum": "Forum",
         "actualites": "Actualités",
-        "deconnexion": "Déconnexion"
+        "deconnexion": "Déconnexion",
+        "annonces": "Annonces"
     },
     "auth": {
         "email": "Email",
@@ -237,7 +240,8 @@
         "devenir_hotelier": "Devenir hôtelier",
         "paiement": "Paiement",
         "paiements_securises": "Paiements sécurisés via aangaraa-pay.com",
-        "developpe_par": "Développé par Noutta Sarl"
+        "developpe_par": "Développé par Noutta Sarl",
+        "annonces": "Annonces"
     },
     "pages": {
         "accueil_titre": "Accueil — Flux",
@@ -474,7 +478,8 @@
         "tous_les_hotels": "Tous les hôtels",
         "tous_les_logements": "Tous les logements",
         "tous_les_baux": "Tous les baux",
-        "toutes_les_reservations": "Toutes les réservations"
+        "toutes_les_reservations": "Toutes les réservations",
+        "mes_annonces": "Mes annonces"
     },
     "dashboard": {
         "titre_defaut": "Tableau de bord — Flux",
@@ -1003,7 +1008,10 @@
         "etoiles_minimum": "Étoiles minimum",
         "note_minimum": "Note minimum (sur 10)",
         "hotels_disponibles_compte": "{0} 0 hôtel disponible|{1} :n+ hôtel disponible|[2,*] :n+ hôtels disponibles",
-        "aucun_resultat": "Aucun hôtel ne correspond à ces critères."
+        "aucun_resultat": "Aucun hôtel ne correspond à ces critères.",
+        "equipement": "Équipement",
+        "tri_note": "Meilleure note",
+        "tri_etoiles": "Plus d'étoiles"
     },
     "logements_page": {
         "hero_titre": "Trouvez votre prochain chez-vous",
@@ -1013,7 +1021,9 @@
         "logements_disponibles_compte": "{0} 0 logement disponible|{1} :n logement disponible|[2,*] :n logements disponibles",
         "meuble_minuscule": "meublé",
         "standard_minuscule": "standard",
-        "aucun_resultat": "Aucun logement ne correspond à ces critères."
+        "aucun_resultat": "Aucun logement ne correspond à ces critères.",
+        "tri_prix_asc": "Prix croissant",
+        "tri_prix_desc": "Prix décroissant"
     },
     "hotel_show": {
         "ajouter_favoris": "Ajouter aux favoris",
@@ -1068,5 +1078,46 @@
         "mois_th": "Mois",
         "total_bail": "Total du bail",
         "genere_auto_location": "Document généré automatiquement par Flux à la fin de la location"
+    },
+    "annonces_page": {
+        "hero_titre": "Les dernières informations de vos hôteliers et bailleurs.",
+        "hero_desc": "Promotions, disponibilités, informations pratiques : suivez l'actualité des professionnels de l'hébergement.",
+        "categorie": "Catégorie",
+        "categorie_promotion": "Promotion",
+        "categorie_information": "Information",
+        "categorie_evenement": "Événement",
+        "categorie_disponibilite": "Disponibilité",
+        "categorie_autre": "Autre",
+        "publie_par": "Publié par",
+        "publie_par_x": "Publié par :nom",
+        "rechercher_placeholder": "Mots-clés...",
+        "annonces_compte": "{0} 0 annonce|{1} :n annonce|[2,*] :n annonces",
+        "aucun_resultat": "Aucune annonce ne correspond à ces critères.",
+        "retour_annonces": "Retour aux annonces",
+        "mes_annonces": "Mes annonces",
+        "nouvelle_annonce": "Nouvelle annonce",
+        "reserve_pro_titre": "Fonctionnalité réservée au forfait pro",
+        "reserve_pro_desc": "La publication d'annonces (promotions, informations, événements) est réservée aux comptes hôtelier/bailleur en forfait pro.",
+        "voir_forfaits": "Voir les forfaits",
+        "publiee": "Publiée",
+        "masquee_admin": "Masquée par l'admin",
+        "confirmer_suppression": "Supprimer cette annonce ?",
+        "aucune_annonce_perso": "Vous n'avez publié aucune annonce pour le moment.",
+        "modifier_annonce": "Modifier l'annonce",
+        "titre_annonce": "Titre de l'annonce",
+        "image_optionnelle": "Image (optionnelle)",
+        "expiration_optionnelle": "Date d'expiration (optionnelle)",
+        "publier_annonce": "Publier l'annonce"
+    },
+    "admin_annonces": {
+        "titre": "Annonces",
+        "gerer_annonces": "Modérez les annonces publiées par les hôteliers et bailleurs.",
+        "tous_statuts": "Tous les statuts",
+        "visible": "Visibles",
+        "masquee": "Masquées",
+        "auteur": "Auteur",
+        "masquer": "Masquer",
+        "afficher": "Afficher",
+        "aucune_annonce": "Aucune annonce pour le moment."
     }
 }

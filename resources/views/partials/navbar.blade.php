@@ -31,11 +31,12 @@
                 <a href="{{ route('register') }}" class="px-4 py-2 rounded-full bg-flux-or text-flux-noir text-sm font-semibold hover:bg-flux-or-vif transition-colors">{{ __('auth.creer_compte') }}</a>
             @endauth
         </div>
-
+        <div class="grid grid-cols-2 md:hidden p-2">
+            <x-language-switcher />
         <button class="md:hidden p-2" @click="open = !open" aria-label="{{ __('common.open_menu') }}">
             <x-icon name="menu" class="w-6 h-6 text-flux-bleu" />
         </button>
-
+        </div>
         <div x-show="open" x-cloak @click.outside="open = false"
              class="absolute top-16 inset-x-0 bg-white border-b border-black/5 md:hidden px-4 py-4 space-y-3 shadow-lg">
             <a href="{{ route('hotels.index') }}" class="block py-2 font-medium">{{ __('navigation.hotels') }}</a>

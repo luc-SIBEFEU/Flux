@@ -19,7 +19,7 @@
 
             <!-- Contenu texte de l'actualité active -->
             <div class="absolute top-5 sm:top-20 left-10 right-4 sm:left-110 sm:right-auto sm:max-w-md">
-                <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">Actualités</p>
+                <p class="text-flux-or text-sm font-medium tracking-widest uppercase mb-3">{{ __('sidebar.actualites') }}</p>
                 @foreach($actualites as $i => $actu)
                     <div x-show="index === {{ $i }}" x-transition:enter="transition ease-out duration-500 delay-150" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
                         <p class="text-flux-or text-xs font-medium uppercase tracking-wide mb-1">{{ $actu->date_debut->format('d M') }} — {{ $actu->date_fin->format('d M Y') }}</p>
@@ -66,24 +66,29 @@
     @endif
 
     <!-- Carte de recherche flottante -->
-    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-20">
+    <!-- <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-20">
         <form action="{{ route('hotels.index') }}" class="bg-white rounded-2xl shadow-xl p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div class="lg:col-span-2">
-                <label class="text-xs font-medium text-flux-noir/50">Destination</label>
+                <label class="text-xs font-medium text-flux-noir/50">{{ __('hotels_page.destination') }}</label>
                 <div class="flex items-center gap-2 mt-1 border border-black/10 rounded-lg px-3 py-2.5">
                     <x-icon name="map-pin" class="w-4 h-4 text-flux-bleu shrink-0" />
-                    <input type="text" name="destination" placeholder="Ville, quartier..." class="w-full outline-none text-sm">
+                    <input type="text" name="destination" placeholder="{{ __('home.hero.ville_quartier') }}" list="villes-accueil" class="w-full outline-none text-sm">
+                    <datalist id="villes-accueil">
+                        @foreach($villes as $ville)
+                            <option value="{{ $ville }}"></option>
+                        @endforeach
+                    </datalist>
                 </div>
             </div>
             <div>
-                <label class="text-xs font-medium text-flux-noir/50">Arrivée</label>
+                <label class="text-xs font-medium text-flux-noir/50">{{ __('reservation_form.date_arrivee') }}</label>
                 <div class="flex items-center gap-2 mt-1 border border-black/10 rounded-lg px-3 py-2.5">
                     <x-icon name="calendar" class="w-4 h-4 text-flux-bleu shrink-0" />
                     <input type="date" name="date_arrivee" class="w-full outline-none text-sm">
                 </div>
             </div>
             <div>
-                <label class="text-xs font-medium text-flux-noir/50">Départ</label>
+                <label class="text-xs font-medium text-flux-noir/50">{{ __('reservation_form.date_depart') }}</label>
                 <div class="flex items-center gap-2 mt-1 border border-black/10 rounded-lg px-3 py-2.5">
                     <x-icon name="calendar" class="w-4 h-4 text-flux-bleu shrink-0" />
                     <input type="date" name="date_depart" class="w-full outline-none text-sm">
@@ -91,24 +96,24 @@
             </div>
             <div class="flex gap-2">
                 <div class="flex-1">
-                    <label class="text-xs font-medium text-flux-noir/50">Adultes</label>
+                    <label class="text-xs font-medium text-flux-noir/50">{{ __('home.hero.adultes') }}</label>
                     <div class="flex items-center gap-2 mt-1 border border-black/10 rounded-lg px-3 py-2.5">
                         <x-icon name="users" class="w-4 h-4 text-flux-bleu shrink-0" />
                         <input type="number" min="1" value="2" name="adultes" class="w-full outline-none text-sm">
                     </div>
                 </div>
                 <div class="flex-1">
-                    <label class="text-xs font-medium text-flux-noir/50">Enfants</label>
+                    <label class="text-xs font-medium text-flux-noir/50">{{ __('home.hero.enfants') }}</label>
                     <div class="mt-1 border border-black/10 rounded-lg px-3 py-2.5">
                         <input type="number" min="0" value="0" name="enfants" class="w-full outline-none text-sm">
                     </div>
                 </div>
             </div>
             <button type="submit" class="lg:col-span-5 mt-1 inline-flex items-center justify-center gap-2 bg-flux-or hover:bg-flux-or-vif text-flux-noir font-semibold py-3 rounded-lg transition-colors">
-                <x-icon name="search" class="w-5 h-5" /> Rechercher un hôtel
+                <x-icon name="search" class="w-5 h-5" /> {{ __('home.hero.rechercher_hotel') }}
             </button>
         </form>
-    </div>
+    </div> -->
 </section>
 
 <!-- Pourquoi Flux ? -->
@@ -188,14 +193,14 @@
             <div class="relative">
                 <div class="w-12 h-12 rounded-full bg-flux-bleu text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">5</div>
                 <x-icon name="coins" class="w-6 h-6 text-flux-bleu mb-3" />
-                <h3 class="font-semibold text-flux-noir">Payez</h3>
-                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Réglez votre réservation/location avec MTN MoMo ou Orange Money.</p>
+                <h3 class="font-semibold text-flux-noir">{{ __('home.workflow.step5_titre') }}</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">{{ __('home.workflow.step5_desc') }}</p>
             </div>
             <div class="relative">
                 <div class="w-12 h-12 rounded-full bg-flux-violet text-white flex items-center justify-center font-display text-xl mb-5 ring-8 ring-flux-brume">6</div>
                 <x-icon name="check-circle" class="w-6 h-6 text-flux-violet mb-3" />
-                <h3 class="font-semibold text-flux-noir">Suivez</h3>
-                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">Retrouvez l'état de votre réservation/location dans votre espace.</p>
+                <h3 class="font-semibold text-flux-noir">{{ __('home.workflow.step6_titre') }}</h3>
+                <p class="text-sm text-flux-noir/60 mt-2 leading-relaxed">{{ __('home.workflow.step6_desc') }}</p>
             </div>
         </div>
 
@@ -242,10 +247,10 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-end justify-between mb-6">
         <div>
-            <p class="text-flux-or text-sm font-medium uppercase tracking-wide">Tendance</p>
-            <h2 class="font-display text-2xl sm:text-3xl text-flux-noir">Hôtels en vogue</h2>
+            <p class="text-flux-or text-sm font-medium uppercase tracking-wide">{{ __('home.tendance') }}</p>
+            <h2 class="font-display text-2xl sm:text-3xl text-flux-noir">{{ __('home.hotels_en_vogue') }}</h2>
         </div>
-        <a href="{{ route('hotels.index') }}" class="text-sm font-medium text-flux-bleu hover:underline hidden sm:block">Tout voir →</a>
+        <a href="{{ route('hotels.index') }}" class="text-sm font-medium text-flux-bleu hover:underline hidden sm:block">{{ __('home.tout_voir') }}</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         @foreach($hotelsEnVogue as $hotel)

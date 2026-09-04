@@ -7,7 +7,12 @@
 
 <form method="GET" class="flex items-center gap-2 border border-black/10 rounded-lg px-3 py-2 bg-white mb-6 max-w-xs">
     <x-icon name="map-pin" class="w-4 h-4 text-flux-noir/40" />
-    <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" class="outline-none text-sm w-full">
+    <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" list="villes-favoris" class="outline-none text-sm w-full">
+    <datalist id="villes-favoris">
+        @foreach($villes as $ville)
+            <option value="{{ $ville }}"></option>
+        @endforeach
+    </datalist>
 </form>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">

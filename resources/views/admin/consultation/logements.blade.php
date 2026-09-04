@@ -8,6 +8,15 @@
 <p class="text-xs text-flux-noir/40 mb-4 flex items-center gap-1.5"><x-icon name="cog" class="w-3.5 h-3.5" /> {{ __('consultation.lecture_seule_bailleur') }}</p>
 
 <form method="GET" class="flex flex-col sm:flex-row gap-3 mb-6">
+    <div class="flex-1 flex items-center gap-2 border border-black/10 rounded-lg px-3 py-2.5 bg-white">
+        <x-icon name="map-pin" class="w-4 h-4 text-flux-noir/40" />
+        <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" list="villes-consultation-logements" class="w-full outline-none text-sm">
+        <datalist id="villes-consultation-logements">
+            @foreach($villes as $ville)
+                <option value="{{ $ville }}"></option>
+            @endforeach
+        </datalist>
+    </div>
     <select name="type" class="border border-black/10 rounded-lg px-3 py-2.5 text-sm bg-white">
         <option value="">{{ __('logement.tous_les_types') }}</option>
         @foreach(['chambre'=>__('logement.type_chambre'),'studio'=>__('logement.type_studio'),'appartement'=>__('logement.type_appartement'),'villa'=>__('logement.type_villa')] as $val=>$label)

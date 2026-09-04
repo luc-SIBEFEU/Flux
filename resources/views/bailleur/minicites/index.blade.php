@@ -10,7 +10,12 @@
     <div class="flex gap-3">
         <form method="GET" class="flex items-center gap-2 border border-black/10 rounded-lg px-3 py-2 bg-white">
             <x-icon name="map-pin" class="w-4 h-4 text-flux-noir/40" />
-            <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" class="outline-none text-sm">
+            <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" list="villes-minicites" class="outline-none text-sm">
+            <datalist id="villes-minicites">
+                @foreach($villes as $ville)
+                    <option value="{{ $ville }}"></option>
+                @endforeach
+            </datalist>
         </form>
         <a href="{{ route('bailleur.minicites.create') }}" class="inline-flex items-center gap-2 bg-flux-violet text-white text-sm font-medium px-4 py-2.5 rounded-lg">
             <x-icon name="plus" class="w-4 h-4" /> {{ __('minicite.nouvelle_minicite') }}

@@ -13,11 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Middleware global
-        $middleware->use([
+        // La session doit être démarrée avant de lire la langue choisie.
+        $middleware->web(append: [
             SetLocale::class,
         ]);
-        
+
         // Utilisation : Route::middleware('role:admin') ou 'role:admin,hotelier'
         $middleware->alias([
             'role' => EnsureRole::class,

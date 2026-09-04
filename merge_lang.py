@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 import json, sys
 
-def set_nested(d, dotted_key, value):
-    parts = dotted_key.split('.')
-    cur = d
-    for p in parts[:-1]:
-        cur = cur.setdefault(p, {})
-    cur[parts[-1]] = value
+def set_translation(d, dotted_key, value):
+    d[dotted_key] = value
 
 def main():
     entries_path = sys.argv[1]
@@ -19,8 +15,8 @@ def main():
     with open(fr_path) as f:
         fr = json.load(f)
     for key, vals in entries.items():
-        set_nested(en, key, vals['en'])
-        set_nested(fr, key, vals['fr'])
+        set_translation(en, key, vals['en'])
+        set_translation(fr, key, vals['fr'])
     with open(en_path, 'w') as f:
         json.dump(en, f, ensure_ascii=False, indent=4)
         f.write('\n')

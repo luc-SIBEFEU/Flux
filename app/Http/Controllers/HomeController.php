@@ -19,6 +19,9 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        return view('home', compact('actualites', 'hotelsEnVogue'));
+        // Villes réelles pour la recherche du hero — cohérent avec hotels/index.
+        $villes = Hotel::valides()->distinct()->orderBy('ville')->pluck('ville');
+
+        return view('home', compact('actualites', 'hotelsEnVogue', 'villes'));
     }
 }

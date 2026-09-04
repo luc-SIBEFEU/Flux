@@ -16,7 +16,10 @@ class MiniciteController extends Controller
             ->latest()
             ->get();
 
-        return view('bailleur.minicites.index', compact('minicites'));
+        // Villes réellement présentes parmi les mini-cités du bailleur.
+        $villes = auth()->user()->minicites()->distinct()->orderBy('ville')->pluck('ville');
+
+        return view('bailleur.minicites.index', compact('minicites', 'villes'));
     }
 
     public function create()

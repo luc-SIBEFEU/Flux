@@ -306,7 +306,22 @@
         "search.button": "Rechercher un hôtel",
         "hotels_en_vogue.badge": "Tendance",
         "hotels_en_vogue.title": "Hôtels en vogue",
-        "hotels_en_vogue.see_all": "Tout voir →"
+        "hotels_en_vogue.see_all": "Tout voir →",
+        "hero": {
+            "ville_quartier": "Ville, quartier...",
+            "adultes": "Adultes",
+            "enfants": "Enfants",
+            "rechercher_hotel": "Rechercher un hôtel"
+        },
+        "workflow": {
+            "step5_titre": "Payez",
+            "step5_desc": "Réglez votre réservation/location avec MTN MoMo ou Orange Money.",
+            "step6_titre": "Suivez",
+            "step6_desc": "Retrouvez l'état de votre réservation/location dans votre espace."
+        },
+        "tendance": "Tendance",
+        "hotels_en_vogue": "Hôtels en vogue",
+        "tout_voir": "Tout voir →"
     },
     "about": {
         "a_propos_de_flux": "À propos de Flux",

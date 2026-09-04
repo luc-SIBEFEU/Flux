@@ -16,7 +16,7 @@
             @csrf
 
             <div>
-                <label class="text-xs font-medium text-flux-noir/50 mb-2 block">Je m'inscris en tant que</label>
+                <label class="text-xs font-medium text-flux-noir/50 mb-2 block">{{ __('auth.register_as') }}</label>
                 <div class="grid grid-cols-3 gap-2">
                     <label>
                         <input type="radio" name="role" value="client" x-model="role" class="peer sr-only">

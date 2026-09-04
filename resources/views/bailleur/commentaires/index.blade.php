@@ -7,13 +7,13 @@
 
 <form method="GET" class="flex flex-col sm:flex-row gap-3 mb-6">
     <select name="logement_id" onchange="this.form.submit()" class="border border-black/10 rounded-lg px-3 py-2.5 text-sm bg-white">
-        <option value="">Tous mes logements</option>
+        <option value="">{{ __('logement.tous_mes_logements') }}</option>
         @foreach($logements as $l)
             <option value="{{ $l->id }}" {{ request('logement_id')==$l->id?'selected':'' }}>{{ __('logement.type_' . $l->type) }} — {{ $l->quartier }}</option>
         @endforeach
     </select>
     <select name="note_min" onchange="this.form.submit()" class="border border-black/10 rounded-lg px-3 py-2.5 text-sm bg-white">
-        <option value="">Toutes les notes</option>
+        <option value="">{{ __('avis.toutes_les_notes') }}</option>
         @foreach([8,6,4,2] as $n)
             <option value="{{ $n }}" {{ request('note_min')==$n?'selected':'' }}>{{ __('avis.note_et_plus', ['n' => $n]) }}</option>
         @endforeach

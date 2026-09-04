@@ -11,7 +11,7 @@
     @if($minicite->exists) @method('PUT') @endif
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Nom de la mini-cité</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('minicite.nom_minicite') }}</label>
         <input type="text" name="nom" required value="{{ old('nom', $minicite->nom) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
     </div>
@@ -23,20 +23,20 @@
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
         </div>
         <div>
-            <label class="text-xs font-medium text-flux-noir/50">Quartier</label>
+            <label class="text-xs font-medium text-flux-noir/50">{{ __('logement.quartier') }}</label>
             <input type="text" name="quartier" required value="{{ old('quartier', $minicite->quartier) }}"
                    class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
         </div>
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Lien Google Maps</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('hotel.lien_google_maps') }}</label>
         <input type="url" name="google_map_lien" value="{{ old('google_map_lien', $minicite->google_map_lien) }}"
                class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">
     </div>
 
     <div>
-        <label class="text-xs font-medium text-flux-noir/50">Informations complémentaires</label>
+        <label class="text-xs font-medium text-flux-noir/50">{{ __('logement.infos_complementaires') }}</label>
         <textarea name="info" rows="3" class="mt-1 w-full border border-black/10 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-flux-violet">{{ old('info', $minicite->info) }}</textarea>
     </div>
 

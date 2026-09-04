@@ -14,7 +14,10 @@ class FavoriController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        return view('client.favoris', compact('favoris'));
+        // Villes réellement présentes parmi les favoris de l'utilisateur (pas une liste figée).
+        $villes = auth()->user()->favoris()->distinct()->orderBy('ville')->pluck('ville');
+
+        return view('client.favoris', compact('favoris', 'villes'));
     }
 
     public function toggle(Hotel $hotel)

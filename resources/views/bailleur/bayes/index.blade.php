@@ -19,11 +19,11 @@
     <table class="w-full text-sm min-w-[720px]">
         <thead class="bg-flux-brume text-flux-noir/50 text-xs uppercase">
             <tr>
-                <th class="text-left px-5 py-3">Locataire</th>
-                <th class="text-left px-5 py-3">Logement</th>
-                <th class="text-left px-5 py-3">Période</th>
+                <th class="text-left px-5 py-3">{{ __('logement.locataire_singulier') }}</th>
+                <th class="text-left px-5 py-3">{{ __('logement.logement_singulier') }}</th>
+                <th class="text-left px-5 py-3">{{ __('mail.periode') }}</th>
                 <th class="text-left px-5 py-3">{{ __('common.statut') }}</th>
-                <th class="text-left px-5 py-3">Paiement</th>
+                <th class="text-left px-5 py-3">{{ __('reservation.paiement_label') }}</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-black/5">

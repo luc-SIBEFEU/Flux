@@ -24,7 +24,9 @@ class SupervisionController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        return view('admin.consultation.hotels', compact('hotels'));
+        $villes = Hotel::distinct()->orderBy('ville')->pluck('ville');
+
+        return view('admin.consultation.hotels', compact('hotels', 'villes'));
     }
 
     public function hotel(Hotel $hotel, String $action)
@@ -40,11 +42,14 @@ class SupervisionController extends Controller
         $logements = Logement::with('bailleur')
             ->when(request('validation'), fn ($q, $v) => $q->where('validation', $v))
             ->when(request('type'), fn ($q, $v) => $q->where('type', $v))
+            ->when(request('ville'), fn ($q, $v) => $q->where('ville', 'like', "%{$v}%"))
             ->latest()
             ->paginate(15)
             ->withQueryString();
 
-        return view('admin.consultation.logements', compact('logements'));
+        $villes = Logement::distinct()->orderBy('ville')->pluck('ville');
+
+        return view('admin.consultation.logements', compact('logements', 'villes'));
     }
 
     public function logement(Logement $logement)

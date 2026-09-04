@@ -20,11 +20,11 @@
         <thead class="bg-flux-brume text-flux-noir/50 text-xs uppercase">
             <tr>
                 <th class="text-left px-5 py-3">{{ __('common.client') }}</th>
-                <th class="text-left px-5 py-3">Hôtel / Chambre</th>
-                <th class="text-left px-5 py-3">Période</th>
+                <th class="text-left px-5 py-3">{{ __('reservation.hotel_chambre') }}</th>
+                <th class="text-left px-5 py-3">{{ __('mail.periode') }}</th>
                 <th class="text-left px-5 py-3">{{ __('common.prix') }}</th>
                 <th class="text-left px-5 py-3">{{ __('common.statut') }}</th>
-                <th class="text-left px-5 py-3">Paiement</th>
+                <th class="text-left px-5 py-3">{{ __('reservation.paiement_label') }}</th>
                 <th class="text-right px-5 py-3">{{ __('common.actions') }}</th>
             </tr>
         </thead>

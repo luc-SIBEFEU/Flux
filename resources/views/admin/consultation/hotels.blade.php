@@ -10,7 +10,12 @@
 <form method="GET" class="flex flex-col sm:flex-row gap-3 mb-6">
     <div class="flex-1 flex items-center gap-2 border border-black/10 rounded-lg px-3 py-2.5 bg-white">
         <x-icon name="map-pin" class="w-4 h-4 text-flux-noir/40" />
-        <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" class="w-full outline-none text-sm">
+        <input type="text" name="ville" value="{{ request('ville') }}" placeholder="{{ __('common.filtrer_par_ville') }}" list="villes-consultation-hotels" class="w-full outline-none text-sm">
+        <datalist id="villes-consultation-hotels">
+            @foreach($villes as $ville)
+                <option value="{{ $ville }}"></option>
+            @endforeach
+        </datalist>
     </div>
     <select name="statut" class="border border-black/10 rounded-lg px-3 py-2.5 text-sm bg-white">
         <option value="">{{ __('common.tous_les_statuts') }}</option>

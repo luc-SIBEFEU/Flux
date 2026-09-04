@@ -305,7 +305,22 @@
         "search.button": "Search for a hotel",
         "hotels_en_vogue.badge": "Trendy",
         "hotels_en_vogue.title": "Popular Hotels",
-        "hotels_en_vogue.see_all": "See all →"
+        "hotels_en_vogue.see_all": "See all →",
+        "hero": {
+            "ville_quartier": "City, district...",
+            "adultes": "Adults",
+            "enfants": "Children",
+            "rechercher_hotel": "Search hotels"
+        },
+        "workflow": {
+            "step5_titre": "Pay",
+            "step5_desc": "Settle your booking/rental with MTN MoMo or Orange Money.",
+            "step6_titre": "Track",
+            "step6_desc": "Track the status of your booking/rental from your dashboard."
+        },
+        "tendance": "Trending",
+        "hotels_en_vogue": "Trending hotels",
+        "tout_voir": "View all →"
     },
     "about": {
         "a_propos_de_flux": "About Flux",
